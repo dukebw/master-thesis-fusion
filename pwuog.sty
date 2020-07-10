@@ -1,0 +1,116 @@
+%%%% file pwuog.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pwuog}[2020/07/09 v0.1 U of G thesis]
+
+%% Only works with the memoir class!!!!!!!!!!!!!!!
+\@ifclassloaded{memoir}{\let\endpwuog\relax}{\let\endpwuog\endinput
+  \PackageError{pwuog}{The pwuog package only works with the memoir class}%
+               {\@ehd}}
+\endpwuog
+
+\usepackage{url}
+\urlstyle{same}
+\setverbatimfont{\normalfont\rmfamily}% make verbatims use the body font
+
+\renewcommand*{\foottextfont}{\normalfont\normalsize}
+
+% To enable spacing to be changed if neccesary by the user
+\newcommand*{\setuogspacing}[1]{%
+  \let\UogSpacing#1
+  \UogSpacing}
+\setuogspacing{\DoubleSpacing}
+
+% left, right margins and textwidth
+\setlrmarginsandblock{1.5in}{1in}{*}
+
+%% for main body, bottom of text at 1in, footer below
+%% top of header at 1in, first text line double spaced
+%% below base of header
+\newlength{\linespace}
+\setlength{\linespace}{\baselineskip} % current equivalent of \onelineskip
+\setlength{\headheight}{\onelineskip}
+\setlength{\headsep}{\linespace}
+\addtolength{\headsep}{-\topskip}
+\setlength{\uppermargin}{1in}
+\addtolength{\uppermargin}{\headheight}
+\addtolength{\uppermargin}{\headsep}
+
+%% and for the bottom
+\setlength{\lowermargin}{1in}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-\uppermargin}
+\addtolength{\textheight}{-\lowermargin}
+
+%% footnote settings
+\setlength{\footskip}{\onelineskip}
+\setlength{\footnotesep}{\onelineskip}
+
+\newlength{\toptafiddle} \setlength{\toptafiddle}{2\linespace}
+\newlength{\bottafiddle} \setlength{\bottafiddle}{0pt}
+\newlength{\topfiddle}
+\setlength{\topfiddle}{\toptafiddle}
+\newlength{\botfiddle}
+\setlength{\botfiddle}{\onelineskip}
+
+\setlength{\parindent}{2em}
+\checkandfixthelayout[nearest]
+
+\newcommand*{\addtotextheight}[1]{%
+\twocolumn
+\addtolength{\textheight}{#1}%
+\onecolumn}
+
+%%%% pagestyles
+%% the main text
+\makepagestyle{uog}
+\makeevenhead{uog}{\thepage}{}{}
+\makeoddhead{uog}{}{}{\thepage}
+
+%% for continuation pages of the ToC, LoF, LoT
+\makepagestyle{toc}
+\makeevenfoot{toc}{}{\thepage}{}
+\makeoddfoot{toc}{}{\thepage}{}
+\makeevenhead{toc}{Chapter}{}{Page}
+\makeoddhead{toc}{Chapter}{}{Page}
+\makepagestyle{lof}
+\makeevenfoot{lof}{}{\thepage}{}
+\makeoddfoot{lof}{}{\thepage}{}
+\makeevenhead{lof}{Figure}{}{Page}
+\makeoddhead{lof}{Figure}{}{Page}
+\makepagestyle{lot}
+\makeevenfoot{lot}{}{\thepage}{}
+\makeoddfoot{lot}{}{\thepage}{}
+\makeevenhead{lot}{Table}{}{Page}
+\makeoddhead{lot}{Table}{}{Page}
+
+%%%% The LoF
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\addtodef{\listoffigures}{\clearpage\pagestyle{lof}}{}
+
+\renewcommand*{\lofheadstart}{\vspace*{-\topfiddle}}
+\renewcommand*{\afterloftitle}{\thispagestyle{plain}%
+  \par\nobreak {\normalfont Figure \hfill Page}\par\nobreak}
+
+%%% The LoT
+\renewcommand{\listtablename}{LIST OF TABLES}
+\addtodef{\listoftables}{\clearpage\pagestyle{lot}}{}
+\renewcommand*{\lotheadstart}{\vspace*{-\topfiddle}}
+\renewcommand*{\afterlottitle}{\thispagestyle{plain}%
+  \par\nobreak {\normalfont Table \hfill Page}\par\nobreak}
+
+%%%% Do the ToC
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\addtodef{\tableofcontents}{\clearpage\pagestyle{toc}}{}
+\renewcommand*{\tocheadstart}{\vspace*{-\topfiddle}}
+\renewcommand*{\aftertoctitle}{\thispagestyle{plain}%
+  \par\nobreak \mbox{}\hfill{\normalfont Page}\par\nobreak}
+
+\renewcommand*{\cftchapterfont}{\normalfont}
+\renewcommand*{\cftchapterpagefont}{\normalfont}
+\renewcommand*{\cftchapterleader}{%
+  \cftchapterfont\cftdotfill{\cftchapterdotsep}}
+\renewcommand*{\cftchapterdotsep}{\cftdotsep}
+
+%%% no extra space before the entry, or in the LoF/LoT
+\setlength{\cftbeforechapterskip}{0pt plus 0pt}
+\renewcommand*{\insertchapterspace}{}

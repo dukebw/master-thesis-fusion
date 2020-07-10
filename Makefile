@@ -15,6 +15,7 @@ clean:
 	rm -f Declaration/*.aux
 	rm -f Dedication/*.aux
 	rm -f Preamble/*.aux
+	rm -rf thesis.nlo
 
 mrproper: clean
 	rm -rf *.pdf
