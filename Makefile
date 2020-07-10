@@ -1,10 +1,10 @@
 THESIS=thesis
 
 all:
-	pdflatex $(THESIS).tex
+	xelatex $(THESIS).tex
 	bibtex $(THESIS).aux
-	pdflatex $(THESIS).tex
-	pdflatex $(THESIS).tex
+	xelatex $(THESIS).tex
+	xelatex $(THESIS).tex
 	$(MAKE) clean
 
 clean:

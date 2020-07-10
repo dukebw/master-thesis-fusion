@@ -1,54 +1,11 @@
-\documentclass[a4paper,12pt]{memoir}
+\documentclass[oneside,12pt]{memoir}
 
 % Includes
-\usepackage{epsfig}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{rotating}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{enumitem}
-\usepackage{multirow}
-\usepackage{epigraph}
-\usepackage{pgfplots}
-\usepackage{upgreek}
-\usepackage{adjustbox}
-\usepackage{gensymb}
-\usepackage{xfrac}
-\usepackage{pdflscape}
-\usepackage{afterpage}
-\usepackage{tabularx}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
-\usepackage[noabbrev,capitalize]{cleveref}
-\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
-% Custom macros
-\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
-\newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
-\newcommand{\sct}[1]{Section~\ref{sec:#1}}
-\newcommand{\eqn}[1]{(\ref{eqn:#1})}
-\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
-
-\usepackage{pifont}% http://ctan.org/pkg/pifont
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-% Math
-\newcommand{\N}{\mathcal{N}}
-\newcommand{\f}{\mathbf{f}}
-\newcommand{\x}{\mathbf{x}}
-\newcommand{\Bb}{\mathbf{b}}
-\newcommand{\y}{\mathbf{y}}
-\newcommand{\z}{\mathbf{z}}
-\newcommand{\W}{\mathbf{W}}
-\newcommand{\X}{\mathbf{X}}
-\newcommand{\Y}{\mathbf{Y}}
-\newcommand{\softmax}{\text{Softmax}}
-\newcommand{\cL}{\mathcal{L}}
-\newcommand{\Wh}{{\widehat{\mathbf{W}}}}
-\newcommand{\diag}{\text{diag}}
-\newcommand{\p}{\mathbf{p}}
+% \usepackage{mathptmx}  % Times New Roman
+% \usepackage[T1]{fontenc}
+\usepackage{ebgaramond} % Defines garamond font
+% \usepackage[altbullet]{lucidabr}  % Lucida bright
+\usepackage{pwuog}  % U of G thesis package
 
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
@@ -61,16 +18,16 @@
 % ******************************** Front Matter ********************************
 \begin{document}
 
+\maxtocdepth{subsection} % put 3 levels into the ToC
 \frontmatter
-
-\begin{titlepage}
-  \maketitle
-\end{titlepage}
-
-% \include{Dedication/dedication}
-\include{Declaration/declaration}
+\thetitlepage
+% \approvalpage
 % \include{Acknowledgement/acknowledgement}
-\include{Abstract/abstract}
+% \include{Declaration/declaration}
+\uogabstract
+\input{Abstract/abstract}
+% \uogdedication{\include{Dedication/dedication}}
+% \uogacknowledgments
 
 % *********************** Adding TOC and List of Figures ***********************
 
@@ -80,13 +37,14 @@
 
 \listoftables
 
-% \printnomenclature[space] space can be set as 2em between symbol and description
-%\printnomenclature[3em]
-
-\printnomenclature
+%%% if you have more prelim sections, then
+%%% \clearpage
+%%% \pagestyle{plain}
+%%% \prelimtitle{title} text % for each section before main text
 
 % ******************************** Main Matter *********************************
 \mainmatter
+\pagestyle{uog}
 
 \include{Chapter1/chapter1}
 % \include{Chapter2/chapter2}
@@ -101,9 +59,10 @@
 % Backmatter should be commented out, if you are using appendices after References
 %\backmatter
 
-% ********************************** Bibliography ******************************
-\begin{spacing}{0.9}
+%% if endnotes then
+% \printpagenotes
 
+% ********************************** Bibliography ******************************
 % To use the conventional natbib style referencing
 % Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
 % Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
@@ -115,26 +74,16 @@
 \bibliography{References/references} % Path to your References.bib file
 
 
-% If you would like to use BibLaTeX for your references, pass `custombib' as
-% an option in the document class. The location of 'reference.bib' should be
-% specified in the preamble.tex file in the custombib section.
-% Comment out the lines related to natbib above and uncomment the following line.
-
-%\printbibliography[heading=bibintoc, title={References}]
-
-
-\end{spacing}
-
 % ********************************** Appendices ********************************
 
-\begin{appendices} % Using appendices environment for more functunality
+% \appendix % Using appendices environment for more functunality
 
-%\include{Appendix1/appendix1}
-%\include{Appendix2/appendix2}
-
-\end{appendices}
+%\chapter{\include{Appendix1/appendix1}}
 
 % *************************************** Index ********************************
-\printthesisindex % If index is present
+% \printthesisindex % If index is present
+
+%% if Biographical sketch then
+% \begin{biosketch} ... \end{biosketch}
 
 \end{document}

@@ -114,3 +114,185 @@
 %%% no extra space before the entry, or in the LoF/LoT
 \setlength{\cftbeforechapterskip}{0pt plus 0pt}
 \renewcommand*{\insertchapterspace}{}
+
+%% chapter style
+\makechapterstyle{uog}{%
+  \setlength{\beforechapskip}{-\topfiddle}
+  \setlength{\midchapskip}{1.0\onelineskip}
+  \setlength{\afterchapskip}{1.0\onelineskip}
+  \renewcommand*{\chapnamefont}{\normalfont}
+  \renewcommand*{\chapnumfont}{\chapnamefont}
+  \renewcommand*{\printchapternum}{\centering\chapnumfont \thechapter}
+  \renewcommand*{\chaptitlefont}{\normalfont\centering}
+  \renewcommand*{\printchapternonum}{}}
+\aliaspagestyle{chapter}{empty}
+
+%%% different chapter style for appendices, (and double spaced)
+\addtodef{\appendix}{}{\chapterstyle{uogappendix}\UogSpacing}
+
+%%% (subsub)section styles
+\setsecheadstyle{\centering\normalfont}
+\setbeforesecskip{-1\onelineskip plus -1ex minus -.2ex}
+\setaftersecskip{1\onelineskip plus .2ex}
+\setsubsecheadstyle{\centering\normalfont}
+\setbeforesubsecskip{-1\onelineskip plus -1ex minus -.2ex}
+\setaftersubsecskip{1\onelineskip plus .2ex}
+
+%% Captions
+\captiontitlefont{\normalfont}% title font
+\precaption{\raggedright}% for Caption N
+\captiondelim{\newline}% newline
+\captionstyle{\raggedright}% for title
+\setlength{\belowcaptionskip}{\onelineskip}
+
+%% for REFERENCE section
+\renewcommand*{\bibname}{REFERENCES}
+\setlength{\bibitemsep}{\onelineskip}
+
+\renewcommand*{\biblistextra}{%
+  \setlength{\itemsep}{\bibitemsep}
+  \setlength{\labelwidth}{0pt}
+  \setlength{\leftmargin}{3em}% hanging indent
+  \setlength{\itemindent}{-\leftmargin}}
+
+\renewcommand*{\bibsection}{%
+  \UogSpacing
+  \chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}
+  \SingleSpacing}
+
+%% endnotes
+\renewcommand*{\notesname}{NOTES}
+\renewcommand*{\notedivision}{%
+  \UogSpacing
+  \chapter*{\notesname}
+  \addcontentsline{toc}{chapter}{\notesname}
+  \SingleSpacing}
+
+\continuousnotenums
+\renewcommand*{\notenuminnotes}[1]{\textsuperscript{#1}\space}
+\renewcommand{\noteinnotes}[1]{#1\\}
+\renewcommand*{\pagenotesubhead}[3]{}% no subheads
+
+%%% general macro for Abstract, etc., headings
+\newcommand*{\pretoctitle}[1]{{\clearpage\centering
+  \vspace*{-\topfiddle}#1\par}}
+%%% Start the ACKNOWLEDGEMENTS
+\newcommand{\uogacknowledgements}{\pretoctitle{ACKNOWLEDGEMENTS}}
+
+%%% Start the ABSTRACT
+\newcommand{\uogabstract}{%
+  \addtotextheight{-\botfiddle}%
+  \pretoctitle{ABSTRACT}
+  \vspace{3\onelineskip}
+  {\centering
+  \uogtitleupper \\[3\onelineskip]
+  \par}
+  {\noindent \uogauthor \hfill  Advisor:\\
+  \noindent University of Guelph, 2020 \hfill Graham W. Taylor
+  \par}
+  \vspace{3\onelineskip}
+  \input{Abstract/abstract}}
+
+\addtodef{\mainmatter}{\addtotextheight{\botfiddle}}
+
+%% make it easy to center any dedication
+\newcommand{\uogdedication}[1]{%
+  {\clearpage\mbox{}\vfill\centering #1 \par\vfill\clearpage}}
+
+%% for any headings after the tocloft and before the main body
+\newcommand{\prelimtitle}[1]{%
+  \pretoctitle{#1}\addcontentsline{toc}{chapter}{#1}}
+
+%%%% for the title page and approval page.
+% your title
+\newcommand{\settitle}[1]{\def\uogtitle{\large{}#1\normalsize}}
+\newcommand{\settitleupper}[1]{\def\uogtitleupper{\large{}#1\normalsize}}
+% you
+\newcommand{\setauthor}[1]{\def\uogauthor{#1}}
+% document type (e.g., thesis)
+\newcommand{\setdoctype}[1]{\def\uogdoctype{#1}}
+% possible degree
+\newcommand{\masters}{\def\uogdegree{Master of Applied Science}}
+\newcommand{\doctors}{\def\uogdegree{Doctor of Philosophy}}
+% defence date
+\newcommand{\setdefdate}[1]{\def\uogdefdate{#1}}
+% graduation date
+\newcommand{\setgraddate}[1]{\def\uoggraddate{#1}}
+% committe chair
+\newcommand{\setchair}[1]{\def\uogchair{#1, Chair}}
+% committe co-chairs
+\newcommand{\setchairs}[2]{%
+  \def\uogchair{#1, Co-chair \\ #2, Co-chair}}
+% other members (separated by \\s)
+\newcommand{\setmembers}[1]{\def\uogmembers{#1\par}}
+
+% Default settings
+%% Use them like this, and if you don’t change them you will
+%% get unacceptable title and/or approval pages
+\settitle{AN INCREDIBLE PIECE OF WORK OVER WHICH I HAVE STRUGGLED
+DAY AND NIGHT FOR FAR TOO LONG AND NOW IT IS OVER}
+\setauthor{A. N. Author}
+\setdoctype{Polemic}
+\masters % going for a Masters degree
+%% \doctors % going for a PhD
+\setdefdate{April 2018}
+\setgraddate{May 2021}
+% \setchair{A. Jones}
+% this one
+\setchairs{A. Jones}{B. Doe} % or this one
+\setmembers{C. Smith \\ D. Somebody \\ Some One Else \\ Yet Another}
+
+%%% typesets the TITLE page
+\newcommand{\thetitlepage}{{%
+  \clearpage
+  \thispagestyle{empty}
+  \centering
+  \vspace*{-\toptafiddle}
+  \uogtitle \\ by \\ \uogauthor
+  \vfill
+  {A \uogdoctype\ \\
+  Presented to \\
+  The University of Guelph\par}
+  \vfill
+  {\SingleSpace
+  In Partial Fulfillment \\
+  of the Requirements for the Degree \\
+  \uogdegree\par}
+  \vfill
+  Guelph, Ontario, Canada \\
+  © \uogauthor, \uoggraddate
+  \par
+  \enlargethispage{\bottafiddle}
+  \clearpage}}
+
+%%% typesets the APPROVAL page
+\newcommand{\approvalpage}{{%
+  \thispagestyle{empty}
+  \centering
+  \vspace*{-\toptafiddle}
+  \uogtitle \\ by \\ \uogauthor \\[3\onelineskip]
+  has been approved \\
+  \uogdefdate
+  \vfill
+  Graduate Supervisory Committee: \\[-0.5\onelineskip]
+  {\SingleSpacing
+  \uogchair \\
+  \uogmembers}
+  \vfill
+  ACCEPTED BY THE GRADUATE COLLEGE
+  \par
+  \enlargethispage{\bottafiddle}
+  \clearpage}}
+
+%%% put your biographical text in this environment
+%% \begin{biosketch} I’m a person who has accomplished .... \end{biosketch}
+\newenvironment{biosketch}{%
+  \pretoctitle{BIOGRAPHICAL SKETCH}\thispagestyle{empty}\SingleSpacing}%
+  {}
+
+%% use the uog chapterstyle and plain pagestyle
+\chapterstyle{uog}
+\pagestyle{plain}
+%%%%%%%%%%%%%%% end of *.sty file
+\endinput
+%%%%%%%%%%%%%%%
