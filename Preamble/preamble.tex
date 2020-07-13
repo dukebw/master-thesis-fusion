@@ -5,14 +5,23 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{bbm}  % for \mathbbm{1}
+\usepackage{bm}  % for more powerful bold symbols https://tex.stackexchange.com/a/596
+\usepackage{booktabs}
+\usepackage{pifont}  % for dingbats checkmark and xmark
 \usepackage{mathtools}
-\usepackage{hyperref}
 \usepackage{ifthen}
 \usepackage{keyval}
 \usepackage{placeins}
 \usepackage{tabu}
 \usepackage{tikz}
+\usepackage[normalem]{ulem}
 \usepackage{upgreek}
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
 \usetikzlibrary{arrows.meta, backgrounds, calc, fit, positioning}
 
@@ -121,6 +130,31 @@
 \newcommand{\binoppartBseq}{\ensuremath{{(\binoppartB_b)}_{b = 1}^B}}
 \newcommand{\tuckbranch}{\ensuremath{\T_r^{\q{}\v{}}}}
 \newcommand{\hadamardqv}{\ensuremath{N_r\mutanfeat{q} \odot M_r\mutanfeat{v}}}
+
+% SST
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\yvosvalG}{66.5}
+\newcommand{\inputvar}{\mathbf{X}}
+\newcommand{\outputvar}{\mathbf{Y}}
+\newcommand{\vidfeat}{\mathbf{T}}
+\newcommand{\objfeat}{\mathbf{R}}
+\newcommand{\pixel}{\mathbf{p}}
+\newcommand{\querytensor}{\mathbf{Q}}
+\newcommand{\keytensor}{\mathbf{K}}
+\newcommand{\embtensor}{\mathbf{E}}
+\newcommand{\valuetensor}{\mathbf{V}}
+\newcommand{\objmean}{\bm{\mu}_o}
+\newcommand{\objcov}{\bm{\Sigma}_o}
+\newcommand{\objctx}{\tilde{\bm{\mu}}_o}
+\newcommand{\viddim}{\real{}^{C\times T\times H\times W}}
+\newcommand{\softmax}{\mathtt{softmax}}
+\newcommand{\yesmark}{\ding{51}}
+\newcommand{\nomark}{\ding{55}}
+\newcommand{\J}{$\mathcal{J}$}
+\newcommand{\F}{$\mathcal{F}$}
+\renewcommand{\G}{$\mathcal{G}$}
+\newcommand{\JandF}{$\mathcal{J} \& \mathcal{F}$}
+
 
 % ********************************* Appendix ***********************************
 
