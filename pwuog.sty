@@ -9,6 +9,8 @@
 \endpwuog
 
 \usepackage{graphicx}  % for crest
+\usepackage{nomencl}  % list of symbols
+\makenomenclature
 \usepackage{url}
 \urlstyle{same}
 \setverbatimfont{\normalfont\rmfamily}% make verbatims use the body font
@@ -98,6 +100,9 @@
 \renewcommand*{\lotheadstart}{\vspace*{-\topfiddle}}
 \renewcommand*{\afterlottitle}{\thispagestyle{plain}%
   \par\nobreak {\normalfont Table \hfill Page}\par\nobreak}
+
+%%% The LoS
+\renewcommand{\nomname}{LIST OF SYMBOLS}
 
 %%%% Do the ToC
 \renewcommand{\contentsname}{TABLE OF CONTENTS}

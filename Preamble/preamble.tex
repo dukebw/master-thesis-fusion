@@ -1,4 +1,23 @@
 % **************************** Custom Packages ********************************
+\let\newfloat\undefined
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{keyval}
+\usepackage{placeins}
+\usepackage{tabu}
+\usepackage{tikz}
+\usepackage{upgreek}
+
+\usetikzlibrary{arrows.meta, backgrounds, calc, fit, positioning}
+
+\DeclareMathOperator*{\binop}{\oplus}
+
 
 % *************************** Graphics and figures *****************************
 
@@ -72,14 +91,36 @@
 %\renewcommand{\contentsname}{My Table of Contents}
 %\renewcommand{\listfigurename}{My List of Figures}
 %\renewcommand{\listtablename}{My List of Tables}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\matr}[1]{\mathbf{#1}}
+\newcommand{\tens}[1]{\mathcal{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vect}[2]{\vec{#1}^{(#2)}}
 
-
-% ******************************* Nomenclature *********************************
-
-% To change the name of the Nomenclature section, uncomment the following line
-
-%\renewcommand{\nomname}{Symbols}
-
+% Generalized hadamard product fusion
+\newcommand{\thetavec}{\ensuremath{\boldsymbol{\theta}}}
+\newcommand{\fusop}{\ensuremath{\mathcal{F_{\thetavec}}}}
+\newcommand{\mutanfeat}[1]{\ensuremath{\tilde{\mathbf{#1}}}}
+\newcommand{\m}{\ensuremath{\mathbf{m}}}
+\newcommand{\n}{\ensuremath{\mathbf{n}}}
+\newcommand{\q}{\ensuremath{\mathbf{q}}}
+\renewcommand{\v}{\ensuremath{\mathbf{v}}}
+\newcommand{\z}{\ensuremath{\mathbf{z}}}
+\newcommand{\A}{\ensuremath{A}}
+\newcommand{\B}{\ensuremath{B}}
+\renewcommand{\C}{\ensuremath{C}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\T}{\ensuremath{\mathcal{T}}}
+\newcommand{\Tfibre}{\ensuremath{\T_{i_1 \cdots i_{n - 1} \,:\, i_{n + 1} \cdots i_N}}}
+\newcommand{\TsizeIn}[1]{\ensuremath{I_1 \times \cdots \times I_{n - 1} \times #1 \times I_{n + 1} \times \cdots \times I_N}}
+\newcommand{\binopb}{\ensuremath{\sideset{}{_b}\binop}}
+\newcommand{\binopseq}{\ensuremath{{(\binopb)}_{b = 1}^B}}
+\newcommand{\binoppartition}{\ensuremath{{\{\tuckbranch\}}_b}}
+\newcommand{\binoppartB}{\ensuremath{\mathbb{B}}}
+\newcommand{\binoppartBseq}{\ensuremath{{(\binoppartB_b)}_{b = 1}^B}}
+\newcommand{\tuckbranch}{\ensuremath{\T_r^{\q{}\v{}}}}
+\newcommand{\hadamardqv}{\ensuremath{N_r\mutanfeat{q} \odot M_r\mutanfeat{v}}}
 
 % ********************************* Appendix ***********************************
 

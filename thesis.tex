@@ -7,6 +7,8 @@
 % \usepackage[altbullet]{lucidabr}  % Lucida bright
 \usepackage{pwuog}  % U of G thesis package
 
+\input{Nomenclature/nomenclature}
+
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
 \input{Preamble/preamble}
@@ -25,7 +27,6 @@
 % \include{Acknowledgement/acknowledgement}
 % \include{Declaration/declaration}
 \uogabstract
-\input{Abstract/abstract}
 % \uogdedication{\include{Dedication/dedication}}
 % \uogacknowledgments
 
@@ -37,6 +38,8 @@
 
 \listoffigures
 
+\printnomenclature[6em]
+
 %%% if you have more prelim sections, then
 %%% \clearpage
 %%% \pagestyle{plain}
@@ -47,10 +50,10 @@
 \pagestyle{uog}
 
 \include{Chapter1/chapter1}
-% \include{Chapter2/chapter2}
-% \include{Chapter3/chapter3}
-% \include{Chapter4/chapter4}
-% \include{Chapter5/chapter5}
+\include{Chapter2/chapter2}
+\include{Chapter3/chapter3}
+\include{Chapter4/chapter4}
+\include{Chapter5/chapter5}
 % \include{Chapter6/chapter6}
 
 
