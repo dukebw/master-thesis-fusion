@@ -167,7 +167,65 @@ reading.
 In natural language, we structure our sentences differently depending on which
 cues in our environment capture our focus~\cite{myachykov2005attention}.
 
-Drawing inspiration from the importance of attention in human perception,
+The deep learning community drew inspiration from the importance of attention
+in human perception, with early work using Boltzmann machines to combine foveal
+glimpses~\cite{larochelle2010learning}, and using foveated images for
+recognition and tracking~\cite{denil2012learning}.
+Graves used differentiable attention in the form of weights of a mixture of
+Gaussians over shifts for handwriting synthesis~\cite{graves2013generating}.
+Mnih et al.\ used non-differentiable attention trained with reinforcement
+learning to perform classification with reduced computation by observing only
+predicted regions of an image~\cite{mnih2014recurrent}.
+Bahdanau et al.\ introduced attention models for neural machine translation,
+by predicting a set of weights~$(\alpha_1, \dots, \alpha_t)$ over the sequence
+of hidden state vectors~$(h_1, \dots, h_t)$ over~$t$ timesteps output by an
+encoder-decoder architecture~\cite{cho2014ontheproperties}.
+
+In the following we describe mathematically the attention operator relevant to
+this thesis.
+We first introduce attention on sequences, i.e., 1D attention, before
+describing our generalization to spatial and spatiotemporal domains.
+
+
+\subsection{Scaled Dot-Product Attention}
+
+Suppose we are given two matrices~$Q$ and~$K$ in~$\mathbb{R}^{t_1 \times c}$
+and~$\mathbb{R}^{t_2\times c}$, respectively, representing input
+sequences~$Q \equiv (q_1, \dots, k_{t_1})$ and~$K \equiv (k_1, \dots, k_{t_2})$
+of~$t_i$ vectors~$q_t$ and~$k_t$, for example sequences of word embeddings.
+We wish to compute an output sequence~$Y \equiv (y_1, \dots, y_{t_1})$ that is
+a linear combination of a third sequence~$V \equiv (v_1, \dots, v_{t_2})$ whose
+weights in the linear combination depend on the affinity between pairs of
+vectors in~$Q$ and~$K$.
+
+In their work introducing Transformers for NLP tasks, Vaswani et
+al.~\cite{vaswani2017attention} interpreted attention in the framework of data
+retrieval, and we follow their perspective here.
+An attention layer retrieves vector elements of the value~$V$ based on the
+similarity of a query vector element from~$Q$ with the key vector from~$K$ that
+corresponds to the value.
+From our perspective, attention is a method for using query~$Q$ to perform a
+lookup in the values~$V$, indexed by the key~$K$.
+
+In particular, output vectors~$y_t \in \mathbb{R}^c$ are a linear combination
+of all value vectors~$v_i$, with the weighting of~$v_i$ in the linear
+combination dependent on the similarity of query vector~$q_t$ with key
+vector~$k_i$.
+At this point in our definition of attention we are faced with a decision about
+how we should quantify the similarity between query vector~$q_t$ and key
+vector~$k_i$.
+
+
+\subsection{Multi-Headed Attention}
+
+
+\subsection{Positional Encoding}
+
+
+\subsection{Sparse Attention}
+
+
+\subsection{Transformers}
 
 
 \section{Fusion}
