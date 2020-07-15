@@ -214,9 +214,54 @@ vector~$k_i$.
 At this point in our definition of attention we are faced with a decision about
 how we should quantify the similarity between query vector~$q_t$ and key
 vector~$k_i$.
+Vaswani et al. refer to the similarity between query and key as attention's
+``compatibility function''.
+One possible compatibility function would be the ``additive alignment model''
+used by Bahdanau et al.~\cite{bahdanau2015neuralmt}, which computes
+compatibility by concatenating query and key and using this concatenated vector
+as input to a feedforward neural network.
+Another possibility is to use a dot-product compatibility function, which
+computes the compatibility between query and key as their dot product.
+
+The dot-product compatibility function has similar theoretical complexity to
+additive compatibility, but has the advantage of being able to compute all
+pairwise query-key compatibilities in a single matrix
+multiplication~$QK^\intercal$.
+Matrix multiplication is highly optimized on modern compute hardware, and
+therefore dot-product attention runs faster than additive attention out of the
+box.
+For this reason, we use dot product attention in our work.
+
+Our overall attention function is therefore
+
+\begin{equation}
+\mathtt{Attention}\big(Q, K, V\big) = \softmax{}\left(\frac{QK^\intercal}{\sqrt{c}}\right) V.
+\label{eqn:background:attndefn}
+\end{equation}
+
+In Equation~\ref{eqn:background:attndefn} we scale by the squareroot of the
+dimension of query and key vectors~$\sqrt{c}$ in the argument to softmax.
+The intuition behind this scaled dot product attention, as given by Vaswani et
+al., is that if scalar elements of query and key vector were drawn from
+independent zero-mean, unit-variance distributions, then the magnitude of the
+query-key dot product grows like the squareroot of their dimension.
+Therefore for query-key combinations whose dimensions are large, without
+scaling it is likely that the softmax would saturate early in training, causing
+vanishing gradients.
 
 
 \subsection{Multi-Headed Attention}
+
+Building on scaled dot-product attention, multi-headed attention is another
+technique to improve the capacity while reducing the computation of attention.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/multihead-attention.pdf}
+\caption{Multi-headed attention. Adapted from Vaswani et
+         al.~\cite{vaswani2017attention}.}
+\label{fig:background:multiheadattn}
+\end{figure}
 
 
 \subsection{Positional Encoding}
