@@ -56,7 +56,7 @@ we have $m, n \in \{-1, 0, 1\}$.
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/cnn.pdf}
+\includegraphics[width=0.8\textwidth]{Figures/cnn.pdf}
 \caption{Two subsequent layers of a convolutional neural network.}
 \label{fig:cnn}
 \end{figure}
@@ -262,8 +262,8 @@ We illustrate multi-head in Figure~\ref{fig:background:multiheadattn}.
 \begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/multihead-attention.pdf}
-\caption{Multi-head attention. Adapted from Vaswani et
-         al.~\cite{vaswani2017attention}.}
+\caption{Multi-head attention.
+         Adapted from Vaswani et al.~\cite{vaswani2017attention}.}
 \label{fig:background:multiheadattn}
 \end{figure}
 
@@ -305,6 +305,38 @@ sequence-to-sequence networks~\cite{gehring2017convolutional}, in Transformers
 Vaswani et al.~\cite{vaswani2017attention} introduced positional encodings to
 attention.
 
+Positional encoding means adding to each key vector another vector with encoded
+positional information.
+Therefore with positional encoding Equation~\ref{eqn:background:attndefn} becomes
+
+\begin{equation}
+\mathtt{Attention}_E\big(Q, K, V\big) = \softmax{}\left(\frac{Q(K + E)^\intercal}{\sqrt{c}}\right) V,
+\label{eqn:background:posenc-attn}
+\end{equation}
+
+where positional encoding matrix~$E \in \mathbb{R}^{t_2\times c}$ contains a
+unique positional encoding~$c$-vector for each of the~$t_2$ elements in our
+queried sequence.
+
+We consider positional encodings made up of learned embeddings, and sinusoidal
+positional encodings.
+In the case of learned embeddings, the positional encoding matrix~$E$ is
+initialized at the beginning of training and updated along with the rest of the
+model parameters using backpropagation.
+Sinusoidal positional encodings, on the other hand, are not learned and instead
+are fixed to a vector of values from a set of sinusoids of varying period
+evaluated at the timestep, or sequence element,~$t$.
+In particular,
+
+\begin{equation}
+\begin{split}
+E_{t, 2i} &= \sin\left(\frac{t}{\tau^{2i/c}}\right) \\
+E_{t, 2i + 1} &= \cos\left(\frac{t}{\tau^{2i/c}}\right)
+\end{split}
+\end{equation}
+
+where~$\tau$ is a fixed constant, for example Vaswani et al. fixed~$\tau$
+to~\num{10000}.
 
 % \subsection{Sparse Attention}
 
@@ -313,3 +345,32 @@ attention.
 
 
 \section{Fusion}
+
+We refer to a topic specific to multimodal applications as fusion.
+Following Lahat et al.'s definition~\cite{Lahat2015MultimodalDF}, multimodal
+applications involve observing a single phenomenon using data collected from
+multiple distinct sensors.
+We refer to the raw stream of data collected from each sensor as a modality.
+For example, we could treat a video as a multimodal application by making use
+of RGB video frames, extracted optical flow and audio as input.
+Autonomous driving also makes use of multimodal fusion to combine information
+collected from multiple sensors, including LiDAR, radar, and camera
+sensors~\cite{Feng2019DeepMO}.
+
+Multimodal fusion refers to the technique by which information extracted from
+these multiple raw data streams is combined.
+Using fusion holds the promise of producing superior predictions by leveraging
+the complementary information contained in separate data streams.
+As an example proposed by Kazakos et al.~\cite{kazakos2019TBN}, consider an
+egocentric action recognition system that is given as input a video of a person
+at a kitchen sink.
+When the sink tap is occluded, the audio signal provides a discriminative cue
+for the actions ``turn tap on'' and ``turn tap off''.
+On the other hand, video input would be more useful for predicting ``wiping
+hands'', which has no discriminative auditory signal.
+Hence, in this case multiple sensors provide the multimodal action recognition
+system with complementary inputs leading to superior predictions.
+
+We can categorize multimodal fusion architectures into early and late fusion.
+
+Fusion operators themselves have varying designs.
