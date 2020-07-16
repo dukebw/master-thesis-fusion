@@ -250,27 +250,66 @@ scaling it is likely that the softmax would saturate early in training, causing
 vanishing gradients.
 
 
-\subsection{Multi-Headed Attention}
+\subsection{Multi-Head Attention}
 
-Building on scaled dot-product attention, multi-headed attention is another
+Building on scaled dot-product attention, multi-head attention is another
 technique to improve the capacity while reducing the computation of attention.
+Multi-head attention breaks the attention computation up into multiple
+attention computations determined by the ``number of attention heads''
+hyperparameter~$n_h$.
+We illustrate multi-head in Figure~\ref{fig:background:multiheadattn}.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/multihead-attention.pdf}
-\caption{Multi-headed attention. Adapted from Vaswani et
+\caption{Multi-head attention. Adapted from Vaswani et
          al.~\cite{vaswani2017attention}.}
 \label{fig:background:multiheadattn}
 \end{figure}
 
+A single attention operator as given by Equation~\ref{eqn:background:attndefn}
+would have a theoretical complexity proportional to the query and key
+dimension~$c$.
+In multi-head attention, we project query, key and value vectors by learned
+weights~$W^Q_i \in \mathbb{R}^{c\times c/n_h}$,
+$W^K_i \in \mathbb{R}^{c\times c/n_h}$,
+and~$W^V_i \in \mathbb{R}^{c\times c/n_h}$, respectively, where~$i$
+ranges from~$1$ to~$n_h$.
+We then perform the~$n_h$ attention operations on the projected query, key and
+value vectors.
+Hence, multi-head attention on the projected vectors has the same theoretical
+complexity as a single attention operator on the original query, key and value
+vectors.
+Intuitively, multi-head attention has the advantage that each~$i$th head can
+specialize in learning to attend to particular features corresponding to the
+affine subspace spanned by columns of the~$i$th projection weight matrix.
+
+We concatenate outputs of the multi-head attention layers and feed the
+resulting~$c$-vector into an output linear layer to produce the output~$Y$.
+This final concatenation and projection step aggregates information from the
+multiple attention heads, for example to combine information gathered by
+different attention heads ``looking at'' different regions of an image.
+
 
 \subsection{Positional Encoding}
 
+Up until this point in our description of attention, our attention operators
+are unable to incorporate positional information, since query and key vectors
+interact pairwise with each other.
+Whlie recurrent networks have a positional inductive bias, both convolutional
+and attention networks are translation equivariant and require injection of
+position information to perform position-dependent tasks such as
+sequence-to-sequence learning.
+Following Gehring et al.'s use of positional encodings for convolutional
+sequence-to-sequence networks~\cite{gehring2017convolutional}, in Transformers
+Vaswani et al.~\cite{vaswani2017attention} introduced positional encodings to
+attention.
 
-\subsection{Sparse Attention}
+
+% \subsection{Sparse Attention}
 
 
-\subsection{Transformers}
+% \subsection{Transformers}
 
 
 \section{Fusion}
