@@ -338,6 +338,8 @@ E_{t, 2i + 1} &= \cos\left(\frac{t}{\tau^{2i/c}}\right)
 where~$\tau$ is a fixed constant, for example Vaswani et al. fixed~$\tau$
 to~\num{10000}.
 
+% TODO(brendan): attention in VQA and VOS
+
 % \subsection{Sparse Attention}
 
 
@@ -373,5 +375,34 @@ system with complementary inputs leading to superior predictions.
 
 Traditional multimodal fusion researcher categorize multimodal fusion
 techniques into early and late fusion~\cite{ramachandram2017deepmultimodal}.
+Early fusion involves combining modalities at the data level, which proves
+challenging particularly for data drawn from sensors that may have different
+sampling rates or resolutions.
+Late fusion became popular in the early 2000s with the rise of ensemble
+classifiers~\cite{kuncheva2004combining}.
+Compared with early fusion, late fusion proves easier to implement, while
+removing the need to retrain models pretrained on each modality, since late
+fusion combines modalities at the prediction level.
 
-Fusion operators themselves have varying designs.
+Deep learning introduced a third category of multimodal fusion, ``intermediate
+fusion'', made possible due to deep learning models' hierarchical
+representations~\cite{ramachandram2017deepmultimodal}.
+Since deep learning models have many layers, which collectively output a
+hierarchical feature representation, deep models offer a flexible method for
+performing fusion since representations from different modalities can be fused
+at different levels of the representation hierarchy.
+In deep multimodal models, separate modality-specific encoders, which could be
+for example CNNs or RNNs, first extract representations from each modality
+independently.
+A ``fusion operator'' then combines the modality-specific representations into
+a shared representation.
+
+Fusion operators themselves have varying designs. A naive approach would be to
+concatenate the representations from different modalities and feed their
+concatenation into a feedforward neural network to make a prediction.
+However, this simple concatenation may lead to overfitting, and features
+extracted from different modalities may be distributed differently so as to
+make taking their affine combination an unfavourable fusion strategy.
+
+In general, the subject of designing fusion operators that form effective
+priors for combining modalities for a given task is a topic of active research.
