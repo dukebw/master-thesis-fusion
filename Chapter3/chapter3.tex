@@ -80,7 +80,7 @@ Current research in multimodal fusion for VQA focuses
 on performance improvements by approximating a bilinear product between a
 feature vector~$\q$ extracted from the question, and a feature vector~$\v$
 extracted from the
-image~\cite{DBLP:conf/emnlp/FukuiPYRDR16, Kim2017, ben2017mutan}.  The feature
+image~\cite{fukui2016multimodalCB, Kim2017, ben2017mutan}.  The feature
 vectors $\q$ and $\v$ can be produced by pre-trained feature extraction methods
 specific to encoding information from the sentence and image modalities into
 vector representations.
@@ -104,7 +104,7 @@ the answer~$y$ conditional on~$\q$ and~$\v$:
 \label{eqn:general-fusion-op}
 \end{equation}
 
-The methods of~\cite{DBLP:conf/emnlp/FukuiPYRDR16},
+The methods of~\cite{fukui2016multimodalCB},
 \cite{Kim2017} and~\cite{ben2017mutan} all propose that in the multimodal
 application of VQA, the outer product of the feature
 vector~$\q$ extracted from the question, with the feature vector~$\v$ extracted
@@ -113,7 +113,7 @@ straightforward concatenation, element-wise product, or element-wise sum. These 
 to the outer product~$\q \otimes \v$.
 
 The Multimodal Compact Bilinear Pooling (MCB) method
-of~\cite{DBLP:conf/emnlp/FukuiPYRDR16} uses the Compact Bilinear Pooling
+of~\cite{fukui2016multimodalCB} uses the Compact Bilinear Pooling
 method of~\cite{gao2016compact} to approximate a bilinear interaction between
 $\q$ and $\v$. In the case of MCB, the fusion operator~$\fusop$ consists of
 projecting~$\q$ and~$\v$ using Count
@@ -123,7 +123,7 @@ the frequency domain.
 
 The MCB method makes use of the fact that the Count Sketch of the outer
 product~$\Psi(\q \otimes \v \,, h \,, s)$, where~$h$ and~$s$ are uniform random
-variables as described in~\cite{DBLP:conf/emnlp/FukuiPYRDR16}, is equal in
+variables as described in~\cite{fukui2016multimodalCB}, is equal in
 expectation to the convolution~$\Psi(\q \,, h \,, s) * \Psi(\v \,, h \,, s)$ of
 the question and visual feature representations,
 i.e.,
@@ -717,7 +717,7 @@ find that our best model achieves an absolute percentage point improvement
 of~$1.1\%$ over the strong baseline of~\cite{ben2017mutan}. We note that the
 improvement in OpenEnded accuracy of our model on the test-dev set is
 significantly larger in magnitude when compared to the improvement
-of~\cite{ben2017mutan} over~\cite{DBLP:conf/emnlp/FukuiPYRDR16}. We attribute
+of~\cite{ben2017mutan} over~\cite{fukui2016multimodalCB}. We attribute
 our relatively large improvement in accuracy to the introduction of
 nonlinearities in the fusion operator. The nonlinearities both allow the fusion
 operator to ensemble nonlinear functions of the input features (via
@@ -747,7 +747,7 @@ product, as in MLB\@.
 & \multicolumn{4}{c}{\textbf{VQA~2.0 test-dev}} & & \multicolumn{4}{c}{\textbf{VQA~2.0 test-std}} \\
 \textbf{Model} & All & Y/N & Number & Other & & All & Y/N & Number & Other \\
 \midrule
-MCB~\cite{DBLP:conf/emnlp/FukuiPYRDR16} as reported in~\cite{goyal2017making} & 61.96 & 78.41 & 38.81 & 53.23 & & 62.27 & 78.82 & 38.28 & 53.36 \\
+MCB~\cite{fukui2016multimodalCB} as reported in~\cite{goyal2017making} & 61.96 & 78.41 & 38.81 & 53.23 & & 62.27 & 78.82 & 38.28 & 53.36 \\
 MUTAN~\cite{ben2017mutan} as trained and evaluated by us & 63.13 & 80.7 & 39.4 & 53.55 & & --- & --- & --- & --- \\
 ResNet features~$7 \times 7$ (single)~\cite{teney2017tips} & 62.07 & 79.20 & 39.46 & 52.62 & & 62.27 & 79.32 & 39.77 & 52.59 \\
 Bottom-up attention image features, adaptive~$K$ (single)~\cite{teney2017tips} & 65.32 & 81.82 & 44.21 & 56.05 & & 65.67 & 82.20 & 43.90 & 56.26 \\

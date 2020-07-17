@@ -6,6 +6,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bbm}  % for \mathbbm{1}
+\usepackage{bibentry}
+\nobibliography*
 \usepackage{bm}  % for more powerful bold symbols https://tex.stackexchange.com/a/596
 \usepackage{booktabs}
 \usepackage{breakcites}
@@ -108,9 +110,9 @@
 %\renewcommand{\listtablename}{My List of Tables}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-\newcommand{\matr}[1]{\mathbf{#1}}
+\newcommand{\matr}[1]{#1}
 \newcommand{\tens}[1]{\mathcal{#1}}
-\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{#1}
 \newcommand{\vect}[2]{\vec{#1}^{(#2)}}
 
 % Generalized hadamard product fusion

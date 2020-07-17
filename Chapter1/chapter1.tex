@@ -1,21 +1,61 @@
 \chapter{BACKGROUND}
 
-We present the shared prerequisites to our articles.
+Our work concerns the investigation of complex computer vision problems, and in
+one article the relation of vision and natural language, using the method of
+extracting deep hierarchical representations known as deep learning.
+Underpinning the methods in our articles are a set of deep learning
+architectures, each of which constitutes its own active topic of research.
+After briefly describing deep learning as a whole, we introduce these
+subcomponents underlying our models, in order to provide additional background
+context before presenting our articles.
 
 
 \section{Deep Learning}
 
-Deep learning is a subfield of machine learning that uses neural
-networks.
+Deep learning is a subfield of machine learning that uses a hierarchy of neural
+network layers for representation learning~\cite{lecun2015deeplearning}.
+Representation learning, then, means to extract from raw data meaningful
+information in the form of vectors or tensors of real-valued numbers, called
+``features''.
+The defining quality of deep learning is its learning of a deep hierarchy of
+representations using backpropagation~\cite{rumelhart1988learningreps}, which
+is the term used by the deep learning community for reverse-mode automatic
+differentation~\cite{griewank2008evaluatingderivatives}.
+Thanks to breakthroughs in computation, data, and algorithms, in recent years
+deep learning methods have made progress in domains that had previously proven
+challenging for traditional machine learning approaches.
+Today, deep learning is a top-performing approach for solving complex
+machine-learning problems including image and speech recognition, language
+translation, and natural language understanding topics such as question
+answering~\cite{lecun2015deeplearning}.
 
-Feedforward neural networks (FNNs) can be expressed as
-$\vec{h}_i = f_i({\matr{W}_i}^\intercal \vec{h}_{i - 1} + \vec{b}_i)$, where
-$\vec{h}_i$ is a hidden unit, $\matr{W}_i$ is the weight matrix of layer~$i$ of
-the neural network, $\vec{b}_i$ is a bias vector and $f_i$ is a non-linearity
-or link function, such as the sigmoid function $f(x) = 1/(1 + e^{-x})$.
+We introduce feedforward neural networks (FNNs) as a simple yet concrete
+example of a deep learning model.
+FNNs can be expressed as a sequence of hidden layers
+\begin{equation}
+\vec{h}_i = f_i({\matr{W}_i}^\intercal \vec{h}_{i - 1} + \vec{b}_i),
+\label{eqn:background:fnn}
+\end{equation}
+where $\vec{h}_i$ is a hidden unit, $\matr{W}_i$ is the weight matrix of
+layer~$i$ of the neural network, $\vec{b}_i$ is a bias vector and $f_i$ is a
+non-linearity or link function, such as the sigmoid
+function~$f(x) = 1/(1 + e^{-x})$ or ReLU~$f(x) = \max(x, 0)$.
+We may consider~$h_0$ as the input feature vector to the FNN, and~$h_L$ as the
+output prediction for an FNN with~$L$ layers.
+As with other deep models, the representation capacity of FNNs can be tuned by
+increasing the depth of the network, i.e., the total number of layers of the
+form in Equation~\ref{eqn:background:fnn}, or by increasing the width of each
+of the layers~$i$, i.e., the dimension of the hidden
+representation~$\vec{h}_i$.
+
+In our articles we make use of more complex neural network architectures than
+FNNs, which may include FNNs as a subcomponent.
+In particular we focus on convolutional neural networks, recurrent neural
+networks, attention networks, and fusion operators, all of which we describe
+below.
 
 
-\section{Convolutional Neural Networks (CNNs)}
+\section{Convolutional Neural Networks}
 
 Convolutional neural networks (CNNs) are a type of neural network designed to
 model data that is arranged in a grid, as the pixels in an image are arranged.
@@ -56,7 +96,7 @@ we have $m, n \in \{-1, 0, 1\}$.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{Figures/cnn.pdf}
+\includegraphics[width=1.0\textwidth]{Figures/cnn.pdf}
 \caption{Two subsequent layers of a convolutional neural network.}
 \label{fig:cnn}
 \end{figure}
@@ -83,7 +123,7 @@ with a feature representation of the question, in order to predict an answer to
 the posed question conditioned on the image.
 
 
-\section{Recurrent Neural Networks (RNNs)}
+\section{Recurrent Neural Networks}
 
 Like CNNs, Recurrent Neural Networks~(RNNs)~\cite{rumelhart1986learning} are a
 type of neural network model that has been invented using prior knowledge of
@@ -406,5 +446,13 @@ make taking their affine combination an unfavourable fusion strategy.
 
 In general, the subject of designing fusion operators that form effective
 priors for combining modalities for a given task is a topic of active research.
-Standard fusion operators appear, for example, in the Visual Question Answering
-(VQA)
+Fusion operators are an important component, for example, in the visual
+question answering (VQA)~\cite{fukui2016multimodalCB} and image hashtag
+prediction~\cite{durand2020learninguserreps} domains.
+Standard fusion operators include elementwise sum and product, and
+concatenation.
+Examples of research into more complex fusion operators include
+MCB~\cite{fukui2016multimodalCB}, MUTAN~\cite{ben2017mutan},
+GLU~\cite{dauphin2017languagemodeling} and TIRG~\cite{vo2019composing}.
+Designing a search space over multimodal fusion operators for VQA is the topic
+of our first article.
