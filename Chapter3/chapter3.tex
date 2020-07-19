@@ -362,10 +362,10 @@ features are projected onto before applying a linear prediction layer~$W_o$.
 
 Therefore, MUTAN is a special case of the Tucker decomposition in
 Equation~\ref{eqn:tucker-defn}, as given by Equation~\ref{eqn:tucker-mutan},
-where~$\mathbf{y}$ is the prediction output of the fusion operator:
+where~$y$ is the prediction output of the fusion operator:
 
 \begin{equation}
-        \mathbf{y} = \T_c \times_1
+        y = \T_c \times_1
                 \qtWq \times_2
                 \vtWv \times_3
                 W_o
@@ -747,16 +747,20 @@ product, as in MLB\@.
 & \multicolumn{4}{c}{\textbf{VQA~2.0 test-dev}} & & \multicolumn{4}{c}{\textbf{VQA~2.0 test-std}} \\
 \textbf{Model} & All & Y/N & Number & Other & & All & Y/N & Number & Other \\
 \midrule
-MCB~\cite{fukui2016multimodalCB} as reported in~\cite{goyal2017making} & 61.96 & 78.41 & 38.81 & 53.23 & & 62.27 & 78.82 & 38.28 & 53.36 \\
-MUTAN~\cite{ben2017mutan} as trained and evaluated by us & 63.13 & 80.7 & 39.4 & 53.55 & & --- & --- & --- & --- \\
-ResNet features~$7 \times 7$ (single)~\cite{teney2017tips} & 62.07 & 79.20 & 39.46 & 52.62 & & 62.27 & 79.32 & 39.77 & 52.59 \\
-Bottom-up attention image features, adaptive~$K$ (single)~\cite{teney2017tips} & 65.32 & 81.82 & 44.21 & 56.05 & & 65.67 & 82.20 & 43.90 & 56.26 \\
+MCB\footnotemark & 61.96 & 78.41 & 38.81 & 53.23 & & 62.27 & 78.82 & 38.28 & 53.36 \\
+MUTAN\footnotemark & 63.13 & 80.7 & 39.4 & 53.55 & & --- & --- & --- & --- \\
+ResNet\footnotemark & 62.07 & 79.20 & 39.46 & 52.62 & & 62.27 & 79.32 & 39.77 & 52.59 \\
+Bottom-up\footnotemark & 65.32 & 81.82 & 44.21 & 56.05 & & 65.67 & 82.20 & 43.90 & 56.26 \\
 \midrule
 Ours (single) & 64.22 & 81.19 & 40.95 & 55.05 & & 64.64 & 81.62 & 41.19 & 55.22 \\
 \midrule
 \end{tabular}
 \label{tab:sota-comparison}
 \end{table*}
+\footnotetext[1]{\cite{fukui2016multimodalCB} as reported in~\cite{goyal2017making}}
+\footnotetext[2]{\cite{ben2017mutan} as trained and evaluated by us}
+\footnotetext[3]{ResNet features~$7 \times 7$ (single)~\cite{teney2017tips}}
+\footnotetext[4]{Bottom-up attention image features, adaptive~$K$ (single)~\cite{teney2017tips}}
 
 
 \section{Conclusion and Future Work}

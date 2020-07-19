@@ -21,12 +21,12 @@ The defining quality of deep learning is its learning of a deep hierarchy of
 representations using backpropagation~\cite{rumelhart1988learningreps}, which
 is the term used by the deep learning community for reverse-mode automatic
 differentation~\cite{griewank2008evaluatingderivatives}.
-Thanks to breakthroughs in computation, data, and algorithms, in recent years
+Thanks to breakthroughs in computation, data and algorithms, in recent years
 deep learning methods have made progress in domains that had previously proven
 challenging for traditional machine learning approaches.
 Today, deep learning is a top-performing approach for solving complex
 machine-learning problems including image and speech recognition, language
-translation, and natural language understanding topics such as question
+translation and natural language understanding topics such as question
 answering~\cite{lecun2015deeplearning}.
 
 We introduce feedforward neural networks (FNNs) as a simple yet concrete
@@ -64,10 +64,10 @@ previous layer via a matrix multiplication, neurons in a layer of a CNN are
 only locally connected to neurons in the previous layer.
 
 We explain the meaning of ``locally connected''. We assume that a given layer
-has a 3-D tensor $\tens{V}$ as input, where in addition to the single dimension
+has a 3D tensor $\tens{V}$ as input, where in addition to the single dimension
 of the hidden unit vector $\vec{h}$ of FNNs, there are two extra spatial
 dimensions (e.g. $x$ and $y$ dimensions of an image).  A CNN connects the input
-tensor $\tens{V}$ to an output tensor $\tens{Z}$ through a 4-D tensor
+tensor $\tens{V}$ to an output tensor $\tens{Z}$ through a 4D tensor
 $\tens{K}$ called a ``kernel'', which contains the CNN's learned parameters.
 
 The kernel has one dimension matching the ``channels'' (the third, i.e.\
@@ -111,8 +111,8 @@ CNNs generalize well in comparison to FNNs on visual data, since the number of
 parameters are dramatically reduced compared with an equivalent FNN by sharing
 parameters in the spatial dimensions~\cite{lecun-89}. This is an example of
 improving generalization of neural networks by using prior knowledge (i.e.\ in
-this case, the spatial invariance of image data) when constructing a model for
-a given type of data.
+this case, the spatial equivariance of image data) when constructing a model
+for a given type of data.
 
 In the case of the visual question-answering task, we make use of a particular
 CNN architecture called a ResNet~\cite{he2016deep} that has~\num{152} layers.
@@ -126,7 +126,7 @@ the posed question conditioned on the image.
 \section{Recurrent Neural Networks}
 
 Like CNNs, Recurrent Neural Networks~(RNNs)~\cite{rumelhart1986learning} are a
-type of neural network model that has been invented using prior knowledge of
+type of neural network model that has been designed using prior knowledge of
 the type of data distribution relevant to the given task.
 In particular, RNNs are designed to work on sequential data of arbitrary
 length, such as time-series data including stock prices over time, or language
@@ -183,16 +183,16 @@ Equation~\ref{eqn:gru-update} is a linear interpolation controlled by the
 $\vect{h}{t - 1}$ and the would-be current
 hidden-state~$\vect{\widetilde{h}}{t}$.
 
-Regardless of the specific details of GRUs, the relevance to this paper is that
-skip-thought vectors use an RNN as an encoder, which encodes the sequence
-of words in a sentence into a feature representation corresponding to that
-sentence, where the feature representation is a vector of real-valued numbers.
+Skip-thought vectors use an RNN as an encoder, which encodes the sequence of
+words in a sentence into a feature representation corresponding to that
+sentence.
 
-In this work, skip-thought vectors are used to extract a feature representation
-from the question, which is coupled with the feature representation extracted
-from the image as a dual input to a multi-modal fusion operator, which takes
-the two feature-representation inputs and produces an output prediction as to
-the answer to the given question, conditioned on the image.
+In our first article, we use skip-thought vectors to extract a feature
+representation from the question, which is coupled with the feature
+representation extracted from the image as a dual input to a multi-modal fusion
+operator, which takes the two feature-representation inputs and produces an
+output prediction as to the answer to the given question, conditioned on the
+image.
 
 
 \section{Attention}
@@ -224,7 +224,8 @@ encoder-decoder architecture~\cite{cho2014ontheproperties}.
 In the following we describe mathematically the attention operator relevant to
 this thesis.
 We first introduce attention on sequences, i.e., 1D attention, before
-describing our generalization to spatial and spatiotemporal domains.
+describing our generalization to the spatiotemporal domain in our second
+article.
 
 
 \subsection{Scaled Dot-Product Attention}
@@ -254,7 +255,7 @@ vector~$k_i$.
 At this point in our definition of attention we are faced with a decision about
 how we should quantify the similarity between query vector~$q_t$ and key
 vector~$k_i$.
-Vaswani et al. refer to the similarity between query and key as attention's
+Vaswani et al.\ refer to the similarity between query and key as attention's
 ``compatibility function''.
 One possible compatibility function would be the ``additive alignment model''
 used by Bahdanau et al.~\cite{bahdanau2015neuralmt}, which computes
@@ -375,7 +376,7 @@ E_{t, 2i + 1} &= \cos\left(\frac{t}{\tau^{2i/c}}\right)
 \end{split}
 \end{equation}
 
-where~$\tau$ is a fixed constant, for example Vaswani et al. fixed~$\tau$
+where~$\tau$ is a fixed constant, for example Vaswani et al.\ fixed~$\tau$
 to~\num{10000}.
 
 % TODO(brendan): attention in VQA and VOS

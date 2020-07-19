@@ -379,7 +379,7 @@ operator shown in Figure~\ref{fig:expandmaskproject}.
 % Create a diagram that parallels the Vaswani et al. architecture diagram.
 \begin{figure*}
 \centering
-\includegraphics[scale=0.4]{Figures/aina_encoder}
+\includegraphics[width=1.0\textwidth]{Figures/aina_encoder.pdf}
 \caption{SST encoder architecture.
          The input to the SST encoder is a
          video~$\in\real{}^{3\times T \times H\times W}$, where~$T$ is the
@@ -437,7 +437,7 @@ only on the prior knowledge given in the reference frame.
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.18]{Figures/expand-mask-project}
+\includegraphics[width=0.9\textwidth]{Figures/expand-mask-project.pdf}
 \caption{Expand-Mask-Project operator.
          We use an RGB image to visualize feature maps for clarity.
          The actual Expand-Mask-Project operator uses downsampled object masks
@@ -517,7 +517,7 @@ estimate.
 % TODO(brendan): use vidfeat and objfeat notation should be in the figure.
 \begin{figure*}
 \centering
-\includegraphics[scale=0.4]{Figures/aina_decoder}
+\includegraphics[width=1.0\textwidth]{Figures/aina_decoder.pdf}
 \caption{SST decoder architecture.
          Decoder inputs are a generic video representation
          tensor~$\vidfeat{}\in\real{}^{C\times K \times H'\times W'}$ (top
@@ -648,7 +648,7 @@ define~$\Phi : \real{}^{S\times (T + H + W - 2)} \times \real{}^{S\times C} \rig
 as
 
 \begin{equation}
-        {\Phi\big(\mathbf{A}, \valuetensor{}\big)}_\pixel{} =  {\mathbf{A}_\pixel{}}^\intercal \Psi\big(\valuetensor{}, \pixel{}\big).
+        {\Phi\big(A, \valuetensor{}\big)}_\pixel{} =  {A_\pixel{}}^\intercal \Psi\big(\valuetensor{}, \pixel{}\big).
 \end{equation}
 
 Note that we implemented our grid attention operator in place, so there is no
@@ -656,7 +656,7 @@ overhead from indexing tensors by~$\pixel{}$.
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.25]{Figures/gridattention}
+\includegraphics[width=0.9\textwidth]{Figures/gridattention.pdf}
 \caption{Interaction propagation from a given pixel via grid attention.}
 \label{fig:ainadecoder}
 \end{figure}
@@ -802,8 +802,8 @@ define object appearance models as
 
 \begin{subequations}
 \begin{align}
-        \objmean{} &= \frac{\sum_\pixel{}\alpha_{\pixel{}, o} \mathbf{x}_\pixel{}}{\sum_\pixel{}\alpha_{\pixel{}, o}} \\
-        \objcov{} &= \frac{\sum_\pixel{}\alpha_{\pixel{}, o} \mathrm{diag}\{{(\mathbf{x}_p - \objmean{})}^2 + \mathbf{r}_k\}}{\sum_\pixel{}\alpha_{\pixel{}, o}}
+        \objmean{} &= \frac{\sum_\pixel{}\alpha_{\pixel{}, o} x_\pixel{}}{\sum_\pixel{}\alpha_{\pixel{}, o}} \\
+        \objcov{} &= \frac{\sum_\pixel{}\alpha_{\pixel{}, o} \mathrm{diag}\{{(x_p - \objmean{})}^2 + r_k\}}{\sum_\pixel{}\alpha_{\pixel{}, o}}
 \end{align}
 \label{eqn:appearancemodel}
 \end{subequations}
@@ -811,7 +811,7 @@ define object appearance models as
 where~$o$ indexes objects in the video,~$\pixel{}$ indexes pixels in the
 video,~$\alpha_{\pixel{}, o} \in \{0, 1\}$ indicates whether a given
 pixel~$\pixel{}$ in the reference frame belongs to object~$o$,
-and~$\mathbf{r}_k$ are model parameters.
+and~$r_k$ are model parameters.
 
 Since~$\alpha_{\pixel{}, o}$ takes discrete values of unity inside an object,
 and zero outside, in our current definition we still form object appearance
@@ -898,7 +898,8 @@ OSMN~\cite{yang2018efficient} & \nomark & 51.2 & 60.0 & 40.6 \\
 S2S~\cite{xu2018youtube} & \nomark & 57.6 & 66.7 & 48.2 \\
 RGMP~\cite{oh2018fast} & \nomark & 53.8 & 59.5 & 45.2 \\
 A-GAME~\cite{johnander2019agenerative} & \nomark & 66.0 & 66.9 & 61.2 \\
-\textbf{SST} & \nomark & 66.5 & 67.8 & 60.2 \\
+\textbf{SST (Grid)} & \nomark & 66.5 & 67.8 & 60.2 \\
+\textbf{SST (Strided)} & \nomark & 68.1 & 69.9 & 60.8 \\
 \bottomrule
 \end{tabular}
 \label{tab:sota-yvos}
@@ -951,7 +952,7 @@ VM~\cite{hu2018videomatch} & \nomark & - & 56.5 & - \\
 FAVOS~\cite{cheng2018fast} & \nomark & 58.2 & 54.6 & 61.8 \\
 OSMN~\cite{yang2018efficient} & \nomark & 54.8 & 52.5 & 57.1 \\
 A-GAME~\cite{johnander2019agenerative} & \nomark & 70.0 & 67.2 & 72.7 \\
-\textbf{SST} & \nomark & 52.7 & 49.6 & 57.4 \\
+\textbf{SST (Strided)} & \nomark & \davisvalG & 50.5 & 55.9 \\
 \bottomrule
 \end{tabular}
 \label{tab:sota-davis}
@@ -967,10 +968,48 @@ compare our results with SOTA in Table~\ref{tab:sota-davis}.
 We report our DAVIS results following the traditionally used region
 similarity~\J{} and contour accuracy~\F{} metrics as well as their
 mean~\JandF{}.
-Our DAVIS2017 evaluation provides additional experimental evidence that SST
-method performs favourably compared with existing SOTA methods, since SST
-achieves a mean~\JandF{} score of~$TODO$, whereas previous SOTA scored
-a~\JandF{} of~\num{70.6}.
+% Our DAVIS2017 evaluation provides additional experimental evidence that SST
+% method performs favourably compared with existing SOTA methods, since SST
+% achieves a mean~\JandF{} score of~$\davisvalG$, whereas previous SOTA scored
+% a~\JandF{} of~\num{70.6}.
+According to our DAVIS2017 evaluation, SST performs relatively inaccurately
+compared to prior work, since SST achieves a mean~\JandF{} score
+of~$\davisvalG$, whereas previous SOTA scored a~\JandF{} of~\num{70.6}.
+We believe that our method's performance on the DAVIS2017 validation set is
+reflective of a weakness of our current formulation.
+The DAVIS2017 validation set is made up of only~\num{30} sequences, and since
+the DAVIS2017 evaluation is done per object, sequences with many objects are
+weighed far heavier in the evaluation.
+For example, a single sequence with a group of people dancing accounts for more
+than~\num{10}\% of the final score.
+
+We hypothesize that our method performs poorly on exactly the sequences that
+DAVIS2017 weighs heavily in evaluation, where there are many objects of the
+same class that need to be tracked in a video.
+We observe that in these cases our method performs well in the initial frames,
+and then our method's performance deteriorates rapidly.
+SST's most common failure mode is confusing multiple objects of the same class
+in medium and long temporal sequence lengths.
+
+Long et al.\ showed that ConvNets learn correspondence, and furthermore ConvNet
+features can align intraclass instances~\cite{long2014correspondence}.
+By using attention for VOS we leverage this correspondence property of ConvNet
+features in order to do pixelwise tracking.
+However, to adapt attention to VOS we must extract representations that
+distinguish one object from another, whereas Long et al.\ showed that
+intraclass ConvNet features match so well that they are effective for
+intraclass alignment.
+We believe that the inductive bias of recurrent methods gives a temporal cue to
+the VOS model to favour matching features that are spatially nearby, since
+recurrent methods always propagate information from the previous frame.
+Since our method currently lacks this inductive bias, our model is unable to
+separate objects of the same class beyond the initial frames close to the
+reference frame.
+In future work we propose to inject this same ``spatial locality'' inductive
+bias into SST by updating our object-discriminative and reference features
+gradually with the predictions from earlier layers, instead of simply
+initializing object-discriminative and reference features with the reference
+frame.
 
 We evaluate only on DAVIS2017 and not DAVIS2016~\cite{perazzi2016abenchmark}
 because DAVIS2017 is strictly a more challenging superset of DAVIS2016.
@@ -990,33 +1029,33 @@ are useful for evaluating generalization.
 \label{sec:yvosablation}
 % YVOS ablation studies
 
-\begin{table}
-\caption{Performance decay evaluation on DAVIS2017~\cite{ponttuset2017davis}.}
-\centering
-\begin{tabular}{lccr}
-\toprule
-Method & O-Ft & Recurrent & $\mathcal{D}$ \\
-\midrule
-RGMP~\cite{oh2018fast} & \nomark & \yesmark & \\
-\textbf{SST} & \nomark & \nomark & 0.21 \\
-\bottomrule
-\end{tabular}
-\label{tab:decay}
-\end{table}
+% \begin{table}
+% \caption{Performance decay evaluation on DAVIS2017~\cite{ponttuset2017davis}.}
+% \centering
+% \begin{tabular}{lccr}
+% \toprule
+% Method & O-Ft & Recurrent & $\mathcal{D}$ \\
+% \midrule
+% RGMP~\cite{oh2018fast} & \nomark & \yesmark & \\
+% \textbf{SST} & \nomark & \nomark & 0.21 \\
+% \bottomrule
+% \end{tabular}
+% \label{tab:decay}
+% \end{table}
 
 We were motivated to use attention-based models for VOS due to spatiotemporal
 attention's ability to incorporate temporal context without incurring a decay
 in performance due to accumulating errors as is inherent to reccurent and
 optical flow methods, and also noticed by Yang et al.~\cite{yang2019anchor}.
-We tested our hypothesis that SST alleviates the compounding error issue
-quantitatively on DAVIS2017 with the decay~$\mathcal{D}$ metric defined by
-Perazzi et al.~\cite{perazzi2016abenchmark}.
-In Table~\ref{tab:decay} we compare against Oh et al.'s recurrent work
-RGMP~\cite{oh2018fast}, and show that our method's performance is relatively
-robust to decay with a decay of~$\mathcal{D} = 0.21$ compared with
-RGMP's~$TODO$.
-Furthermore, in Figure~\ref{fig:ainaocclusion} we show a qualitative example on
-the YouTube-VOS validation set of SST handling foreground occlusion, where a
+% We tested our hypothesis that SST alleviates the compounding error issue
+% quantitatively on DAVIS2017 with the decay~$\mathcal{D}$ metric defined by
+% Perazzi et al.~\cite{perazzi2016abenchmark}.
+% In Table~\ref{tab:decay} we compare against Oh et al.'s recurrent work
+% RGMP~\cite{oh2018fast}, and show that our method's performance is relatively
+% robust to decay with a decay of~$\mathcal{D} = 0.21$ compared with
+% RGMP's~$TODO$.
+In Figure~\ref{fig:ainaocclusion} we show a qualitative example on the
+YouTube-VOS validation set of SST handling foreground occlusion, where a
 motorcycle entirely occludes a person for one frame then the person becomes
 disoccluded in the following frame.
 
@@ -1029,21 +1068,20 @@ disoccluded in the following frame.
 \end{figure}
 
 We used YouTube-VOS to perform ablation studies on interesting components of
-our method, including sparse attention operators, positional encodings, and AIA
-operator variations.
+our method, including sparse attention operators and positional encodings.
 
 \begin{table}
-\caption{Comparison of positional encoding schemes and sparse attention
-         variants for video attention.}
+\caption{Comparison of positional encoding schemes for the ``grid'' sparse
+         attention variant of video attention.}
 \centering
-\begin{tabular}{lrr}
+\begin{tabular}{lr}
 \toprule
-Positional Encoding & Grid~\G{} & Strided~\G{} \\
+Positional Encoding & Grid~\G{} \\
 \midrule
-None & \num{61.1} & 65.2 \\
-$K$ Embedding & \num{61.8} & \\
-$T$ Embedding & \num{60.5} & \\
-$T$ Sinusoidal & \num{62.6} & \\
+None & \num{61.1}  \\
+$K$ Embedding & \num{61.8} \\
+$T$ Embedding & \num{60.5} \\
+$T$ Sinusoidal & \num{62.6} \\
 \bottomrule
 \end{tabular}
 \label{tab:pos-encoding}
@@ -1070,16 +1108,16 @@ Adding relative positional embeddings, Equation~\ref{eqn:stridedattndefn} become
         \mathtt{StridedAttn}{\big(\querytensor, \keytensor, \valuetensor)}_\pixel{} = \softmax\big(\querytensor_\pixel{} \big(\keytensor^\intercal_{I_\pixel} + \embtensor^\intercal_{\tilde{I}_\pixel}\big)\big)\keytensor_{I_\pixel}
 \end{equation}
 
-where~$\tilde{I}_\pixel{} = (f(\mathbf{q}, \pixel) : \mathbf{q} \in I_\pixel)$
-is the sequence of relative position indices for points~$\mathbf{q}$ in
+where~$\tilde{I}_\pixel{} = (f(q, \pixel) : q \in I_\pixel)$
+is the sequence of relative position indices for points~$q$ in
 sequence~$I_\pixel$ relative to pixel~$\pixel$,
 and~$f \,:\, \real^3\times \real^3 \rightarrow \real$ is a function mapping
 pairs of positions to scalar indices.
-For grid attention pixel~$\mathbf{q}$ would differ along at most one of the
+For grid attention pixel~$q$ would differ along at most one of the
 three spatiotemporal axes~$X, Y, T$, so the relative positional embedding for
-pair~$(\pixel, \mathbf{q})$ would correspond to
-either~$\Delta_x \equiv \mathbf{q}_x - \pixel_x$,
-$\Delta_y \equiv \mathbf{q}_y - \pixel_y$,~or~$\Delta_t \equiv \mathbf{q}_t - \pixel_t$.
+pair~$(\pixel, q)$ would correspond to
+either~$\Delta_x \equiv q_x - \pixel_x$,
+$\Delta_y \equiv q_y - \pixel_y$,~or~$\Delta_t \equiv q_t - \pixel_t$.
 For strided attention, the relative positional embedding would be the
 concatenation of three separate embeddings corresponding
 to~$\Delta_x$,~$\Delta_y$, and~$\Delta_t$.
@@ -1116,6 +1154,39 @@ due to the data imbalance of absolute temporal positions.
 Sinusoidal temporal positional encodings performed best, which is in line with
 our hypothesis that information about distance-from-reference is important in
 positional encodings for VOS\@.
+
+\begin{table}
+\caption{Comparison of sparse and dense evaluation on
+         YouTube-VOS~\cite{xu2018youtubevos} for both strided and grid sparse
+         attention variants.}
+\centering
+\begin{tabular}{llr}
+\toprule
+Method & Evaluation & \G{} \\
+\midrule
+SST (Grid) & Sparse & 65.8 \\
+SST (Grid) & Dense & 66.5 \\
+SST (Strided) & Sparse & 66.7 \\
+SST (Strided) & Dense & 68.1 \\
+\bottomrule
+\end{tabular}
+\label{tab:evalsparse}
+\end{table}
+
+At training time we used TSN sampling~\cite{wang2016temporal} to subsample
+sequences to a fixed number of frames since backpropagation constrained our
+memory usage.
+However at test time we do not have the same memory constraint, so we have the
+ability to simultaneously predict on an entire sequence of frames at once.
+In Table~\ref{tab:evalsparse} we compare the TSN and ``all frames'' test time
+sampling methods, which we refer to as sparse and dense evaluation,
+respectively.
+We show that simultaneously attending to all frames densely produces superior
+predictions for both grid and strided sparse attention variants.
+We also maintain reasonable accuracy when using TSN sampling at test time to
+subsample sequence, showing an advantage of our method over recurrent methods
+that would have to process every preceding frame in order to predict on a given
+timestep.
 
 % TODO(brendan): grid vs. sparse discussion
 

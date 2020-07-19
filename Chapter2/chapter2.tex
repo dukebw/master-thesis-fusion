@@ -8,8 +8,8 @@
 \subsection{Personal Contributions}
 
 The idea for conducting architecture search in the design space of fusion
-operators came principally from Graham Taylor, precipitated by prior work we
-did fusing pose, optical flow, depth and RGB modalities for action recognition.
+operators came principally from Graham Taylor, precipitated our prior work on
+fusing pose, optical flow, depth and RGB modalities for action recognition.
 I devised the particular search space design for visual question answer fusion
 operators, motivated by adding nonlinearity to MUTAN~\cite{ben2017mutan}, and
 conducted all experiments.
@@ -19,18 +19,18 @@ I wrote the manuscript with the assistance of Graham Taylor.
 \section{Context}
 
 Visual question answering (VQA) is a topic intended to test the ability of
-machine learning model's to comprehend a question about a presented image.
-Early work in VQA extracted features seperately from question and image using
+machine learning models to comprehend a question about a presented image.
+Early work in VQA extracted features separately from question and image using
 pretrained feature extractors: pre-trained CNNs and RNNs were used to extract
 features from image and question, respectively.
 These early works used simple fusion operators such as elementwise sum and
-product, or concatenation, until Fukui et al. showed that more complex fusion
+product, or concatenation, until Fukui et al.\ showed that more complex fusion
 operators can outperform simple fusion~\cite{fukui2016multimodalCB}.
 Fukui et al.'s work spawned further work exploring fusion operator design for
 VQA~\cite{Kim2017, ben2017mutan}, and all of this model design was done
 manually.
 
-In parallel, Zoph et al. showed that neural architecture
+In parallel, Zoph et al.\ showed that neural architecture
 search (NAS), an automatic method for searching for neural network models, is
 capable of producing architectures even superior to highly tuned image
 classification and language models~\cite{zoph2016neural}.
@@ -42,6 +42,9 @@ We were inspired by Zoph et al.'s work, and the manual design of increasingly
 complex fusion operators for VQA.
 Our core idea was that NAS is capable of finding superior fusion operators than
 can be designed manually.
+Particularly, since multimodal fusion operators operate in high-dimensional
+feature spaces it is difficult to manually design effective priors for these
+models, and automatic model search methods are especially important.
 
 
 \section{Contributions}
@@ -58,6 +61,6 @@ baseline model, MUTAN, and offered intuition into the advantages of our method.
 
 We were recognized with a ``Best Computer Vision Paper'' award at the 2018
 Computer and Robot Vision Conference for our work.
-Perez-Rua et al. published a paper investigating multimodal fusion architecture
+Perez-Rua et al.\ published a paper investigating multimodal fusion architecture
 search, the core motivation for our paper, at CVPR
 2019~\cite{Perez-Rua2019mfas}.

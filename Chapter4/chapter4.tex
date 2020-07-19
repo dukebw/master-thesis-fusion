@@ -3,11 +3,42 @@
 
 \section{Article Details}
 
+\bibentry{duke2020scalabevos}.
+
+\subsection{Personal Contributions}
+
+Abdalla Ahmed and I worked together writing a PyTorch codebase for video object
+segmentation (VOS).
+I devised the idea of using Transformers for VOS due to the natural analogy
+between attention and correspondence, and the idea that VOS can be reduced to
+finding correspondences in feature space.
+I adapted our sparse attention operators to the spatiotemporal domain and
+implemented the operators in CUDA.
+I conceived of, implemented and ran all experiments.
+I wrote the manuscript, with the assistance of Graham Taylor.
+
 
 \section{Context}
+
+VOS challenges computer vision researchers with the task of tracking an object
+pixelwise through a video sequence.
+At the time of writing, most VOS methods are recurrent, and feed the
+predictions or feature representations extracted from the previous frame as
+input to the current frame.
+Meanwhile, Wang et al.\ showed that correspondence can be learned through the
+cycle-consistency of time and that those correspondences can be used for
+VOS~\cite{wang2019learning}.
+The similarity between attention with the normalized cross-correlation used as
+a subcomponent by Wang et al.\ to find correspondences motivated me to
+investigate using end-to-end attention architectures for VOS\@.
 
 
 \section{Contributions}
 
-
-\section{Recent Developments}
+Our work introduces Transformers to the VOS domain, and we propose a method of
+incorporating reference object identity knowledge into a spatiotemporal
+Transformer architecture.
+We provide CUDA implementations of our sparse spatiotemporal attention
+operators in order to enable attention computation on tensor dimensions that
+would be otherwise unfeasible to compute on using existing deep learning
+primitives.
