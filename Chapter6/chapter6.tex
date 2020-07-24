@@ -1,0 +1,17 @@
+\chapter{Discussion}
+
+In this thesis we investigated representation learning focused on developing
+improved attention and fusion operators for computer vision.
+We introduced the idea of learning fusion operators via neural architecture
+search, and proposed a search space for fusion operator search for VQA\@.
+We demonstrated the potential of our search space by manually finding
+configurations of our search space that outperform the baseline fusion model,
+MUTAN~\cite{ben2017mutan}, based on Tucker decomposition.
+Our improved fusion operator used a gating mechanism to conditionally enable or
+disable features, ensembled activation functions, and added additional learned
+nonlinearity via a neural network output function.
+We showed that our method achieved an absolute percentage point increase
+of~\num{1.1}\% in top-1 accuracy over the baseline MUTAN model.
+Furthermore, our proposed fusion operator search space holds promise for use
+with neural architecture search to discover new, even superior fusion
+operators.
