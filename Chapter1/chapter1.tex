@@ -5,7 +5,7 @@ one article the relation of vision and natural language, using the method of
 extracting deep hierarchical representations known as deep learning.
 Underpinning the methods in our articles are a set of deep learning
 architectures, each of which constitutes its own active topic of research.
-After briefly describing deep learning as a whole, we introduce these
+After briefly describing deep learning as a whole, we introduce the particular
 subcomponents underlying our models, in order to provide additional background
 context before presenting our articles.
 
@@ -232,8 +232,8 @@ article.
 
 Suppose we are given two matrices~$Q$ and~$K$ in~$\mathbb{R}^{t_1 \times c}$
 and~$\mathbb{R}^{t_2\times c}$, respectively, representing input
-sequences~$Q \equiv (q_1, \dots, k_{t_1})$ and~$K \equiv (k_1, \dots, k_{t_2})$
-of~$t_i$ vectors~$q_t$ and~$k_t$, for example sequences of word embeddings.
+sequences~$Q \equiv (q_1, \dots, q_{t_1})$ and~$K \equiv (k_1, \dots, k_{t_2})$
+of~$t_i$ vectors, $i \in \{1,2\}$, $q_t$ and~$k_t$, for example, sequences of word embeddings.
 We wish to compute an output sequence~$Y \equiv (y_1, \dots, y_{t_1})$ that is
 a linear combination of a third sequence~$V \equiv (v_1, \dots, v_{t_2})$ whose
 weights in the linear combination depend on the affinity between pairs of
@@ -280,12 +280,12 @@ Our overall attention function is therefore
 \label{eqn:background:attndefn}
 \end{equation}
 
-In Equation~\ref{eqn:background:attndefn} we scale by the squareroot of the
-dimension of query and key vectors~$\sqrt{c}$ in the argument to softmax.
+In Equation~\ref{eqn:background:attndefn} we scale by the square root of the
+dimension of query and key vectors~$\sqrt{c}$ in the argument to the softmax.
 The intuition behind this scaled dot product attention, as given by Vaswani et
 al., is that if scalar elements of query and key vector were drawn from
 independent zero-mean, unit-variance distributions, then the magnitude of the
-query-key dot product grows like the squareroot of their dimension.
+query-key dot product grows like the square root of their dimension.
 Therefore for query-key combinations whose dimensions are large, without
 scaling it is likely that the softmax would saturate early in training, causing
 vanishing gradients.
@@ -298,7 +298,7 @@ technique to improve the capacity while reducing the computation of attention.
 Multi-head attention breaks the attention computation up into multiple
 attention computations determined by the ``number of attention heads''
 hyperparameter~$n_h$.
-We illustrate multi-head in Figure~\ref{fig:background:multiheadattn}.
+We illustrate multi-head attention in Figure~\ref{fig:background:multiheadattn}.
 
 \begin{figure}
 \centering
@@ -328,7 +328,7 @@ affine subspace spanned by columns of the~$i$th projection weight matrix.
 We concatenate outputs of the multi-head attention layers and feed the
 resulting~$c$-vector into an output linear layer to produce the output~$Y$.
 This final concatenation and projection step aggregates information from the
-multiple attention heads, for example to combine information gathered by
+multiple attention heads, for example, to combine information gathered by
 different attention heads ``looking at'' different regions of an image.
 
 
@@ -337,7 +337,7 @@ different attention heads ``looking at'' different regions of an image.
 Up until this point in our description of attention, our attention operators
 are unable to incorporate positional information, since query and key vectors
 interact pairwise with each other.
-Whlie recurrent networks have a positional inductive bias, both convolutional
+While recurrent networks have a positional inductive bias, both convolutional
 and attention networks are translation equivariant and require injection of
 position information to perform position-dependent tasks such as
 sequence-to-sequence learning.
@@ -355,11 +355,11 @@ Therefore with positional encoding Equation~\ref{eqn:background:attndefn} become
 \label{eqn:background:posenc-attn}
 \end{equation}
 
-where positional encoding matrix~$E \in \mathbb{R}^{t_2\times c}$ contains a
+\noindent where positional encoding matrix~$E \in \mathbb{R}^{t_2\times c}$ contains a
 unique positional encoding~$c$-vector for each of the~$t_2$ elements in our
 queried sequence.
 
-We consider positional encodings made up of learned embeddings, and sinusoidal
+We consider positional encodings constructed of learned embeddings, and sinusoidal
 positional encodings.
 In the case of learned embeddings, the positional encoding matrix~$E$ is
 initialized at the beginning of training and updated along with the rest of the
@@ -376,7 +376,7 @@ E_{t, 2i + 1} &= \cos\left(\frac{t}{\tau^{2i/c}}\right)
 \end{split}
 \end{equation}
 
-where~$\tau$ is a fixed constant, for example Vaswani et al.\ fixed~$\tau$
+\noindent where~$\tau$ is a fixed constant, for example Vaswani et al.\ fixed~$\tau$
 to~\num{10000}.
 
 % TODO(brendan): attention in VQA and VOS
@@ -438,7 +438,7 @@ independently.
 A ``fusion operator'' then combines the modality-specific representations into
 a shared representation.
 
-Fusion operators themselves have varying designs. A naive approach would be to
+Fusion operators themselves have varying designs. A na\"ive approach would be to
 concatenate the representations from different modalities and feed their
 concatenation into a feedforward neural network to make a prediction.
 However, this simple concatenation may lead to overfitting, and features
