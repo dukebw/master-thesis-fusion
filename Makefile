@@ -17,6 +17,7 @@ clean:
 	rm -f Chapter3/*.aux
 	rm -f Chapter4/*.aux
 	rm -f Chapter5/*.aux
+	rm -f Chapter6/*.aux
 	rm -f Declaration/*.aux
 	rm -f Dedication/*.aux
 	rm -f Preamble/*.aux
