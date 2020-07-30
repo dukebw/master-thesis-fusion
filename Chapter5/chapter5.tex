@@ -101,7 +101,7 @@ gains by instead warping compressed object features.
 
 Applying spatiotemporal attention operators to VOS raises two challenges:
 computational complexity and distinguishing foreground objects.
-Naive spatiotemporal attention is square in the dimensionality of the video
+Na\"ive spatiotemporal attention is square in the dimensionality of the video
 feature tensor, i.e.,~$O({(THW)}^2 C)$.
 We resolve this computational complexity issue with sparse attention operators,
 of which we compare two promising candidates.
@@ -150,7 +150,7 @@ to other dense video prediction tasks.
 % Our adaptively extracted object appearance models capture features that are
 % discriminative even between multiple instances of the same class.
 
-We provide a public implementation available upon our paper's acceptance.
+We will provide a public implementation available upon our article's acceptance.
 
 
 \section{Related Work}
@@ -485,7 +485,7 @@ In the case of multiple objects we have probability scoremaps
 in~$\real{}^{O\times 2\times K\times H\times W}$, i.e., foreground-background
 probabilities for each object for each pixel in the video, which we want to
 reduce to a tensor in~$\real{}^{K\times H\times W}$ of object integer labels.
-We use the ``naive'' inference protocol~\cite{oh2018fast} and take, for each
+We use the ``na\"ive'' inference protocol~\cite{oh2018fast} and take, for each
 pixel, the argmax over all object probabilities including the background
 probability, computed as the maximum background probability over all objects.
 
@@ -555,7 +555,7 @@ Formally, we follow~\cite{vaswani2017attention} in defining attention as
 \label{eqn:attndefn}
 \end{equation}
 
-where query~$\querytensor{}$, key~$\keytensor{}$, and value~$\valuetensor{}$
+\noindent where query~$\querytensor{}$, key~$\keytensor{}$, and value~$\valuetensor{}$
 are all matrices in~$\real{}^{S\times C}$ for flattened spatial dimensions~$S =
 THW$.
 As we alluded to in Section~\ref{sec:architecture}, we use object
@@ -577,14 +577,14 @@ The difference in impact of scaling factor between our VOS attention and
 Vaswani et al.'s NLP attention could be due to our attention operator having a
 comparatively low number of channels.
 
-A computational barrier prevents naively using Equation~\ref{eqn:attndefn} to
+A computational barrier prevents na\"ively using Equation~\ref{eqn:attndefn} to
 perform our desired lookup of video features~$\vidfeat{}$ using
 object-discriminative features~$\objfeat{}$.
 The attention operation given in Equation~\ref{eqn:attndefn} is~$O({(THW)}^2
 C)$, which poses a problem for video object segmentation since for dense
 prediction tasks such as segmentation, model performance tends to improve with
 greater input resolution~\cite{zhao2017icnet}.
-As an illustration of the infeasibility of using naive attention for VOS,
+As an illustration of the infeasibility of using na\"ive attention for VOS,
 consider that a single layer of attention on a~\num{16} frame video with
 a~$64\times 64$ feature map with~\num{32} channels would cost more
 than~\num{137} billion FLOPs, far more than the most computationally expensive
@@ -619,7 +619,7 @@ define our~$\mathtt{GridAttention}$ operator as
 \label{eqn:gridattndefn}
 \end{equation}
 
-where~$\Phi$ and~$\Omega$ are the 3D generalizations of
+\noindent where~$\Phi$ and~$\Omega$ are the 3D generalizations of
 the~\textbf{aggregation} and~\textbf{affinity} operations defined by Huang et
 al.~\cite{huang2018ccnet}.
 
@@ -632,7 +632,7 @@ Concretely, we define affinity operator~$\Omega$ as
 \label{eqn:gridattndefn}
 \end{equation}
 
-where~$\Psi : \real{}^{S\times C} \times \real{}^3 \rightarrow \real{}^{(T + H + W - 2)\times C}$
+\noindent where~$\Psi : \real{}^{S\times C} \times \real{}^3 \rightarrow \real{}^{(T + H + W - 2)\times C}$
 returns all pixels along the horizontal, vertical, or temporal axes incident to
 location~$\pixel{} \equiv (x, y, t)$.
 $\Omega(\querytensor{}, \keytensor{})$ is then a matrix
@@ -709,7 +709,7 @@ as~$\Phi^3_{\tilde{\Omega}}$, produces
 \label{eqn:gridattnrouting}
 \end{equation}
 
-where~$\cdots$ represents other similar third order terms.
+\noindent where~$\cdots$ represents other similar third order terms.
 We show in Equation~\ref{eqn:gridattnrouting} that grid attention propagates
 information along ``routes'' through the video feature tensor: for a pixel at
 position~$(x, y, t)$ to interact with another pixel at an arbitrary
@@ -808,7 +808,7 @@ define object appearance models as
 \label{eqn:appearancemodel}
 \end{subequations}
 
-where~$o$ indexes objects in the video,~$\pixel{}$ indexes pixels in the
+\noindent where~$o$ indexes objects in the video,~$\pixel{}$ indexes pixels in the
 video,~$\alpha_{\pixel{}, o} \in \{0, 1\}$ indicates whether a given
 pixel~$\pixel{}$ in the reference frame belongs to object~$o$,
 and~$r_k$ are model parameters.
@@ -897,9 +897,9 @@ MSK~\cite{khoreva2017learning} & \yesmark & 53.1 & 59.9 & 45.0 \\
 OSMN~\cite{yang2018efficient} & \nomark & 51.2 & 60.0 & 40.6 \\
 S2S~\cite{xu2018youtube} & \nomark & 57.6 & 66.7 & 48.2 \\
 RGMP~\cite{oh2018fast} & \nomark & 53.8 & 59.5 & 45.2 \\
-A-GAME~\cite{johnander2019agenerative} & \nomark & 66.0 & 66.9 & 61.2 \\
+A-GAME~\cite{johnander2019agenerative} & \nomark & 66.0 & 66.9 & \textbf{61.2} \\
 \textbf{SST (Grid)} & \nomark & 66.5 & 67.8 & 60.2 \\
-\textbf{SST (Strided)} & \nomark & 68.1 & 69.9 & 60.8 \\
+\textbf{SST (Strided)} & \nomark & \textbf{68.1} & \textbf{69.9} & 60.8\\
 \bottomrule
 \end{tabular}
 \label{tab:sota-yvos}
@@ -972,7 +972,7 @@ mean~\JandF{}.
 % method performs favourably compared with existing SOTA methods, since SST
 % achieves a mean~\JandF{} score of~$\davisvalG$, whereas previous SOTA scored
 % a~\JandF{} of~\num{70.6}.
-According to our DAVIS2017 evaluation, SST performs relatively inaccurately
+According to our DAVIS2017 evaluation, SST performs relatively poorly
 compared to prior work, since SST achieves a mean~\JandF{} score
 of~$\davisvalG$, whereas previous SOTA scored a~\JandF{} of~\num{70.6}.
 We believe that our method's performance on the DAVIS2017 validation set is
@@ -1081,7 +1081,7 @@ Positional Encoding & Grid~\G{} \\
 None & \num{61.1}  \\
 $K$ Embedding & \num{61.8} \\
 $T$ Embedding & \num{60.5} \\
-$T$ Sinusoidal & \num{62.6} \\
+$T$ Sinusoidal & \num[math-rm=\mathbf]{62.6} \\
 \bottomrule
 \end{tabular}
 \label{tab:pos-encoding}
@@ -1108,7 +1108,7 @@ Adding relative positional embeddings, Equation~\ref{eqn:stridedattndefn} become
         \mathtt{StridedAttn}{\big(\querytensor, \keytensor, \valuetensor)}_\pixel{} = \softmax\big(\querytensor_\pixel{} \big(\keytensor^\intercal_{I_\pixel} + \embtensor^\intercal_{\tilde{I}_\pixel}\big)\big)\keytensor_{I_\pixel}
 \end{equation}
 
-where~$\tilde{I}_\pixel{} = (f(q, \pixel) : q \in I_\pixel)$
+\noindent where~$\tilde{I}_\pixel{} = (f(q, \pixel) : q \in I_\pixel)$
 is the sequence of relative position indices for points~$q$ in
 sequence~$I_\pixel$ relative to pixel~$\pixel$,
 and~$f \,:\, \real^3\times \real^3 \rightarrow \real$ is a function mapping
@@ -1164,10 +1164,10 @@ positional encodings for VOS\@.
 \toprule
 Method & Evaluation & \G{} \\
 \midrule
-SST (Grid) & Sparse & 65.8 \\
-SST (Grid) & Dense & 66.5 \\
-SST (Strided) & Sparse & 66.7 \\
-SST (Strided) & Dense & 68.1 \\
+SST (Grid) & Sparse & \num{65.8} \\
+SST (Grid) & Dense & \num{66.5} \\
+SST (Strided) & Sparse & \num{66.7} \\
+SST (Strided) & Dense & \num[math-rm=\mathbf]{68.1} \\
 \bottomrule
 \end{tabular}
 \label{tab:evalsparse}
@@ -1197,7 +1197,7 @@ Our work represents the first algorithm for VOS purely based on end-to-end
 attention.
 Future work in attention-based models for VOS could be analogous to Transformer
 models' progression on language translation tasks, where researchers
-successfully applied Transformers to increasingly long sequence.
+successfully applied Transformers to increasingly long sequences.
 For example, Dai et al.\ combined recurrence with attention to translate
 arbitrary-length sequences~\cite{dai2019transformer}, and Kitaev et al.
 introduced locality-sensitive hashing instead of dot-product attention, to
