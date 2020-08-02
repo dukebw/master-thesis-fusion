@@ -80,9 +80,9 @@ $\tens{Z}$'s spatial dimensions. E.g.\ for an input image of dimensions $224
 \times 224$ pixels and~\num{3} colour channels, a CNN kernel's spatial
 dimensions would normally be $3 \times 3$. The CNN kernel's weights are thus
 shared spatially, and each element of the output tensor is contributed to only
-by a $3 \times 3$ spatial region of the input tensor, via a sum over
-channel-wise matrix multiplications of the kernel strictly over that spatial
-region.
+by a $3 \times 3$ spatial region of the input tensor, via a sum over dot
+products on the vectorized slice of the kernel and the vectorized slice of the
+spatial region.
 
 Formally, each element $\tens{Z}_{i, j, k}$ of the output tensor corresponds to the
 sum given in Equation~\ref{eqn:convolution}, where~$i$ is the index of the
