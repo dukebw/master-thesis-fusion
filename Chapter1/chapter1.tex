@@ -231,9 +231,10 @@ article.
 \subsection{Scaled Dot-Product Attention}
 
 Suppose we are given two matrices~$Q$ and~$K$ in~$\mathbb{R}^{t_1 \times c}$
-and~$\mathbb{R}^{t_2\times c}$, respectively, representing input
-sequences~$Q \equiv (q_1, \dots, k_{t_1})$ and~$K \equiv (k_1, \dots,
-k_{t_2})$, for example sequences of word embeddings.
+and~$\mathbb{R}^{t_2\times c}$, respectively, defined
+as~$Q \equiv (q_1, \dots, q_{t_1})$ and~$K \equiv (k_1, \dots, k_{t_2})$.
+$Q$ and~$K$ represent input sequences of $c$-vectors, for example sequences of
+word embeddings.
 We wish to compute an output sequence~$Y \equiv (y_1, \dots, y_{t_1})$ that is
 a linear combination of a third sequence~$V \equiv (v_1, \dots, v_{t_2})$ whose
 weights in the linear combination depend on the affinity between pairs of
