@@ -1,17 +1,17 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 In this thesis by articles we make contributions related to attention and
-fusion in the intersection of the deep learning and computer vision fields.
+fusion at the intersection of the deep learning and computer vision fields.
 
 In our first article, we investigated the design of neural network operators
 that fuse features extracted from different modalities, such as audio and
 video, and use the fused representation to make predictions on a single task,
-such as visual question answer or activity recognition.
+such as visual question answering (VQA) or activity recognition.
 We propose a generalized class of multimodal fusion operators for the task of
-visual question answering (VQA).
+VQA.
 We identify generalizations of existing multimodal fusion operators based on
 the Hadamard product, and show that specific non-trivial instantiations of this
-generalized fusion operator exhibit superior performance in terms of OpenEnded
+generalized fusion operator exhibit superior performance in terms of open-ended
 accuracy on the VQA task.
 In particular, we introduce Nonlinearity Ensembling, Feature Gating, and
 post-fusion neural network layers as fusion operator components, culminating in
@@ -23,11 +23,11 @@ as a search space in an architecture search over fusion operators.
 
 In our second article, we introduced Transformers, which are an attention-based
 architecture, to the video object segmentation (VOS) task.
-Video Object Segmentation (VOS) requires tracking an object through a video
+VOS requires tracking an object through a video
 with pixel-level accuracy, and has previously been solved either through
 combinations of online fine-tuning or recurrent feature propagation, which have
 inherent disadvantages.
-Online fine-tuning methods have slow runtime, while recurrent methods lack
+Online fine-tuning methods have slow runtimes, while recurrent methods lack
 scalability and have the drawback of compounding error, due to their sequential
 nature.
 We propose a scalable, end-to-end method for VOS called
