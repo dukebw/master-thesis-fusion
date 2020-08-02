@@ -62,8 +62,8 @@ below.
 Convolutional neural networks (CNNs) are a type of neural network designed to
 model data that is arranged in a grid, as the pixels in an image are arranged.
 While each neuron in a layer of an FNN is connected to all neurons in its
-previous layer via a matrix multiplication, neurons in a layer of a CNN are
-only locally connected to neurons in the previous layer.
+previous layer via a weight matrix, neurons in a layer of a CNN are only
+locally connected to neurons in the previous layer.
 
 We explain the meaning of ``locally connected''. We assume that a given layer
 has a 3D tensor $\tens{V}$ as input, where in addition to the single dimension
