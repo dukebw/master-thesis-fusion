@@ -148,9 +148,10 @@ data, where the inputs are the word or character tokens making up sentences and
 paragraphs.
 
 Instead of sharing parameters spatially as in CNNs, RNNs share parameters over
-time. The output at each timestep~$t$, $\vect{a}{t}$, takes as input both the
-``hidden state'' from the previous timestep~$\vect{h}{t - 1}$ as well as the
-input~$\vect{x}{t}$ of the current timestep, as given by
+time.
+The pre-activation~$\vect{a}{t}$ at each timestep~$t$ is constructed from
+both the ``hidden state'' from the previous timestep~$\vect{h}{t - 1}$ as well
+as the input~$\vect{x}{t}$ of the current timestep, as given by
 Equation~\ref{eqn:vanilla-rnn}.
 
 \begin{equation}
@@ -158,9 +159,9 @@ Equation~\ref{eqn:vanilla-rnn}.
 \label{eqn:vanilla-rnn}
 \end{equation}
 
-The hidden state~$\vect{h}{t}$ is related to the output~$\vect{a}{t}$ of a
-given timestep~$t$ by the link function $f$, i.e.\
-$\vect{h}{t} = f(\vect{a}{t})$, where $f$ is usually~$\tanh$.
+The hidden state~$\vect{h}{t}$ is related to the pre-activation~$\vect{a}{t}$
+of a given timestep~$t$ by the link function $f$,
+i.e.\ $\vect{h}{t} = f(\vect{a}{t})$, where $f$ is usually~$\tanh$.
 
 
 \section{Skip-Thought Vectors}
