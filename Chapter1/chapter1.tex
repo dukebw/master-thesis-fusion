@@ -86,10 +86,22 @@ spatial region.
 
 Formally, each element $\tens{Z}_{i, j, k}$ of the output tensor corresponds to the
 sum given in Equation~\ref{eqn:convolution}, where~$i$ is the index of the
-output channel and $j$ and $k$ are the spatial indices of the output element.
+output channel and $j$ and $k$ are the spatial indices of the output
+element.\footnotemark{}
 The index~$l$ runs over the input channels, while~$m$ and $n$ are restricted by
 the spatial dimensions of the kernel, e.g.\ in our $3 \times 3$ kernel example
 we have $m, n \in \{-1, 0, 1\}$.
+\footnotetext[1]{Note that while CNNs are called ``convolutional'',
+                 Equation~\ref{eqn:convolution} technically describes
+                 cross-correlation.
+                 True convolution in the sense of signal processing would be
+                 identical to cross-correlation, except for a \ang{180}
+                 rotation of the spatial slice of the kernel
+                 weights~\cite{lyons1996understandingdsp}.
+                 This technicality is inconsequential in machine learning,
+                 since our weight initialization techniques generally do not vary under
+                 rotation, and learned weights would adapt to accomodate the
+                 rotation during training.}
 
 \begin{equation}
         \tens{Z}_{i, j, k} = \sum_{l, m, n} \tens{V}_{l, j + m, k + n} \tens{K}_{i, l, m, n}
