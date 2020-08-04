@@ -509,6 +509,14 @@ concatenation into a feedforward neural network to make a prediction.
 However, this simple concatenation may lead to overfitting, and features
 extracted from different modalities may be distributed differently so as to
 make taking their affine combination an unfavourable fusion strategy.
+\citet{neverova2016moddrop} highlighted this overfitting phenomenon and
+proposed a simple fix via careful weight initialization, along with a novel
+regularization strategy to prevent co-adaptation of modalities.
+In orthogonal work, \citet{Kim2017} addressed both overfitting and modality
+distribution differences by performing multimodal fusion by elementwise
+multiplication, or Hadamard product.
+Hadamard product fusion reduces the model parameter count in comparison with
+concatenation and forces modalities to interact to form predictions.
 
 In general, the subject of designing fusion operators that form effective
 priors for combining modalities for a given task is a topic of active research.
