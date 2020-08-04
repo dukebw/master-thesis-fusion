@@ -33,9 +33,9 @@ propagation.
 
 Online finetuning, mask refinement and temporal feature propagation methods
 each have inherent drawbacks.
-Online finetuning methods~\cite{caelles2017one} cannot adapt to changes in
+Online finetuning methods~\citep{caelles2017one} cannot adapt to changes in
 object appearance throughout a sequence.
-Mask refinement and temporal feature propagation methods~\cite{ventura2019rvos}
+Mask refinement and temporal feature propagation methods~\citep{ventura2019rvos}
 currently in the literature are recurrent.
 Due to their sequential nature, recurrent methods for VOS exhibit compounding
 error over time, and are not parallelizable across a single example.
@@ -58,24 +58,24 @@ Our method is motivated by work on Transformer architectures in language
 translation, as well as by orthogonal work on correspondence matching in
 computer vision.
 
-Transformer architectures~\cite{vaswani2017attention} have shown that
+Transformer architectures~\citep{vaswani2017attention} have shown that
 end-to-end attention networks are a dominant current approach to a multitude of
 text natural language processing (NLP)
-tasks~\cite{devlin2019bert, dai2019transformer}, as well as speech recognition
-tasks~\cite{luscher2019rwth, kim2019improved}.
+tasks~\citep{devlin2019bert, dai2019transformer}, as well as speech recognition
+tasks~\citep{luscher2019rwth, kim2019improved}.
 % TODO(brendan): can add more references from
 % https://github.com/sebastianruder/NLP-progress
 Since VOS is a timeseries prediction task traditionally approached with
-recurrent methods~\cite{ventura2019rvos}, and recurrent methods were succeeded
+recurrent methods~\citep{ventura2019rvos}, and recurrent methods were succeeded
 by Transformers in NLP, we hypothesized that we could achieve similar success
 with Transformers in VOS as has been achieved in NLP\@.
 
 Besides Transformers' success in NLP, we were also motivated to use attention
 for VOS by the relation of attention to cross-correlation used for computing
-optical flow~\cite{dosovitskiy2015flownet} and tracking~\cite{li2018high}, in
+optical flow~\citep{dosovitskiy2015flownet} and tracking~\citep{li2018high}, in
 that both cross-correlation and attention use pairwise dot products of
 embeddings to find matching patches of feature maps.
-Methods such as FlowNet~\cite{dosovitskiy2015flownet} that use
+Methods such as FlowNet~\citep{dosovitskiy2015flownet} that use
 cross-correlation to compute optical flow are relevant to semi-supervised VOS
 because a perfect optical flow computation could produce a video object
 segmentation by warping the reference mask throughout a video (subject to error
@@ -125,13 +125,13 @@ For the first time, we apply video attention on video object segmentation, by
 using sparse attention operator variants to apply Transformer models on
 high-resolution videos.
 We also contribute empirical evaluation of Transformer models applied to video,
-as Girdhar et al.~\cite{girdhar2019video}, a work on video action recognition,
+as~\citet{girdhar2019video}, a work on video action recognition,
 is the only prior work using Transformers on video that we are aware of.
 
 We extend sparse attention variants to video so that they can be used for VOS.
 Specifically we extend to 3D, with two spatial axes and one temporal axis,
-Criss-Cross Attention~\cite{huang2018ccnet} from 2D semantic segmentation, and
-Sparse Attention~\cite{child2019sparsetransformer} from 1D language
+Criss-Cross Attention~\citep{huang2018ccnet} from 2D semantic segmentation, and
+Sparse Attention~\citep{child2019sparsetransformer} from 1D language
 translation.
 Our sparse video attention operators are not VOS specific, and could be applied
 to other dense video prediction tasks.
@@ -166,19 +166,19 @@ activation maps.
 \subsection{Video Object Segmentation}
 
 In the VOS literature, \textbf{online finetuning}
-approaches~\cite{bao2018cnn,caelles2017one,maninis2018video,voigtlaender2017online,hu2018motion,khoreva2017learning,li2018video}
+approaches~\citep{bao2018cnn,caelles2017one,maninis2018video,voigtlaender2017online,hu2018motion,khoreva2017learning,li2018video}
 do one-shot, or semi-supervised, VOS by finetuning a semantic segmentation
 network on an initial frame.
-A number of methods:~\cite{cheng2018fast,caelles2017one,maninis2018video,voigtlaender2017online}
+A number of methods:~\citep{cheng2018fast,caelles2017one,maninis2018video,voigtlaender2017online}
 performed VOS on independent frames using finetuning alone without explicitly
 modelling temporal coherence.
-\cite{maninis2018video} built on the original usage of this approach
-in~\cite{caelles2017one} by adding instance-level semantic information,
-while~\cite{voigtlaender2017online} added adaptive training during the
+\citet{maninis2018video} built on the original usage of this approach
+in~\citet{caelles2017one} by adding instance-level semantic information,
+while~\citet{voigtlaender2017online} added adaptive training during the
 sequence.
 \textbf{Offline} methods must use temporal information to produce future
 segmentations from past frames, as done using optical flow
-in~\cite{jang2017online} and~\cite{tsai2016video}.
+in~\citet{jang2017online} and~\citet{tsai2016video}.
 Our method is in principle able to take advantage of online finetuning to
 improve performance, and also performs competitively using offline training
 alone.
@@ -187,79 +187,79 @@ Research into temporal coherence in VOS falls into two categories: those that
 refine masks, and those that propagate temporal features.
 
 \textbf{Mask refinement}
-approaches~\cite{khoreva2017learning,oh2018fast,khoreva2017learning,hu2017maskrnn,jang2017online}
+approaches~\citep{khoreva2017learning,oh2018fast,khoreva2017learning,hu2017maskrnn,jang2017online}
 refine a previous mask using feedforward models.
-Khoreva et al.~\cite{khoreva2017learning} implemented mask refinement by a
+\citet{khoreva2017learning} implemented mask refinement by a
 recurrent connection on the concatenated frame~$t-1$ output masks and frame~$t$
 RGB inputs where the recurrent connection is a VGG16.
-Oh et al.~\cite{oh2018fast} extended recurrent mask refinement by concatenating
+\citet{oh2018fast} extended recurrent mask refinement by concatenating
 the feature map from the first frame.
-Yang et al.~\cite{yang2018efficient} used a spatial prior on the target
+\citet{yang2018efficient} used a spatial prior on the target
 location, with channel-wise attention mechanism and meta-learning to adapt the
 network to the object given in the first frame.
-Bao et al.~\cite{bao2018cnn} propagated masks by approximate inference in an
+\citet{bao2018cnn} propagated masks by approximate inference in an
 MRF, with temporal dependencies based on optical flow, and spatial dependencies
 using a CNN\@.
 Optical flow has also been used to add motion information via jointly training
-optical flow and VOS~\cite{cheng2017segflow},
-while Jain et al.~\cite{jain2017fusionseg} and Hu et al.~\cite{hu2018motion}
+optical flow and VOS~\citep{cheng2017segflow},
+while \citet{jain2017fusionseg} and \citet{hu2018motion}
 also added motion information via optical flow.
 
 \textbf{Temporal feature propagation}
-approaches~\cite{tokmakov2017learning,xu2018youtube,hu2017maskrnn,salvador2017recurrent}
+approaches~\citep{tokmakov2017learning,xu2018youtube,hu2017maskrnn,salvador2017recurrent}
 improve upon mask refinement methods by increasing the expressive power of the
 mask feature representation.
 At the time of writing, all temporal feature propagation methods have used RNNs
 to encode and propagate spatiotemporal representations through time.
-Jampani et al.~\cite{jampani2017video} also used spatiotemporal features to
+\citet{jampani2017video} also used spatiotemporal features to
 forward-propagate information.
 
 Our approach falls under the temporal feature propagation category.
 We use sparse attention operators to propagate features temporally in a single
 feedforward operation.
 
-% \cite{khoreva2017lucid} used TPS for data augmentation.
+% \citet{khoreva2017lucid} used TPS for data augmentation.
 
-% \cite{chen2018blazingly} and~\cite{hu2018videomatch} condition on a set of
+% \citet{chen2018blazingly} and~\citet{hu2018videomatch} condition on a set of
 % foreground and background feature vectors (?). They use KNN prediction (?).
 
-Luiten et al.~\cite{luiten2018premvos} split the task of semi-supervised object
+\citet{luiten2018premvos} split the task of semi-supervised object
 segmentation into two tasks.
 First, Luiten et al.\ generated multiple mask proposals for each frame and then
 selected and merged the masks to generate accurate and temporally consistent
 masks for the video sequences.
-In contrast to Luiten et al.~\cite{luiten2018premvos}, our approach is
+In contrast to \citet{luiten2018premvos}, our approach is
 conceptually simple, based on a single network architecture composed of
 attention operators, and we perform inference in a single end-to-end forward
 pass.
 
-Voigtlaender et al.\ proposed FEELVOS~\cite{feelvos2019} as a simple and fast
+Voigtlaender et al.\ proposed FEELVOS~\citep{feelvos2019} as a simple and fast
 method for solving the VOS problem.
 Unlike most other VOS methods, Voigtlaender et al.\ trained FEELVOS end-to-end
 using a pixel-wise embedding, along with global and local matching mechanisms
 using the reference and previous frames to generate the masks for the video
 sequence.
-Our work shares similarities with Voigtlaender et al.'s~\cite{feelvos2019} in
+Our work shares similarities with \citet{feelvos2019}'s in
 that both methods are end-to-end trainable and conceptually simple.
 Our method has the added advantages of simultaneously extracting features from
 multiple frames using attention, and using positional encodings to learn
 spatiotemporal position-aware representations.
 
-Johnander et al.~\cite{johnander2019agenerative} used a Gaussian Mixture Model
+\citet{johnander2019agenerative} used a Gaussian Mixture Model
 representation of foreground and background appearance to propagate appearance
 information forward through a video sequence.
 Appearance models are complementary to our method and we show that combining
 appearance models with SST performs better than either method individually.
 
-% No online finetuning:~\cite{jang2017online}, \cite{tsai2016video} both use
+% No online finetuning:~\citet{jang2017online}, \citet{tsai2016video} both use
 % optical flow with refinement.
-% \cite{li2018video} combined optical flow with an object proposal network using
+% \citet{li2018video} combined optical flow with an object proposal network using
 % bidirectional mask propagation and target reidentification.
-% \cite{cheng2018fast} track object parts and refine them with a similarity-based
+% \citet{cheng2018fast} track object parts and refine them with a similarity-based
 % scoring function based on the reference frame.
 
 % A generative
-% \cite{johnander2019agenerative} used a Gaussian Mixture Model representation of
+% \citet{johnander2019agenerative} used a Gaussian Mixture Model representation of
 % foreground and background appearance to propagate appearance information
 % forward through a video sequence.
 % They get a best mIoU of~$67.2\%$ on DAVIS-2017.
@@ -267,30 +267,30 @@ appearance models with SST performs better than either method individually.
 % on YouTube-VOS (overall mIoU~$66.0\%$).
 
 % % RVOS
-% \cite{ventura2019rvos} they use a spatiotemporal
-% ConvLSTM~\cite{shi2015convolutional} to learn one- and zero-shot VOS end-to-end
+% \citet{ventura2019rvos} they use a spatiotemporal
+% ConvLSTM~\citep{shi2015convolutional} to learn one- and zero-shot VOS end-to-end
 % without finetuning or additional data (e.g., object proposals).
 % On YouTube-VOS one-shot they get~$63.1\%$ and~$44.5\%$ mIoU on seen and unseen
 % classes, respectively.
 % On DAVIS-2017 one-shot they get~$48.0\%$ mIoU ($J$), and~$52.6\%$ contour
 % accuracy ($F$).
 
-% Full-frame~\cite{maninis2018video, voigtlaender2017online} vs. single
-% object~\cite{xu2018youtube}.
+% Full-frame~\citep{maninis2018video, voigtlaender2017online} vs. single
+% object~\citep{xu2018youtube}.
 
-% \cite{ren2017endtoend, romeraparedes2016recurrent} do instance segmentation by
+% \citet{ren2017endtoend, romeraparedes2016recurrent} do instance segmentation by
 % predicting a sequence of masks (i.e., spatial recurrence on the current frame).
 
-% \cite{ren2017endtoend, ventura2019rvos} use a soft IoU cost function for
+% \citet{ren2017endtoend, ventura2019rvos} use a soft IoU cost function for
 % bipartite matching using the Hungarian algorithm.
 
 % VOS using Space-Time Memory Networks
-% \cite{oh2019video}
+% \citet{oh2019video}
 
-% \cite{caelles2017one, yoon2017pixellevel, hu2018videomatch} all condition on
+% \citet{caelles2017one, yoon2017pixellevel, hu2018videomatch} all condition on
 % the reference frame mask to predict future segmentations,
-% while~\cite{oh2018fast, yang2018efficient} also utilize the previous frame.
-% Our method, like~\cite{oh2019video}, is able to combine information from any
+% while~\citet{oh2018fast, yang2018efficient} also utilize the previous frame.
+% Our method, like~\citet{oh2019video}, is able to combine information from any
 % subset of the entire sequence history.
 
 
@@ -299,29 +299,29 @@ appearance models with SST performs better than either method individually.
 % Our work builds on the feature matching literature in the calculation of our
 % correspondence scoremap.
 
-% In~\cite{rocco2017convolutional} the authors use normalized correlation to
+% In~\citet{rocco2017convolutional} the authors use normalized correlation to
 % regress the parametric deformation model.
 % We employ a similar normalized correlation similarity measure, but to define an
 % attention scoremap that we use to rank object proposals and merge semantic
 % segmentation masks produced by separate, framewise models.
 
-% In~\cite{rocco2018endtoend} the authors extend~\cite{rocco2017convolutional} to
+% In~\citet{rocco2018endtoend} the authors extend~\citet{rocco2017convolutional} to
 % paired data for which groundtruth keypoint correspondences are unknown, by
 % maximizing a soft-inlier count that is learned end-to-end with feature
 % extraction and a geometric transformation regressor.
 
-% The authors of~\cite{wang2019learning} use the cycle-consistency of time as a
+% The authors of~\citet{wang2019learning} use the cycle-consistency of time as a
 % learning signal for self-supervised training of object tracking feature
 % representations.
 
-% In~\cite{ham2016proposal} the authors use sets of object proposals to predict
+% In~\citet{ham2016proposal} the authors use sets of object proposals to predict
 % region correspondences, which are then used to create dense flow fields.
 % Our work is similar in that both works match per-frame object proposals between
-% pairs of images, however~\cite{ham2016proposal} focused on semantic flow, while
+% pairs of images, however~\citet{ham2016proposal} focused on semantic flow, while
 % we use these correspondences for the downstream task of video object
 % segmentation.
 % Furthermore, our object proposal and matching methods differ from the
-% methodology in~\cite{ham2016proposal}.
+% methodology in~\citet{ham2016proposal}.
 
 % Still TODO for Related Work: skim CVPR 2019, ICCV 2019 paper lists for VOS
 % papers.
@@ -338,7 +338,7 @@ attention modules for VOS\@.
 \label{sec:architecture}
 
 We draw parallels with the canonical text-based Transformer
-architecture~\cite{vaswani2017attention} in order to motivate our architecture.
+architecture~\citep{vaswani2017attention} in order to motivate our architecture.
 Like NLP Transformers, our architecture consists of an encoder and decoder.
 Unlike the encoder of an NLP Transformer, which takes as input embeddings
 extracted from a text sequence, our encoder's input consists of the frames of
@@ -357,10 +357,10 @@ a generic video representation stream, and an object-discriminative
 representation stream.
 We subsample the input video
 tensor~$\inputvar{} \in \real{}^{3\times T \times H\times W}$ to a fixed size
-using Temporal Segment Network (TSN) sampling~\cite{wang2016temporal} during
+using Temporal Segment Network (TSN) sampling~\citep{wang2016temporal} during
 training.
 At test time we replace subsampling with an identity function.
-A 2D ResNet~\cite{he2016deep} encodes input frames independently, before
+A 2D ResNet~\citep{he2016deep} encodes input frames independently, before
 splitting them into separate streams representing the video and individual
 objects-to-segment.
 
@@ -385,9 +385,9 @@ operator shown in Figure~\ref{fig:expandmaskproject}.
          video~$\in\real{}^{3\times T \times H\times W}$, where~$T$ is the
          total number of video frames.
          From left to right, the video is first subsampled (using TSN
-         sampling~\cite{wang2016temporal} during training) to a fixed number of
+         sampling~\citep{wang2016temporal} during training) to a fixed number of
          frames~$K$, which are processed independently by a 2D
-         ResNet~\cite{he2016deep} to produce a feature tensor~$\in
+         ResNet~\citep{he2016deep} to produce a feature tensor~$\in
          \real{}^{C\times K \times H'\times W'}$.
          The encoder then splits into two representation streams.
          The top stream encodes generic video features, and incorporates
@@ -441,7 +441,7 @@ only on the prior knowledge given in the reference frame.
 \caption{Expand-Mask-Project operator.
          We use an RGB image to visualize feature maps for clarity.
          The actual Expand-Mask-Project operator uses downsampled object masks
-         and reference features processed by a 2D ResNet~\cite{he2016deep} of
+         and reference features processed by a 2D ResNet~\citep{he2016deep} of
          stride~\num{8}.
          % TODO(brendan): replace with feature visualization from actual model
          % (e.g., SSS visualization).
@@ -485,7 +485,7 @@ In the case of multiple objects we have probability scoremaps
 in~$\real{}^{O\times 2\times K\times H\times W}$, i.e., foreground-background
 probabilities for each object for each pixel in the video, which we want to
 reduce to a tensor in~$\real{}^{K\times H\times W}$ of object integer labels.
-We use the ``na\"ive'' inference protocol~\cite{oh2018fast} and take, for each
+We use the ``na\"ive'' inference protocol~\citep{oh2018fast} and take, for each
 pixel, the argmax over all object probabilities including the background
 probability, computed as the maximum background probability over all objects.
 
@@ -545,10 +545,10 @@ with all other elements at each attention layer.
 Attention is desirable in VOS because it can capture long-range dependencies
 without recurrence, and because attention can be viewed intuitively as a
 cross-correlation operator that uses CNN features for
-correspondence~\cite{long2014correspondence}, similar to prior work that used
-matching layers for optical flow~\cite{dosovitskiy2015flownet}.
+correspondence~\citep{long2014correspondence}, similar to prior work that used
+matching layers for optical flow~\citep{dosovitskiy2015flownet}.
 
-Formally, we follow~\cite{vaswani2017attention} in defining attention as
+Formally, we follow~\citet{vaswani2017attention} in defining attention as
 
 \begin{equation}
 \mathtt{Attention}\big(\querytensor{}, \keytensor{}, \valuetensor{}\big) = \softmax{}\big(\querytensor{}\keytensor{}^\top\big)\valuetensor{},
@@ -566,7 +566,7 @@ features to do a lookup in the video features in order to update our video
 object features estimate.
 
 We adapted for VOS characteristic components of the Transformer architecture as
-described by Vaswani et al.~\cite{vaswani2017attention}, including multi-head
+described by \citet{vaswani2017attention}, including multi-head
 attention and positional encodings.
 We compare the performance of different positional encoding schemes applied to
 VOS in Section~\ref{sec:yvosablation}.
@@ -583,12 +583,12 @@ object-discriminative features~$\objfeat{}$.
 The attention operation given in Equation~\ref{eqn:attndefn} is~$O({(THW)}^2
 C)$, which poses a problem for video object segmentation since for dense
 prediction tasks such as segmentation, model performance tends to improve with
-greater input resolution~\cite{zhao2017icnet}.
+greater input resolution~\citep{zhao2017icnet}.
 As an illustration of the infeasibility of using na\"ive attention for VOS,
 consider that a single layer of attention on a~\num{16} frame video with
 a~$64\times 64$ feature map with~\num{32} channels would cost more
 than~\num{137} billion FLOPs, far more than the most computationally expensive
-CNNs in the literature at the time of writing~\cite{tan2019efficientnet}.
+CNNs in the literature at the time of writing~\citep{tan2019efficientnet}.
 
 We used two different sparse attention methods to make our attention operator
 computationally tractable at our desired framerate and resolution.
@@ -598,7 +598,7 @@ computationally tractable at our desired framerate and resolution.
 
 We adapted our first sparse attention operator from Huang et al., who also
 noted the computational complexity issue when applying attention for semantic
-segmentation~\cite{huang2018ccnet}, although in VOS the issue is exasperated
+segmentation~\citep{huang2018ccnet}, although in VOS the issue is exasperated
 further by the addition of the time dimension.
 We refer to this operator as grid attention since we have generalized it from
 two to three dimensions, where the moniker criss-cross attention is no longer
@@ -620,8 +620,8 @@ define our~$\mathtt{GridAttention}$ operator as
 \end{equation}
 
 \noindent where~$\Phi$ and~$\Omega$ are the 3D generalizations of
-the~\textbf{aggregation} and~\textbf{affinity} operations defined by Huang et
-al.~\cite{huang2018ccnet}.
+the~\textbf{aggregation} and~\textbf{affinity} operations defined by
+\citet{huang2018ccnet}.
 
 Concretely, we define affinity operator~$\Omega$ as
 
@@ -741,7 +741,7 @@ achieving our goal of making attention tractable for video.
 
 We also investigated strided attention as an alternative sparse attention
 method in addition to grid attention.
-Drawing inspiration from Child et al.~\cite{child2019sparsetransformer}, we
+Drawing inspiration from \citet{child2019sparsetransformer}, we
 propagate information by following paths of locations through sparse
 connectivity patterns in our video feature tensor.
 We define a connectivity
@@ -783,12 +783,12 @@ our training configuration where~$H, W \in \{64, 128\}$, and~$T\approx 8$.
 \subsection{Appearance Model}
 
 % Long et al.\ showed that ConvNets learn correspondence, and furthermore ConvNet
-% features can align intraclass instances~\cite{long2014correspondence}.
+% features can align intraclass instances~\citep{long2014correspondence}.
 % By using attention for VOS we leverage this correspondence property of ConvNet
 % features in order to do pixelwise tracking.  However, to adapt attention to VOS
 % we must extract representations that distinguish one object from another,
 % whereas Long et al.\ showed that intraclass ConvNet features match so well that
-% they are effective for intraclass alignment~\cite{long2014correspondence}.
+% they are effective for intraclass alignment~\citep{long2014correspondence}.
 % Therefore we introduce ``Attention in Attention'', an operator responsible for
 % adaptively adjusting object representations to become discriminative features
 % even in the presence of multiple instances of the same class.
@@ -797,7 +797,7 @@ our training configuration where~$H, W \in \{64, 128\}$, and~$T\approx 8$.
 % models of each object through inter-object attention.
 Johnander et al.\ showed that appearance models are effective for VOS,
 particularly in generalizing to classes not seen in the training
-set~\cite{johnander2019agenerative}.  Hence, following Johnander et al., we
+set~\citep{johnander2019agenerative}.  Hence, following Johnander et al., we
 define object appearance models as
 
 \begin{subequations}
@@ -861,8 +861,8 @@ the input to the self-attention block in the SST encoder.
 \label{sec:experiments}
 
 We present benchmark experiment results against state-of-the-art (SOTA) methods
-on the DAVIS 2016~\cite{perazzi2016abenchmark}, DAVIS
-2017~\cite{ponttuset2017davis}, and YouTube-VOS~\cite{xu2018youtubevos}
+on the DAVIS 2016~\citep{perazzi2016abenchmark}, DAVIS
+2017~\citep{ponttuset2017davis}, and YouTube-VOS~\citep{xu2018youtubevos}
 datasets.
 % We further analyze the effect of different sparse attention operators,
 % positional encodings, and AIA operator variations through ablation studies
@@ -875,13 +875,13 @@ positional encodings through ablation studies using YouTube-VOS\@.
 % YVOS comparison to SOTA
 
 \begin{table}
-\caption{Comparison with SOTA methods on YouTube-VOS~\cite{xu2018youtubevos}.
+\caption{Comparison with SOTA methods on YouTube-VOS~\citep{xu2018youtubevos}.
          We compute region similarity~\J{} over seen and unseen
          categories, then average those scores with contour
          accuracy~\F{} seen and unseen to get overall
          score~\G{}.
          We compute region similarity and contour accuracy as
-         in~\cite{perazzi2016abenchmark}.
+         in~\citet{perazzi2016abenchmark}.
          We distinguish methods by those that use online finetuning (O-Ft), and
          those that do not.}
 \centering
@@ -889,15 +889,15 @@ positional encodings through ablation studies using YouTube-VOS\@.
 \toprule
 Method & O-Ft & \begin{tabular}{@{}r@{}}\G{} overall \\ (\%)\end{tabular} & \begin{tabular}{@{}r@{}}\J{} seen \\ (\%)\end{tabular} & \begin{tabular}{@{}r@{}}\J{} unseen \\ (\%)\end{tabular} \\
 \midrule
-S2S~\cite{xu2018youtube} & \yesmark & 64.4 & 71.0 & 55.5 \\
-OSVOS~\cite{caelles2017one} & \yesmark & 58.8 & 59.8 & 54.2 \\
-OnAVOS~\cite{voigtlaender2017online} & \yesmark & 55.2 & 60.1 & 46.6 \\
-MSK~\cite{khoreva2017learning} & \yesmark & 53.1 & 59.9 & 45.0 \\
+S2S~\citep{xu2018youtube} & \yesmark & 64.4 & 71.0 & 55.5 \\
+OSVOS~\citep{caelles2017one} & \yesmark & 58.8 & 59.8 & 54.2 \\
+OnAVOS~\citep{voigtlaender2017online} & \yesmark & 55.2 & 60.1 & 46.6 \\
+MSK~\citep{khoreva2017learning} & \yesmark & 53.1 & 59.9 & 45.0 \\
 \addlinespace[1mm]
-OSMN~\cite{yang2018efficient} & \nomark & 51.2 & 60.0 & 40.6 \\
-S2S~\cite{xu2018youtube} & \nomark & 57.6 & 66.7 & 48.2 \\
-RGMP~\cite{oh2018fast} & \nomark & 53.8 & 59.5 & 45.2 \\
-A-GAME~\cite{johnander2019agenerative} & \nomark & 66.0 & 66.9 & \textbf{61.2} \\
+OSMN~\citep{yang2018efficient} & \nomark & 51.2 & 60.0 & 40.6 \\
+S2S~\citep{xu2018youtube} & \nomark & 57.6 & 66.7 & 48.2 \\
+RGMP~\citep{oh2018fast} & \nomark & 53.8 & 59.5 & 45.2 \\
+A-GAME~\citep{johnander2019agenerative} & \nomark & 66.0 & 66.9 & \textbf{61.2} \\
 \textbf{SST (Grid)} & \nomark & 66.5 & 67.8 & 60.2 \\
 \textbf{SST (Strided)} & \nomark & \textbf{68.1} & \textbf{69.9} & 60.8\\
 \bottomrule
@@ -905,7 +905,7 @@ A-GAME~\cite{johnander2019agenerative} & \nomark & 66.0 & 66.9 & \textbf{61.2} \
 \label{tab:sota-yvos}
 \end{table}
 
-YouTube-VOS~\cite{xu2018youtubevos} is a large scale VOS dataset comprised
+YouTube-VOS~\citep{xu2018youtubevos} is a large scale VOS dataset comprised
 of~\num{4453} YouTube video clips spanning~\num{94} object categories.
 YouTube-VOS includes an official validation set of~\num{474} videos with
 heldout labels, which can be evaluated only through an evaluation server.
@@ -913,7 +913,7 @@ The YouTube-VOS validation set contains~\num{26} object categories that are
 unique to the validation set, used to test the generalization capability of VOS
 models to object classes unseen in the training set.
 The convention is to compute region similarity~\J{} and contour accuracy~\F{}
-as defined by Perazzi et al.~\cite{perazzi2016abenchmark}.
+as defined by \citet{perazzi2016abenchmark}.
 As a single metric for comparing results, it is also customary to compute
 overall score~\G{} as the average of four values comprising region similarity
 and contour accuracy scores for seen and unseen classes.
@@ -926,8 +926,8 @@ score~\G{}, even methods that use online finetuning (denoted by O-Ft).
 Note that our unique method performs competitively against recurrent methods
 that have undergone multiple research and development cycles where one method
 builds on the foundation of another, for
-example~\cite{johnander2019agenerative} extends~\cite{oh2018fast}, which in
-turn extends~\cite{khoreva2017learning}.
+example~\citet{johnander2019agenerative} extends~\citet{oh2018fast}, which in
+turn extends~\citet{khoreva2017learning}.
 
 
 \subsection{DAVIS}
@@ -935,23 +935,23 @@ turn extends~\cite{khoreva2017learning}.
 
 % TODO(brendan): runtime comparison?
 \begin{table}
-\caption{Comparison with SOTA methods on DAVIS2017~\cite{ponttuset2017davis}.}
+\caption{Comparison with SOTA methods on DAVIS2017~\citep{ponttuset2017davis}.}
 \centering
 \begin{tabular}{lcrrr}
 \toprule
 Method & O-Ft & \begin{tabular}{@{}r@{}}\JandF{} mean \\ (\%)\end{tabular} & \begin{tabular}{@{}r@{}}\J{} \\ (\%)\end{tabular} & \begin{tabular}{@{}r@{}}\F{} \\ (\%)\end{tabular} \\
 \midrule
-CINM~\cite{bao2018cnn} & \yesmark & 70.6 & 67.2 & 74.0 \\
-OSVOS-S~\cite{maninis2018video} & \yesmark & 68.0 & 64.7 & 71.3 \\
-OnAVOS~\cite{voigtlaender2017online} & \yesmark & 65.4 & 61.6 & 69.1 \\
-OSVOS~\cite{caelles2017one} & \yesmark & 60.3 & 56.6 & 63.9 \\
+CINM~\citep{bao2018cnn} & \yesmark & 70.6 & 67.2 & 74.0 \\
+OSVOS-S~\citep{maninis2018video} & \yesmark & 68.0 & 64.7 & 71.3 \\
+OnAVOS~\citep{voigtlaender2017online} & \yesmark & 65.4 & 61.6 & 69.1 \\
+OSVOS~\citep{caelles2017one} & \yesmark & 60.3 & 56.6 & 63.9 \\
 \addlinespace[1mm]
-DyeNet~\cite{li2018video} & \nomark & 69.1 & 67.3 & 71.0 \\
-RGMP~\cite{oh2018fast} & \nomark & 66.7 & 64.8 & 68.6 \\
-VM~\cite{hu2018videomatch} & \nomark & - & 56.5 & - \\
-FAVOS~\cite{cheng2018fast} & \nomark & 58.2 & 54.6 & 61.8 \\
-OSMN~\cite{yang2018efficient} & \nomark & 54.8 & 52.5 & 57.1 \\
-A-GAME~\cite{johnander2019agenerative} & \nomark & 70.0 & 67.2 & 72.7 \\
+DyeNet~\citep{li2018video} & \nomark & 69.1 & 67.3 & 71.0 \\
+RGMP~\citep{oh2018fast} & \nomark & 66.7 & 64.8 & 68.6 \\
+VM~\citep{hu2018videomatch} & \nomark & - & 56.5 & - \\
+FAVOS~\citep{cheng2018fast} & \nomark & 58.2 & 54.6 & 61.8 \\
+OSMN~\citep{yang2018efficient} & \nomark & 54.8 & 52.5 & 57.1 \\
+A-GAME~\citep{johnander2019agenerative} & \nomark & 70.0 & 67.2 & 72.7 \\
 \textbf{SST (Strided)} & \nomark & \davisvalG & 50.5 & 55.9 \\
 \bottomrule
 \end{tabular}
@@ -961,9 +961,9 @@ A-GAME~\cite{johnander2019agenerative} & \nomark & 70.0 & 67.2 & 72.7 \\
 DAVIS2017 is the latest dataset in the DAVIS initiative to promote VOS
 research.
 DAVIS2017 comprises 150 sequences, which include 376 separately annotated
-objects~\cite{ponttuset2017davis}.
+objects~\citep{ponttuset2017davis}.
 
-We additionally evaluate our method on DAVIS2017~\cite{ponttuset2017davis}, and
+We additionally evaluate our method on DAVIS2017~\citep{ponttuset2017davis}, and
 compare our results with SOTA in Table~\ref{tab:sota-davis}.
 We report our DAVIS results following the traditionally used region
 similarity~\J{} and contour accuracy~\F{} metrics as well as their
@@ -992,7 +992,7 @@ SST's most common failure mode is confusing multiple objects of the same class
 in medium and long temporal sequence lengths.
 
 Long et al.\ showed that ConvNets learn correspondence, and furthermore ConvNet
-features can align intraclass instances~\cite{long2014correspondence}.
+features can align intraclass instances~\citep{long2014correspondence}.
 By using attention for VOS we leverage this correspondence property of ConvNet
 features in order to do pixelwise tracking.
 However, to adapt attention to VOS we must extract representations that
@@ -1011,7 +1011,7 @@ gradually with the predictions from earlier layers, instead of simply
 initializing object-discriminative and reference features with the reference
 frame.
 
-We evaluate only on DAVIS2017 and not DAVIS2016~\cite{perazzi2016abenchmark}
+We evaluate only on DAVIS2017 and not DAVIS2016~\citep{perazzi2016abenchmark}
 because DAVIS2017 is strictly a more challenging superset of DAVIS2016.
 Furthermore DAVIS2016 contains only single object annotations and therefore we
 could make only limited evaluation of SST's ability to handle multi-object
@@ -1030,13 +1030,13 @@ are useful for evaluating generalization.
 % YVOS ablation studies
 
 % \begin{table}
-% \caption{Performance decay evaluation on DAVIS2017~\cite{ponttuset2017davis}.}
+% \caption{Performance decay evaluation on DAVIS2017~\citep{ponttuset2017davis}.}
 % \centering
 % \begin{tabular}{lccr}
 % \toprule
 % Method & O-Ft & Recurrent & $\mathcal{D}$ \\
 % \midrule
-% RGMP~\cite{oh2018fast} & \nomark & \yesmark & \\
+% RGMP~\citep{oh2018fast} & \nomark & \yesmark & \\
 % \textbf{SST} & \nomark & \nomark & 0.21 \\
 % \bottomrule
 % \end{tabular}
@@ -1046,12 +1046,12 @@ are useful for evaluating generalization.
 We were motivated to use attention-based models for VOS due to spatiotemporal
 attention's ability to incorporate temporal context without incurring a decay
 in performance due to accumulating errors as is inherent to reccurent and
-optical flow methods, and also noticed by Yang et al.~\cite{yang2019anchor}.
+optical flow methods, and also noticed by \citet{yang2019anchor}.
 % We tested our hypothesis that SST alleviates the compounding error issue
 % quantitatively on DAVIS2017 with the decay~$\mathcal{D}$ metric defined by
-% Perazzi et al.~\cite{perazzi2016abenchmark}.
+% \citet{perazzi2016abenchmark}.
 % In Table~\ref{tab:decay} we compare against Oh et al.'s recurrent work
-% RGMP~\cite{oh2018fast}, and show that our method's performance is relatively
+% RGMP~\citep{oh2018fast}, and show that our method's performance is relatively
 % robust to decay with a decay of~$\mathcal{D} = 0.21$ compared with
 % RGMP's~$TODO$.
 In Figure~\ref{fig:ainaocclusion} we show a qualitative example on the
@@ -1090,7 +1090,7 @@ $T$ Sinusoidal & \num[math-rm=\mathbf]{62.6} \\
 In Table~\ref{tab:pos-encoding} we compare the performance of different
 positional encoding schemes using the overall score~\G{} on the YouTube-VOS
 validation set.
-For spatial dimensions we followed Parmar et al.~\cite{parmar2019standalone} in
+For spatial dimensions we followed \citet{parmar2019standalone} in
 using learned relative positional embeddings as the encoding, following Parmar
 et al.'s findings that relative are superior to absolute positional embeddings
 for spatial attention.
@@ -1123,8 +1123,8 @@ concatenation of three separate embeddings corresponding
 to~$\Delta_x$,~$\Delta_y$, and~$\Delta_t$.
 
 In addition to relative positional embeddings, we also investigated sinusoidal
-positional encodings for the temporal dimension, as used by Vaswani et
-al.~\cite{vaswani2017attention} in Transformers for language translation.
+positional encodings for the temporal dimension, as used by
+\citet{vaswani2017attention} in Transformers for language translation.
 We hypothesized that sinusoidal positional encodings would be superior to
 absolute positional embeddings because of the data imbalance of absolute
 temporal positions in VOS datasets, which are skewed towards lower frame
@@ -1157,7 +1157,7 @@ positional encodings for VOS\@.
 
 \begin{table}
 \caption{Comparison of sparse and dense evaluation on
-         YouTube-VOS~\cite{xu2018youtubevos} for both strided and grid sparse
+         YouTube-VOS~\citep{xu2018youtubevos} for both strided and grid sparse
          attention variants.}
 \centering
 \begin{tabular}{llr}
@@ -1173,7 +1173,7 @@ SST (Strided) & Dense & \num[math-rm=\mathbf]{68.1} \\
 \label{tab:evalsparse}
 \end{table}
 
-At training time we used TSN sampling~\cite{wang2016temporal} to subsample
+At training time we used TSN sampling~\citep{wang2016temporal} to subsample
 sequences to a fixed number of frames since backpropagation constrained our
 memory usage.
 However at test time we do not have the same memory constraint, so we have the
@@ -1199,11 +1199,11 @@ Future work in attention-based models for VOS could be analogous to Transformer
 models' progression on language translation tasks, where researchers
 successfully applied Transformers to increasingly long sequences.
 For example, Dai et al.\ combined recurrence with attention to translate
-arbitrary-length sequences~\cite{dai2019transformer}, and Kitaev et al.
+arbitrary-length sequences~\citep{dai2019transformer}, and Kitaev et al.
 introduced locality-sensitive hashing instead of dot-product attention, to
 reduce computational complexity from squared to~$O(N\log N)$ while using
 reversible networks to model arbitrary-length sequences with constant memory
-usage~\cite{kitaev2020reformer}.
+usage~\citep{kitaev2020reformer}.
 In order to evaluate VOS on long sequences the VOS community would have to
 overcome a dataset creation challenge, since the current benchmark dataset
 YouTube-VOS contains sequences with at most~\num{36} labeled frames, sampled

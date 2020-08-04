@@ -15,21 +15,21 @@ context before presenting our articles.
 \section{Deep Learning}
 
 Deep learning is a subfield of machine learning that uses a hierarchy of neural
-network layers for representation learning~\cite{lecun2015deeplearning}.
+network layers for representation learning~\citep{lecun2015deeplearning}.
 Representation learning, then, means to extract from raw data meaningful
 information in the form of vectors or tensors of real-valued numbers, called
 ``features''.
 The defining quality of deep learning is its learning of a deep hierarchy of
-representations using backpropagation~\cite{rumelhart1988learningreps}, which
+representations using backpropagation~\citep{rumelhart1988learningreps}, which
 is the term used by the deep learning community for reverse-mode automatic
-differentation~\cite{griewank2008evaluatingderivatives}.
+differentation~\citep{griewank2008evaluatingderivatives}.
 Thanks to breakthroughs in computation, data and algorithms, in recent years
 deep learning methods have made progress in domains that had previously proven
 challenging for traditional machine learning approaches.
 Today, deep learning is a top-performing approach for solving complex
 machine-learning problems including image and speech recognition, language
 translation and natural language understanding topics such as question
-answering~\cite{lecun2015deeplearning}.
+answering~\citep{lecun2015deeplearning}.
 
 We introduce feedforward neural networks (FNNs) as a simple yet concrete
 example of a deep learning model.
@@ -97,7 +97,7 @@ we have $m, n \in \{-1, 0, 1\}$.
                  True convolution in the sense of signal processing would be
                  identical to cross-correlation, except for a \ang{180}
                  rotation of the spatial slice of the kernel
-                 weights~\cite{lyons1996understandingdsp}.
+                 weights~\citep{lyons1996understandingdsp}.
                  This technicality is inconsequential in machine learning,
                  since our weight initialization techniques generally do not vary under
                  rotation, and learned weights would adapt to accomodate the
@@ -123,13 +123,13 @@ output~$\tens{Z}$.
 
 CNNs generalize well in comparison to FNNs on visual data, since the number of
 parameters are dramatically reduced compared with an equivalent FNN by sharing
-parameters in the spatial dimensions~\cite{lecun-89}. This is an example of
+parameters in the spatial dimensions~\citep{lecun-89}. This is an example of
 improving generalization of neural networks by using prior knowledge (i.e.\ in
 this case, the spatial equivariance of image data) when constructing a model
 for a given type of data.
 
 In the case of the visual question-answering task, we make use of a particular
-CNN architecture called a ResNet~\cite{he2016deep} that has~\num{152} layers.
+CNN architecture called a ResNet~\citep{he2016deep} that has~\num{152} layers.
 This CNN architecture has been pre-trained on a large dataset of image data to
 extract useful generic feature representations from images.
 The fusion operator takes this image feature representation as input, along
@@ -139,7 +139,7 @@ the posed question conditioned on the image.
 
 \section{Recurrent Neural Networks}
 
-Like CNNs, Recurrent Neural Networks~(RNNs)~\cite{rumelhart1986learning} are a
+Like CNNs, Recurrent Neural Networks~(RNNs)~\citep{rumelhart1986learning} are a
 type of neural network model that has been designed using prior knowledge of
 the type of data distribution relevant to the given task.
 In particular, RNNs are designed to work on sequential data of arbitrary
@@ -181,7 +181,7 @@ i.e.\ $\vect{h}{t} = f(\vect{a}{t})$, where $f$ is usually~$\tanh$.
 
 \section{Skip-Thought Vectors}
 
-Skip-thought vectors~\cite{kiros2015skip} is a method of encoding a feature
+Skip-thought vectors~\citep{kiros2015skip} is a method of encoding a feature
 representation from a sentence, in such a way that the feature representation
 can be re-used as a generic, continuous sentence representation in a variety of
 tasks.
@@ -191,7 +191,7 @@ predict words in the sentences immediately preceding and following the current
 sentence.
 
 As their basic neural network component, skip-thought vectors use a type of RNN
-called a Gated Recurrent Unit (GRU)~\cite{cho2014ontheproperties}.
+called a Gated Recurrent Unit (GRU)~\citep{cho2014ontheproperties}.
 Vanilla RNNs typically propagate information forward through time through an
 alternating sequence of affine transformations and saturating nonlinearities.
 In backpropagation through the resulting vanilla RNN computation graph,
@@ -199,8 +199,8 @@ gradients must sequentially traverse as many saturating nonlinearities as there
 are timesteps, which causes the vanishing gradient problem.
 Cho et al.\ designed GRUs to improve over the vanilla RNN activation
 function in order to alleviate vanishing gradients in
-RNNs~\cite{cho2014ontheproperties} using a similar mechanism to
-skip-connections, which improve gradient flow in ResNets~\cite{he2016deep}.
+RNNs~\citep{cho2014ontheproperties} using a similar mechanism to
+skip-connections, which improve gradient flow in ResNets~\citep{he2016deep}.
 Just as skip-connections compute each layer's activation as the weighted sum of
 its input and a function of that input, GRUs do the same for each timestep's
 activation.
@@ -266,21 +266,21 @@ In vision, attention is motivated by the human fovea, which is responsible for
 our sharp central vision used for demanding vision tasks such as driving and
 reading.
 In natural language, we structure our sentences differently depending on which
-cues in our environment capture our focus~\cite{myachykov2005attention}.
+cues in our environment capture our focus~\citep{myachykov2005attention}.
 
 The deep learning community drew inspiration from the importance of attention
 in human perception, with early work using Boltzmann machines to combine foveal
-glimpses~\cite{larochelle2010learning}, and using foveated images for
-recognition and tracking~\cite{denil2012learning}.
+glimpses~\citep{larochelle2010learning}, and using foveated images for
+recognition and tracking~\citep{denil2012learning}.
 Graves used differentiable attention in the form of weights of a mixture of
-Gaussians over shifts for handwriting synthesis~\cite{graves2013generating}.
+Gaussians over shifts for handwriting synthesis~\citep{graves2013generating}.
 Mnih et al.\ used non-differentiable attention trained with reinforcement
 learning to perform classification with reduced computation by observing only
-predicted regions of an image~\cite{mnih2014recurrent}.
+predicted regions of an image~\citep{mnih2014recurrent}.
 Bahdanau et al.\ introduced attention models for neural machine translation,
 by predicting a set of weights~$(\alpha_1, \dots, \alpha_t)$ over the sequence
 of hidden state vectors~$(h_1, \dots, h_t)$ over~$t$ timesteps output by an
-encoder-decoder architecture~\cite{cho2014ontheproperties}.
+encoder-decoder architecture~\citep{cho2014ontheproperties}.
 
 In the following we describe mathematically the attention operator relevant to
 this thesis.
@@ -301,8 +301,8 @@ a linear combination of a third sequence~$V \equiv (v_1, \dots, v_{t_2})$ whose
 weights in the linear combination depend on the affinity between pairs of
 vectors in~$Q$ and~$K$.
 
-In their work introducing Transformers for NLP tasks, Vaswani et
-al.~\cite{vaswani2017attention} interpreted attention in the framework of data
+In their work introducing Transformers for NLP tasks,
+\citet{vaswani2017attention} interpreted attention in the framework of data
 retrieval, and we follow their perspective here.
 An attention layer retrieves vector elements of the value~$V$ based on the
 similarity of a query vector element from~$Q$ with the key vector from~$K$ that
@@ -320,7 +320,7 @@ vector~$k_i$.
 Vaswani et al.\ refer to the similarity between query and key as attention's
 ``compatibility function''.
 One possible compatibility function would be the ``additive alignment model''
-used by Bahdanau et al.~\cite{bahdanau2015neuralmt}, which computes
+used by \citet{bahdanau2015neuralmt}, which computes
 compatibility by concatenating query and key and using this concatenated vector
 as input to a feedforward neural network.
 Another possibility is to use a dot-product compatibility function, which
@@ -366,7 +366,7 @@ We illustrate multi-head attention in Figure~\ref{fig:background:multiheadattn}.
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/multihead-attention.pdf}
 \caption{Multi-head attention.
-         Adapted from Vaswani et al.~\cite{vaswani2017attention}.}
+         Adapted from \citet{vaswani2017attention}.}
 \label{fig:background:multiheadattn}
 \end{figure}
 
@@ -408,9 +408,8 @@ and attention networks are translation equivariant and require injection of
 position information to perform position-dependent tasks such as
 sequence-to-sequence learning.
 Following Gehring et al.'s use of positional encodings for convolutional
-sequence-to-sequence networks~\cite{gehring2017convolutional}, in Transformers
-Vaswani et al.~\cite{vaswani2017attention} introduced positional encodings to
-attention.
+sequence-to-sequence networks~\citep{gehring2017convolutional}, in Transformers
+\citet{vaswani2017attention} introduced positional encodings to attention.
 
 Positional encoding means adding to each key vector another vector with encoded
 positional information.
@@ -456,7 +455,7 @@ to~\num{10000}.
 \section{Fusion}
 
 We refer to a topic specific to multimodal applications as fusion.
-Following Lahat et al.'s definition~\cite{Lahat2015MultimodalDF}, multimodal
+Following Lahat et al.'s definition~\citep{Lahat2015MultimodalDF}, multimodal
 applications involve observing a single phenomenon using data collected from
 multiple distinct sensors.
 We refer to the raw stream of data collected from each sensor as a modality.
@@ -464,15 +463,15 @@ For example, we could treat a video as a multimodal application by making use
 of RGB video frames, extracted optical flow and audio as input.
 Autonomous driving also makes use of multimodal fusion to combine information
 collected from multiple sensors, including LiDAR, radar, and camera
-sensors~\cite{Feng2019DeepMO}.
+sensors~\citep{Feng2019DeepMO}.
 
 Multimodal fusion refers to the technique by which information extracted from
 these multiple raw data streams is combined.
 Using fusion holds the promise of producing superior predictions by leveraging
 the complementary information contained in separate data streams.
-As an example proposed by Kazakos et al.~\cite{kazakos2019TBN}, consider an
-egocentric action recognition system that is given as input a video of a person
-at a kitchen sink.
+As an example proposed by~\citet{kazakos2019TBN}, consider an egocentric action
+recognition system that is given as input a video of a person at a kitchen
+sink.
 When the sink tap is occluded, the audio signal provides a discriminative cue
 for the actions ``turn tap on'' and ``turn tap off''.
 On the other hand, video input would be more useful for predicting ``wiping
@@ -481,19 +480,19 @@ Hence, in this case multiple sensors provide the multimodal action recognition
 system with complementary inputs leading to superior predictions.
 
 Traditional multimodal fusion researcher categorize multimodal fusion
-techniques into early and late fusion~\cite{ramachandram2017deepmultimodal}.
+techniques into early and late fusion~\citep{ramachandram2017deepmultimodal}.
 Early fusion involves combining modalities at the data level, which proves
 challenging particularly for data drawn from sensors that may have different
 sampling rates or resolutions.
 Late fusion became popular in the early 2000s with the rise of ensemble
-classifiers~\cite{kuncheva2004combining}.
+classifiers~\citep{kuncheva2004combining}.
 Compared with early fusion, late fusion proves easier to implement, while
 removing the need to retrain models pretrained on each modality, since late
 fusion combines modalities at the prediction level.
 
 Deep learning introduced a third category of multimodal fusion, ``intermediate
 fusion'', made possible due to deep learning models' hierarchical
-representations~\cite{ramachandram2017deepmultimodal}.
+representations~\citep{ramachandram2017deepmultimodal}.
 Since deep learning models have many layers, which collectively output a
 hierarchical feature representation, deep models offer a flexible method for
 performing fusion since representations from different modalities can be fused
@@ -514,12 +513,12 @@ make taking their affine combination an unfavourable fusion strategy.
 In general, the subject of designing fusion operators that form effective
 priors for combining modalities for a given task is a topic of active research.
 Fusion operators are an important component, for example, in the visual
-question answering (VQA)~\cite{fukui2016multimodalCB} and image hashtag
-prediction~\cite{durand2020learninguserreps} domains.
+question answering (VQA)~\citep{fukui2016multimodalCB} and image hashtag
+prediction~\citep{durand2020learninguserreps} domains.
 Standard fusion operators include elementwise sum and product, and
 concatenation.
 Examples of research into more complex fusion operators include
-MCB~\cite{fukui2016multimodalCB}, MUTAN~\cite{ben2017mutan},
-GLU~\cite{dauphin2017languagemodeling} and TIRG~\cite{vo2019composing}.
+MCB~\citep{fukui2016multimodalCB}, MUTAN~\citep{ben2017mutan},
+GLU~\citep{dauphin2017languagemodeling} and TIRG~\citep{vo2019composing}.
 Designing a search space over multimodal fusion operators for VQA is the topic
 of our first article.

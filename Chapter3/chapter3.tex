@@ -53,11 +53,11 @@ class of fusion operators:
 We propose that the task of model selection applied to multimodal
 problem domains can be improved by using automated architecture search techniques.
 Reinforcement learning has been used to conduct automated search for neural
-network architectures~\cite{zoph2016neural}, gradient
-descent optimizers~\cite{bello2017neural} and activation
-functions~\cite{ramachandran2017searching}. Other options for architecture
-search include evolutionary optimization~\cite{liu2018hierarchical}, Bayesian
-optimization~\cite{malkomes2016bayesian}, and gradient descent-based methods.
+network architectures~\citep{zoph2016neural}, gradient
+descent optimizers~\citep{bello2017neural} and activation
+functions~\citep{ramachandran2017searching}. Other options for architecture
+search include evolutionary optimization~\citep{liu2018hierarchical}, Bayesian
+optimization~\citep{malkomes2016bayesian}, and gradient descent-based methods.
 
 We contribute to multimodal model selection by describing a generalized class
 of fusion operators that can be used as a design space for many of the
@@ -80,16 +80,16 @@ Current research in multimodal fusion for VQA focuses
 on performance improvements by approximating a bilinear product between a
 feature vector~$\q$ extracted from the question, and a feature vector~$\v$
 extracted from the
-image~\cite{fukui2016multimodalCB, Kim2017, ben2017mutan}.  The feature
+image~\citep{fukui2016multimodalCB, Kim2017, ben2017mutan}.  The feature
 vectors $\q$ and $\v$ can be produced by pre-trained feature extraction methods
 specific to encoding information from the sentence and image modalities into
 vector representations.
 
 In the experimental design of this work, as well as in the work
-of~\cite{Kim2017} and~\cite{ben2017mutan}, a pre-trained Residual Network
-model~\cite{he2016deep} is used as a feature extractor for the image data
+of~\citet{Kim2017} and~\citet{ben2017mutan}, a pre-trained Residual Network
+model~\citep{he2016deep} is used as a feature extractor for the image data
 stream, and a pre-trained Skip-Thought
-Vectors~\cite{kiros2015skip} model is used to extract features from the
+Vectors~\citep{kiros2015skip} model is used to extract features from the
 sentence data stream.
 
 In general, we define a fusion operator for the VQA task as a function
@@ -104,8 +104,8 @@ the answer~$y$ conditional on~$\q$ and~$\v$:
 \label{eqn:general-fusion-op}
 \end{equation}
 
-The methods of~\cite{fukui2016multimodalCB},
-\cite{Kim2017} and~\cite{ben2017mutan} all propose that in the multimodal
+The methods of~\citet{fukui2016multimodalCB},
+\citet{Kim2017} and~\citet{ben2017mutan} all propose that in the multimodal
 application of VQA, the outer product of the feature
 vector~$\q$ extracted from the question, with the feature vector~$\v$ extracted
 from the image, produces a more expressive feature representation than
@@ -113,26 +113,26 @@ straightforward concatenation, element-wise product, or element-wise sum. These 
 to the outer product~$\q \otimes \v$.
 
 The Multimodal Compact Bilinear Pooling (MCB) method
-of~\cite{fukui2016multimodalCB} uses the Compact Bilinear Pooling
-method of~\cite{gao2016compact} to approximate a bilinear interaction between
+of~\citet{fukui2016multimodalCB} uses the Compact Bilinear Pooling
+method of~\citet{gao2016compact} to approximate a bilinear interaction between
 $\q$ and $\v$. In the case of MCB, the fusion operator~$\fusop$ consists of
 projecting~$\q$ and~$\v$ using Count
-Sketch~\cite{Charikar:2002:FFI:646255.684566}, followed by convolution of~$\q$
+Sketch~\citep{Charikar:2002:FFI:646255.684566}, followed by convolution of~$\q$
 and~$\v$, which is done efficiently using an element-wise multiplication in
 the frequency domain.
 
 The MCB method makes use of the fact that the Count Sketch of the outer
 product~$\Psi(\q \otimes \v \,, h \,, s)$, where~$h$ and~$s$ are uniform random
-variables as described in~\cite{fukui2016multimodalCB}, is equal in
+variables as described in~\citet{fukui2016multimodalCB}, is equal in
 expectation to the convolution~$\Psi(\q \,, h \,, s) * \Psi(\v \,, h \,, s)$ of
 the question and visual feature representations,
 i.e.,
 $E[\Psi(\q \otimes \v \,, h \,, s)] = E[\Psi(\q \,, h \,, s) * \Psi(\v \,, h \,, s)]$.
 However, since this expectation is intractable to
-compute,~\cite{Kim2017} proposes a fusion operator based on the Hadamard
+compute,~\citet{Kim2017} proposes a fusion operator based on the Hadamard
 (element-wise) product.
 
-The fusion operator in~\cite{Kim2017}, the Multimodal Low-rank Bilinear
+The fusion operator in~\citet{Kim2017}, the Multimodal Low-rank Bilinear
 Attention Networks~(MLB), uses the Hadamard product coupled with projections
 of~$\q$ and~$\v$ with learned weight matrices~$W_\q$ and~$W_\v$, in order to
 make a low-rank approximation to the general outer product~$\q \otimes \v$. The
@@ -144,12 +144,12 @@ matrices~$W_\q$, $W_\v$ and~$W_{\z}$ approximate the general weight tensor~$\T$
 corresponding to the bilinear interaction between~$\q$ and~$\v$ in the special
 case where~$\T$ is of low rank. The idea of using a constrained-rank weight
 tensor in the outer product~$\q \otimes \v$ is the same idea used in the MUTAN
-fusion operator of~\cite{ben2017mutan}, which generalizes MLB by allowing the
+fusion operator of~\citet{ben2017mutan}, which generalizes MLB by allowing the
 bilinear interaction tensor between~$\q$ and~$\v$ to be of rank $R$.
 
 MUTAN is a fusion operator that is motivated
-in~\cite{ben2017mutan} by the Tucker
-decomposition~\cite{kolda2009tensor}, which we discuss in
+in~\citet{ben2017mutan} by the Tucker
+decomposition~\citep{kolda2009tensor}, which we discuss in
 Section~\ref{sec:tucker}. In Section~\ref{sec:model}, we derive the form of
 bilinear interaction used by the MUTAN fusion operator from the definition of
 the Tucker decomposition, since we base our fusion operator models on this
@@ -184,7 +184,7 @@ operator to an interaction tensor of rank~$R$, and therefore is,
 \end{figure}
 
 The Tucker decomposition is a form of higher-order principal component
-analysis~\cite{kolda2009tensor}, which decomposes a tensor into a series of
+analysis~\citep{kolda2009tensor}, which decomposes a tensor into a series of
 three $n$-mode tensor products between a single core tensor~$\T_c$ and three
 matrices:
 
@@ -205,7 +205,7 @@ size~$\TsizeIn{J}$.
 In our special case, where we have an $n$-mode product between~$\T$ and a
 vector~$\z$, the size of~$\T \times_n \z$ becomes~$\TsizeIn{1}$. The mode-$n$
 ``fiber'', referring to the generalization of rows and columns of matrices to
-higher-order tensors as defined in~\cite{kolda2009tensor},~$\Tfibre$ of~$\T$
+higher-order tensors as defined in~\citet{kolda2009tensor},~$\Tfibre$ of~$\T$
 along~$I_n$ becomes a single element resulting from the dot product
 of~$\Tfibre$ with~$\z$.
 
@@ -244,7 +244,7 @@ which we instantiated and evaluated a range of specific instances.
 
 \subsection{Data}
 
-The VQA~1.0 dataset~\cite{VQA} is a dataset of ``free-form and open-ended
+The VQA~1.0 dataset~\citep{VQA} is a dataset of ``free-form and open-ended
 Visual Question Answering (VQA)''. The VQA task is to give an open-ended
 natural language reponse to an input consisting of a natural language question
 and an image. In VQA~1.0, there are~\num{23234} unique one-word answers for
@@ -253,14 +253,14 @@ choice over these answers. In practice, we limit the number of choices to the
 top~\num{2000} most common answers in the training dataset.
 
 The VQA~1.0 real images dataset consists of~\num{204}K images from the MSCOCO
-dataset~\cite{kolda2009tensor},~\num{614}K questions, and~\num{6}M answers (ten
+dataset~\citep{lin2014microsoft},~\num{614}K questions, and~\num{6}M answers (ten
 answers per question). The dataset is separated into a~$2/1/2$
 training/validation/test split by the VQA~1.0 authors.
 
 It is known that due to the data collection methodology of the VQA~1.0 dataset,
 there exists an imbalance in the dataset that allows questions to be answered
 with high accuracy without taking the image into
-account; this is remedied with VQA~2.0~\cite{goyal2017making}, which balances the answers to each
+account; this is remedied with VQA~2.0~\citep{goyal2017making}, which balances the answers to each
 question, so that the best scores on the VQA~2.0 dataset are not possible using
 language priors alone.
 
@@ -277,7 +277,7 @@ importance of the combination of visual and question features creates a larger
 gap between relatively strong and weak fusion operators, i.e., the performance
 gap between strong and weak fusion operators increases when moving from VQA~1.0
 to VQA~2.0, even when the absolute performance decreases for
-both models under consideration~\cite{goyal2017making}. Therefore, we evaluate
+both models under consideration~\citep{goyal2017making}. Therefore, we evaluate
 our proposed fusion operators on VQA~2.0.
 % TODO(brendan): Experiments using VQA 2.0.
 
@@ -288,7 +288,7 @@ our proposed fusion operators on VQA~2.0.
 \begin{figure*}[!t]
 \centering
 \input{Figures/mutan-ours.tikz}
-\caption{A comparison between the MUTAN fusion operator of~\cite{ben2017mutan}
+\caption{A comparison between the MUTAN fusion operator of~\citet{ben2017mutan}
          (top) and our generalized fusion operator (bottom). Both MUTAN and our
          fusion operator take the features~$M_r\mutanfeat{q}$
          and~$N_r\mutanfeat{v}$ as input. MUTAN approximates the Tucker
@@ -314,12 +314,12 @@ our proposed fusion operators on VQA~2.0.
 \label{fig:mutan-ours}
 \end{figure*}
 
-Following the work of~\cite{Kim2017} and~\cite{ben2017mutan}, we represent the
+Following the work of~\citet{Kim2017} and~\citet{ben2017mutan}, we represent the
 sentence and visual modalities with extracted feature vectors. We use a
-pre-trained Skip-Thought Vectors model~\cite{kiros2015skip}
+pre-trained Skip-Thought Vectors model~\citep{kiros2015skip}
 to extract a ``question vector'' feature representation~$\q$ from a question.
-As well, we use a ResNet~\cite{he2016deep} pre-trained on
-ImageNet~\cite{russakovsky2015imagenet} to extract a ``visual vector'' feature
+As well, we use a ResNet~\citep{he2016deep} pre-trained on
+ImageNet~\citep{russakovsky2015imagenet} to extract a ``visual vector'' feature
 representation~$\v$ from an image.
 
 For the purpose of this article, the Skip-Thought Vectors model and ResNet can
@@ -334,8 +334,8 @@ the ResNet model extracts a~$d_v \times S \times S$ tensor from the image,
 where~$S$ is the pre-pooling spatial dimension of the feature maps produced by
 the ResNet.
 
-The MUTAN fusion operator of~\cite{ben2017mutan} and MLB fusion operator
-of~\cite{Kim2017} combine the image and sentence feature vectors by
+The MUTAN fusion operator of~\citet{ben2017mutan} and MLB fusion operator
+of~\citet{Kim2017} combine the image and sentence feature vectors by
 approximating a bilinear interaction between the vectors. The bilinear
 interaction is learned, and the output of that interaction is input into a
 linear predictive layer, which is in turn fed into a softmax layer that outputs
@@ -347,7 +347,7 @@ all be represented in a common form.
 
 We derive our fusion operator as a generalization of the MUTAN fusion operator
 by first deriving MUTAN from the definition of the Tucker
-decomposition~\cite{kolda2009tensor}, then discussing the generalization of
+decomposition~\citep{kolda2009tensor}, then discussing the generalization of
 this expression.  We begin from the definition of the Tucker decomposition
 given in Equation~\ref{eqn:tucker-defn}.
 
@@ -396,7 +396,7 @@ of~$\mutanfeat{q}$ and~$\mutanfeat{v}$, and slices of~$\T_c$.
 \label{eqn:tucker-core-tensor-expanded}
 \end{align}
 
-The constraint enforced by~\cite{ben2017mutan} in MUTAN is that each slice of
+The constraint enforced by~\citet{ben2017mutan} in MUTAN is that each slice of
 the core tensor, i.e.,~$\T_c[:, :, k]$, must be of rank~$R$, and therefore a sum
 of matrices each given by an outer product of vectors. Therefore,
 
@@ -437,7 +437,7 @@ vectors $\m_r^k$ and $\n_r^k$, respectively.
 
 We have presented an equivalent form of the MUTAN fusion operator in
 Equation~\ref{eqn:tucker-decomp-hadamard}, of which the MLB fusion operator
-of~\cite{Kim2017} is a special case where~$R = 1$. In this article, we propose a
+of~\citet{Kim2017} is a special case where~$R = 1$. In this article, we propose a
 further generalized extension to Equation~\ref{eqn:tucker-decomp-hadamard}, by
 allowing the fusion operator to contain the following transformations:
 
@@ -455,7 +455,7 @@ allowing the fusion operator to contain the following transformations:
                 input, thereby introducing additional nonlinearity into the
                 fusion operator.
 
-        \item Skip connections~\cite{he2016deep, srivastava2015training} may
+        \item Skip connections~\citep{he2016deep, srivastava2015training} may
                 exist between the inputs to the fusion operator, the outputs of
                 any given neural network layer~$\phi_j$ in the fusion operator,
                 and the inputs to any other neural network layer~$\phi_k$, or
@@ -537,13 +537,13 @@ Section~\ref{sec:model}. We then demonstrate the degree to which the
 extensions' performance gains are complementary.
 
 In all of the following experiments, the Adam
-optimizer~\cite{kingma2014adam} is used to train each model with a learning
+optimizer~\citep{kingma2014adam} is used to train each model with a learning
 rate of~$10^{-4}$. The models are trained for~\num{100} epochs. For the validation
 set, models with the best validation accuracy are selected. For the test-dev
 set, the model parameters used to generate test-dev predictions correspond to
 the early-stopping epoch determined from the validation set.
 
-Following the hyperparameter settings of~\cite{ben2017mutan}, the number of
+Following the hyperparameter settings of~\citet{ben2017mutan}, the number of
 branches used in the fusion operator is~$R = 5$. The dimensionality of the
 question vector~$\q$ is the default for uni-skip Skip-Thought Vectors~$d_q =
 2400$, while the visual vector~$\v$ is the~$d_v = 2048$ dimensional output of a
@@ -559,8 +559,8 @@ To test the contribution of using a variety of activation functions per branch
 of the fusion operator, we first conducted a grid search over possible
 combinations where each~$f_{rq}$ and~$f_{rv}$ was drawn uniformly from the
 following set of candidate nonlinearities: identity function, leaky
-ReLU~\cite{maas_rectified_nonlinearities},
-SeLU~\cite{klambauer2017self}, sigmoid, and tanh. We subsampled the VQA~1.0
+ReLU~\citep{maas_rectified_nonlinearities},
+SeLU~\citep{klambauer2017self}, sigmoid, and tanh. We subsampled the VQA~1.0
 dataset and ran a grid search with each run lasting only~\num{5} epochs in
 order to quickly observe many combinations of nonlinear activation function
 pairs.
@@ -584,7 +584,7 @@ In order to allow for a nonlinear function to act on the bilinear features
 extracted by the Hadamard product between~$M_r\mutanfeat{q}$
 and~$N_r\mutanfeat{v}$, we propose adding a neural network~$\Phi_r$ to the
 fusion operator. We embed a ``tiny'' neural network in the fusion operator
-analogous to how Network in Network~\cite{lin2013network} embeds a tiny neural
+analogous to how Network in Network~\citep{lin2013network} embeds a tiny neural
 network in a convolution.
 
 In our implementation, $\Phi_r$ consists of a sequence of blocks of three
@@ -671,7 +671,7 @@ static components in the model.
 \begin{tabular}{rc}
 \textbf{Model} & \textbf{VQA 1.0 val} \\
 \midrule
-MUTAN~\cite{ben2017mutan} & 61.54 \\
+MUTAN~\citep{ben2017mutan} & 61.54 \\
 \midrule
 Nonlinearity Ensembling (NE) & 61.66 \\
 Feature Gating (FG) & 61.72 \\
@@ -703,7 +703,7 @@ set to evaluate different post-fusion neural network architectures. We find
 that a post-fusion neural network with six layers and~\num{128} hidden units
 per layer outperforms the NE + FG model by a margin of~$0.53$ percentage
 points, improving the VQA~2.0 validation open-ended accuracy (as defined
-in~\cite{goyal2017making}) from~$60.57\%$ to~$61.1\%$. We find that with the
+in~\citet{goyal2017making}) from~$60.57\%$ to~$61.1\%$. We find that with the
 low number of~\num{128} hidden units, dropout is detrimental to the accuracy,
 and the best model does not use dropout.
 
@@ -712,12 +712,12 @@ and the best model does not use dropout.
 In Table~\ref{tab:sota-comparison}, we evaluate our best model on the VQA~2.0
 test-dev and test-std sets, and compare to previous state of the art models
 upon which our work is based, as well as to the best models
-of~\cite{teney2017tips}, the winners of the 2017 VQA challenge. We
+of~\citet{teney2017tips}, the winners of the 2017 VQA challenge. We
 find that our best model achieves an absolute percentage point improvement
-of~$1.1\%$ over the strong baseline of~\cite{ben2017mutan}. We note that the
+of~$1.1\%$ over the strong baseline of~\citet{ben2017mutan}. We note that the
 improvement in open-ended accuracy of our model on the test-dev set is
 significantly larger in magnitude when compared to the improvement
-of~\cite{ben2017mutan} over~\cite{fukui2016multimodalCB}. We attribute
+of~\citet{ben2017mutan} over~\citet{fukui2016multimodalCB}. We attribute
 our relatively large improvement in accuracy to the introduction of
 nonlinearities in the fusion operator. The nonlinearities both allow the fusion
 operator to ensemble nonlinear functions of the input features (via
@@ -726,17 +726,17 @@ bilinear features extracted by the Hadamard product (via the post-fusion neural
 networks).
 
 When comparing our model's performance to that of the models
-of~\cite{teney2017tips} in Table~\ref{tab:sota-comparison}, we note that the
-best performing models of~\cite{teney2017tips} gain a significant performance
+of~\citet{teney2017tips} in Table~\ref{tab:sota-comparison}, we note that the
+best performing models of~\citet{teney2017tips} gain a significant performance
 boost from using superior image features for the VQA task. In
-particular,~\cite{teney2017tips} use bottom-up
-attention~\cite{anderson2017bottom}, which makes use of a Faster
-R-CNN~\cite{ren2015faster} pipeline, to obtain features from object proposal
+particular,~\citet{teney2017tips} use bottom-up
+attention~\citep{anderson2017bottom}, which makes use of a Faster
+R-CNN~\citep{ren2015faster} pipeline, to obtain features from object proposal
 regions of an image. Bottom-up attention features improve the models
-of~\cite{teney2017tips} by~$\approx 3\%$ absolute percentage points on average,
+of~\citet{teney2017tips} by~$\approx 3\%$ absolute percentage points on average,
 and since our contribution focuses solely on improving the fusion operator, our
 model should gain similar improvements from using bottom-up attention features.
-The multimodal fusion operator used in~\cite{teney2017tips} is a Hadamard
+The multimodal fusion operator used in~\citet{teney2017tips} is a Hadamard
 product, as in MLB\@.
 
 \begin{table*}[!t]
@@ -757,10 +757,10 @@ Ours (single) & 64.22 & 81.19 & 40.95 & 55.05 & & 64.64 & 81.62 & 41.19 & 55.22 
 \end{tabular}
 \label{tab:sota-comparison}
 \end{table*}
-\footnotetext[1]{\cite{fukui2016multimodalCB} as reported in~\cite{goyal2017making}}
-\footnotetext[2]{\cite{ben2017mutan} as trained and evaluated by us}
-\footnotetext[3]{ResNet features~$7 \times 7$ (single)~\cite{teney2017tips}}
-\footnotetext[4]{Bottom-up attention image features, adaptive~$K$ (single)~\cite{teney2017tips}}
+\footnotetext[1]{\citet{fukui2016multimodalCB} as reported in~\citet{goyal2017making}}
+\footnotetext[2]{\citet{ben2017mutan} as trained and evaluated by us}
+\footnotetext[3]{ResNet features~$7 \times 7$ (single)~\citep{teney2017tips}}
+\footnotetext[4]{Bottom-up attention image features, adaptive~$K$ (single)~\citep{teney2017tips}}
 
 
 \section{Conclusion and Future Work}

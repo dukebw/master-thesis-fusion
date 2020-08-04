@@ -11,7 +11,7 @@ The idea for conducting architecture search in the design space of fusion
 operators came principally from Graham Taylor, precipitated by our prior work
 on fusing pose, optical flow, depth and RGB modalities for action recognition.
 I devised the particular search space design for visual question answer fusion
-operators, motivated by adding nonlinearity to MUTAN~\cite{ben2017mutan}, and
+operators, motivated by adding nonlinearity to MUTAN~\citep{ben2017mutan}, and
 conducted all experiments.
 I wrote the manuscript with the assistance of Graham Taylor.
 
@@ -25,15 +25,15 @@ pretrained feature extractors: pre-trained CNNs and RNNs were used to extract
 features from image and question, respectively.
 These early works used simple fusion operators such as elementwise sum and
 product, or concatenation, until Fukui et al.\ showed that more complex fusion
-operators can outperform simple fusion~\cite{fukui2016multimodalCB}.
+operators can outperform simple fusion~\citep{fukui2016multimodalCB}.
 Fukui et al.'s work spawned further work exploring fusion operator design for
-VQA~\cite{Kim2017, ben2017mutan}, and all of this model design was done
+VQA~\citep{Kim2017, ben2017mutan}, and all of this model design was done
 manually.
 
 In parallel, Zoph et al.\ showed that neural architecture
 search (NAS), an automatic method for searching for neural network models, is
 capable of producing architectures even superior to highly tuned image
-classification and language models~\cite{zoph2016neural}.
+classification and language models~\citep{zoph2016neural}.
 By creating a design space of architectures to search over automatically, NAS
 is capable of discovering complex architectures that would be difficult to
 propose manually.
@@ -63,4 +63,4 @@ We were recognized with a ``Best Computer Vision Paper'' award at the 2018
 Computer and Robot Vision Conference for our work.
 Perez-Rua et al.\ published a paper investigating multimodal fusion architecture
 search, the core motivation for our paper, at CVPR
-2019~\cite{Perez-Rua2019mfas}.
+2019~\citep{Perez-Rua2019mfas}.
