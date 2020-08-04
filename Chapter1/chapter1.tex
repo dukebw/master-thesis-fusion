@@ -149,16 +149,31 @@ paragraphs.
 
 Instead of sharing parameters spatially as in CNNs, RNNs share parameters over
 time.
-The pre-activation~$\vect{a}{t}$ at each timestep~$t$ is constructed from
-both the ``hidden state'' from the previous timestep~$\vect{h}{t - 1}$ as well
-as the input~$\vect{x}{t}$ of the current timestep, as given by
-Equation~\ref{eqn:vanilla-rnn}.
+RNNs compute on variable-length sequence recursively, by computing a ``hidden
+state''~$\vect{h}{t}$ activation at each timestep of an input sequence using
+the input from the current timestep and the hidden state of the previous
+timestep.
+Formally,
+\begin{equation}
+\vect{h}{t} = \phi\big(\vect{h}{t - 1}, \vect{x}{t}\big),
+\label{eqn:highlevel-rnn}
+\end{equation}
+where~$\phi$ represents the function defined by a particular recurrent unit.
+
+In its basic form, the vanilla RNN,~$\phi$ may be as simple as the~$\tanh$ or
+sigmoid nonlinearity of an affine combination of~$\vect{h}{t - 1}$
+and~$\vect{x}{t}$.
+In this vanilla RNN case, the pre-activation~$\vect{a}{t}$ at each timestep~$t$
+is constructed from both the hidden state from the previous
+timestep~$\vect{h}{t - 1}$ as well as the input~$\vect{x}{t}$ of the current
+timestep, as given by Equation~\ref{eqn:vanilla-rnn},
 
 \begin{equation}
-        \vect{a}{t} = \matr{W}\vect{h}{t - 1} + \matr{U}\vect{x}{t} + \vec{b}
+        \vect{a}{t} = \matr{W}\vect{h}{t - 1} + \matr{U}\vect{x}{t} + \vec{b},
 \label{eqn:vanilla-rnn}
 \end{equation}
-
+where~$\matr{W}$,~$\matr{U}$ and~$\vec{b}$ are the shared parameters of the
+RNN\@.
 The hidden state~$\vect{h}{t}$ is related to the pre-activation~$\vect{a}{t}$
 of a given timestep~$t$ by the link function $f$,
 i.e.\ $\vect{h}{t} = f(\vect{a}{t})$, where $f$ is usually~$\tanh$.
@@ -177,37 +192,66 @@ sentence.
 
 As their basic neural network component, skip-thought vectors use a type of RNN
 called a Gated Recurrent Unit (GRU)~\cite{cho2014ontheproperties}.
-The GRU is similar to the vanilla RNN given by Equation~\ref{eqn:vanilla-rnn},
-except that there are extra outputs $\vect{r}{t}$ and $\vect{z}{t}$ (and
-corresponding weight matrices $\matr{W}_r$, $\matr{U}_r$ and $\matr{W}_z$,
-$\matr{U}_z$) that are used to ``turn on or off'' both the contribution of the
-hidden state~$\vect{h}{t - 1}$ in Equation~\ref{eqn:vanilla-rnn}, and to
-control the update of the hidden state from timestep~$t - 1$ to $t$, as given
-by Equation~\ref{eqn:gru-update}.
+Vanilla RNNs typically propagate information forward through time through an
+alternating sequence of affine transformations and saturating nonlinearities.
+In backpropagation through the resulting vanilla RNN computation graph,
+gradients must sequentially traverse as many saturating nonlinearities as there
+are timesteps, which causes the vanishing gradient problem.
+Cho et al.\ designed GRUs to improve over the vanilla RNN activation
+function in order to alleviate vanishing gradients in
+RNNs~\cite{cho2014ontheproperties} using a similar mechanism to
+skip-connections, which improve gradient flow in ResNets~\cite{he2016deep}.
+Just as skip-connections compute each layer's activation as the weighted sum of
+its input and a function of that input, GRUs do the same for each timestep's
+activation.
+GRUs allow gradients to backpropagate without traversing saturating
+nonlinearities, by computing their hidden states~$\vect{h}{t}$ as the linear
+interpolation between a candidate hidden state~$\vect{\widetilde{h}}{t}$ and
+the previous hidden state~$\vect{h}{t - 1}$.
+
+In order to compute the linear interpolation between previous and candidate
+hidden states, GRUs include an update gate~$\vect{z}{t}$, defined as
 
 \begin{equation}
-        \vect{h}{t} = (1 - \vect{z}{t}) \odot \vect{h}{t - 1} + \vect{z}{t} \odot \vect{\widetilde{h}}{t}
+\vect{z}{t} = \sigma\big(\matr{U}_z\vect{h}{t - 1} + \matr{W}_z\vect{x}{t}\big),
+\label{eqn:gru-update-gate}
+\end{equation}
+where $\sigma(\cdot)$ is the sigmoid function.
+The hidden state, then, is computed as
+\begin{equation}
+\vect{h}{t} = \big(1 - \vect{z}{t}\big) \odot \vect{h}{t - 1} + \vect{z}{t} \odot \vect{\widetilde{h}}{t}.
 \label{eqn:gru-update}
 \end{equation}
 
-In Equation~\ref{eqn:gru-update},
-$\vect{z}{t} = \sigma(\matr{U}_z\vect{h}{t - 1} + \matr{W}_z\vect{x}{t})$,
-where $\sigma(\cdot)$ is the sigmoid function. So,
-Equation~\ref{eqn:gru-update} is a linear interpolation controlled by the
-``update gate'' $\vect{z}{t}$ between the previous hidden state
-$\vect{h}{t - 1}$ and the would-be current
-hidden-state~$\vect{\widetilde{h}}{t}$.
+GRUs compute candidate hidden state~$\vect{\widetilde{h}}{t}$ similarly to
+the vanilla RNN's hidden state given by Equation~\ref{eqn:vanilla-rnn},
+except for the inclusion of a reset gate~$\vect{r}{t}$.
+The reset gate varies between zero and one.
+When the reset gate is near one, the candidate hidden state acts as the vanilla
+RNN hidden state defined in Equation~\ref{eqn:vanilla-rnn}.
+When the reset gate is near zero, the previous hidden state is ignored and the
+candidate hidden state is computed solely from the current input.
+Formally,
 
-Skip-thought vectors use an RNN as an encoder, which encodes the sequence of
-words in a sentence into a feature representation corresponding to that
-sentence.
+\begin{equation}
+\vect{\widetilde{h}}{t} = f\big(\matr{W}\vect{h}{t - 1} + \vect{r}{t}\odot\big(\matr{U}\vect{x}{t}\big) + \vec{b}\big)
+\end{equation}
+where~$f$ is a nonlinearity, usually~$\tanh$.
+Another set of parameters~$\matr{U}_r$ and~$\matr{W}_r$ compute~$\vect{r}{t}$
+just as~$\matr{U}_z$ and~$\matr{W}_z$ compute~$\vect{z}{t}$ in
+Equation~\ref{eqn:gru-update-gate}, i.e.,
+$\vect{r}{t} = \sigma\big(\matr{U}_r\vect{h}{t - 1} + \matr{W}_r\vect{x}{t}\big)$.
 
+Skip-thought vectors use an RNN, in our case a GRU, as an encoder, which
+encodes the sequence of words in a sentence into a feature representation
+corresponding to that sentence.
 In our first article, we use skip-thought vectors to extract a feature
 representation from the question, which is coupled with the feature
 representation extracted from the image as a dual input to a multi-modal fusion
-operator, which takes the two feature-representation inputs and produces an
-output prediction as to the answer to the given question, conditioned on the
-image.
+operator.
+The multi-modal fusion operator takes the two feature-representation inputs and
+produces an output prediction as to the answer to the given question,
+conditioned on the image.
 
 
 \section{Attention}
