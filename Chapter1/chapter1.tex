@@ -396,9 +396,13 @@ different attention heads ``looking at'' different regions of an image.
 
 \subsection{Positional Encoding}
 
-Up until this point in our description of attention, our attention operators
-are unable to incorporate positional information, since query and key vectors
-interact pairwise with each other.
+Positional information such as the absolute or relative position of tokens in a
+sequence, or the absolute or relative spatiotemporal position of pixels in a
+video tensor, provide an important cue for making predictions on input data
+that contain this positional structure.
+However, up until this point in our description of attention, our attention
+operators are unable to incorporate positional information, since query and key
+vectors interact pairwise with each other.
 While recurrent networks have a positional inductive bias, both convolutional
 and attention networks are translation equivariant and require injection of
 position information to perform position-dependent tasks such as
