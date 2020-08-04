@@ -1068,27 +1068,9 @@ disoccluded in the following frame.
 
 We used YouTube-VOS to perform ablation studies on interesting components of
 our method, including sparse attention operators and positional encodings.
+We first describe and compare different design choices for our positional
+encodings.
 
-\begin{table}
-\caption{Comparison of positional encoding schemes for the ``grid'' sparse
-         attention variant of video attention.}
-\centering
-\begin{tabular}{lr}
-\toprule
-Positional Encoding & Grid~\G{} \\
-\midrule
-None & \num{61.1}  \\
-$K$ Embedding & \num{61.8} \\
-$T$ Embedding & \num{60.5} \\
-$T$ Sinusoidal & \num[math-rm=\mathbf]{62.6} \\
-\bottomrule
-\end{tabular}
-\label{tab:pos-encoding}
-\end{table}
-
-In Table~\ref{tab:pos-encoding} we compare the performance of different
-positional encoding schemes using the overall score~\G{} on the YouTube-VOS
-validation set.
 For spatial dimensions we followed \citet{parmar2019standalone} in
 using learned relative positional embeddings as the encoding, following Parmar
 et al.'s findings that relative are superior to absolute positional embeddings
@@ -1138,9 +1120,26 @@ a given pixel's temporal distance from the reference frame, whereas relative
 positional embeddings encode no information related to distance from the
 reference frame.
 
+\begin{table}
+\caption{Comparison of positional encoding schemes for the ``grid'' sparse
+         attention variant of video attention.}
+\centering
+\begin{tabular}{lr}
+\toprule
+Positional Encoding & Grid~\G{} \\
+\midrule
+None & \num{61.1}  \\
+$K$ Embedding & \num{61.8} \\
+$T$ Embedding & \num{60.5} \\
+$T$ Sinusoidal & \num[math-rm=\mathbf]{62.6} \\
+\bottomrule
+\end{tabular}
+\label{tab:pos-encoding}
+\end{table}
+
 We present our results comparing different positional encodings in
-Table~\ref{tab:pos-encoding} for both grid and strided sparse attention
-variants.
+Table~\ref{tab:pos-encoding} using the overall score~\G{} on the YouTube-VOS
+validation set for both grid and strided sparse attention variants.
 The positional encoding labeled ``None'' is our baseline attention with no
 positional information, while all remaining positional encodings use relative
 positional embeddings for spatial dimensions~$X, Y$.
