@@ -35,7 +35,7 @@ We introduce feedforward neural networks (FNNs) as a simple yet concrete
 example of a deep learning model.
 FNNs can be expressed as a sequence of hidden layers
 \begin{equation}
-\vec{h}_i = f_i({\matr{W}_i}^\intercal \vec{h}_{i - 1} + \vec{b}_i),
+\vec{h}_i = f_i({\matr{W}_i}^\top \vec{h}_{i - 1} + \vec{b}_i),
 \label{eqn:background:fnn}
 \end{equation}
 where $\vec{h}_i$ is a hidden unit, $\matr{W}_i$ is the weight matrix of
@@ -329,7 +329,7 @@ computes the compatibility between query and key as their dot product.
 The dot-product compatibility function has similar theoretical complexity to
 additive compatibility, but has the advantage of being able to compute all
 pairwise query-key compatibilities in a single matrix
-multiplication~$QK^\intercal$.
+multiplication~$QK^\top$.
 Matrix multiplication is highly optimized on modern compute hardware, and
 therefore dot-product attention runs faster than additive attention out of the
 box.
@@ -338,7 +338,7 @@ For this reason, we use dot product attention in our work.
 Our overall attention function is therefore
 
 \begin{equation}
-\mathtt{Attention}\big(Q, K, V\big) = \softmax{}\left(\frac{QK^\intercal}{\sqrt{c}}\right) V.
+\mathtt{Attention}\big(Q, K, V\big) = \softmax{}\left(\frac{QK^\top}{\sqrt{c}}\right) V.
 \label{eqn:background:attndefn}
 \end{equation}
 
@@ -413,7 +413,7 @@ positional information.
 Therefore with positional encoding Equation~\ref{eqn:background:attndefn} becomes
 
 \begin{equation}
-\mathtt{Attention}_E\big(Q, K, V\big) = \softmax{}\left(\frac{Q(K + E)^\intercal}{\sqrt{c}}\right) V,
+\mathtt{Attention}_E\big(Q, K, V\big) = \softmax{}\left(\frac{Q(K + E)^\top}{\sqrt{c}}\right) V,
 \label{eqn:background:posenc-attn}
 \end{equation}
 

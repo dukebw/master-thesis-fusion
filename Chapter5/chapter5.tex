@@ -551,7 +551,7 @@ matching layers for optical flow~\cite{dosovitskiy2015flownet}.
 Formally, we follow~\cite{vaswani2017attention} in defining attention as
 
 \begin{equation}
-\mathtt{Attention}\big(\querytensor{}, \keytensor{}, \valuetensor{}\big) = \softmax{}\big(\querytensor{}\keytensor{}^\intercal\big)\valuetensor{},
+\mathtt{Attention}\big(\querytensor{}, \keytensor{}, \valuetensor{}\big) = \softmax{}\big(\querytensor{}\keytensor{}^\top\big)\valuetensor{},
 \label{eqn:attndefn}
 \end{equation}
 
@@ -628,7 +628,7 @@ Concretely, we define affinity operator~$\Omega$ as
 % TODO(brendan): introduce superscript notation instead of Psi
 % function, since superscript is more compact.
 \begin{equation}
-        {\Omega\big(\querytensor{}, \keytensor{}\big)}_\pixel{} = \softmax{}\big(\querytensor{}_\pixel{} {\Psi\big(\keytensor{}, \pixel{}\big)}^\intercal\big)
+        {\Omega\big(\querytensor{}, \keytensor{}\big)}_\pixel{} = \softmax{}\big(\querytensor{}_\pixel{} {\Psi\big(\keytensor{}, \pixel{}\big)}^\top\big)
 \label{eqn:gridattndefn}
 \end{equation}
 
@@ -648,7 +648,7 @@ define~$\Phi : \real{}^{S\times (T + H + W - 2)} \times \real{}^{S\times C} \rig
 as
 
 \begin{equation}
-        {\Phi\big(A, \valuetensor{}\big)}_\pixel{} =  {A_\pixel{}}^\intercal \Psi\big(\valuetensor{}, \pixel{}\big).
+        {\Phi\big(A, \valuetensor{}\big)}_\pixel{} =  {A_\pixel{}}^\top \Psi\big(\valuetensor{}, \pixel{}\big).
 \end{equation}
 
 Note that we implemented our grid attention operator in place, so there is no
@@ -688,9 +688,9 @@ The first layer outputs, for each pixel~$\pixel{} \equiv (x, y, t)$,
 \begin{equation}
 \begin{split}
         \Phi{\big({\tilde{\Omega}\big(\vidfeat{}, \objfeat{}\big)}, \objfeat{}\big)}_{xyt} =
-        & \sum_{i = 1}^W \big(\vidfeat{}_{xyt}^\intercal\objfeat{}_{iyt}\big)\objfeat{}_{iyt} + \\
-        & \sum_{\substack{j = 1 \\ j \neq y}}^H \big(\vidfeat{}_{xyt}^\intercal \objfeat{}_{xjt}\big)\objfeat{}_{xjt} + \\
-        & \sum_{\substack{k = 1 \\ k \neq t}}^T \big(\vidfeat{}_{xyt}^\intercal \objfeat{}_{xyk}\big)\objfeat{}_{xyk}
+        & \sum_{i = 1}^W \big(\vidfeat{}_{xyt}^\top\objfeat{}_{iyt}\big)\objfeat{}_{iyt} + \\
+        & \sum_{\substack{j = 1 \\ j \neq y}}^H \big(\vidfeat{}_{xyt}^\top \objfeat{}_{xjt}\big)\objfeat{}_{xjt} + \\
+        & \sum_{\substack{k = 1 \\ k \neq t}}^T \big(\vidfeat{}_{xyt}^\top \objfeat{}_{xyk}\big)\objfeat{}_{xyk}
 \end{split}
 \end{equation}
 
@@ -702,9 +702,9 @@ as~$\Phi^3_{\tilde{\Omega}}$, produces
 \begin{split}
         {\Phi^3_{\tilde{\Omega}}\big(\vidfeat{}, \objfeat{}\big)}_{xyt} =
                 \sum_{i = 1}^W \sum_{j = 1}^H \sum_{k = 1}^T
-                & \big(\vidfeat{}_{xyt}^\intercal\vidfeat{}_{iyt}\big) \\
-                & \big(\vidfeat{}_{iyt}^\intercal \vidfeat{}_{ijt}\big) \\
-                & \big(\vidfeat{}_{ijt}^\intercal \objfeat{}_{ijk}\big)\objfeat{}_{ijk} + \cdots,
+                & \big(\vidfeat{}_{xyt}^\top\vidfeat{}_{iyt}\big) \\
+                & \big(\vidfeat{}_{iyt}^\top \vidfeat{}_{ijt}\big) \\
+                & \big(\vidfeat{}_{ijt}^\top \objfeat{}_{ijk}\big)\objfeat{}_{ijk} + \cdots,
 \end{split}
 \label{eqn:gridattnrouting}
 \end{equation}
@@ -750,7 +750,7 @@ where~$I_\pixel{}$ is a set of coordinates~$(i, j, k)$ that index a 3D tensor.
 Each layer of strided attention then returns, for each pixel~$\pixel{}$,
 
 \begin{equation}
-\mathtt{StridedAttn}{\big(\querytensor{}, \keytensor{}, \valuetensor{})}_\pixel{} = \softmax{}\big(\querytensor{}_\pixel{} \keytensor{}^\intercal_{I_\pixel{}}\big)\keytensor{}_{I_\pixel{}}.
+\mathtt{StridedAttn}{\big(\querytensor{}, \keytensor{}, \valuetensor{})}_\pixel{} = \softmax{}\big(\querytensor{}_\pixel{} \keytensor{}^\top_{I_\pixel{}}\big)\keytensor{}_{I_\pixel{}}.
 \label{eqn:stridedattndefn}
 \end{equation}
 
@@ -834,7 +834,7 @@ the input to the self-attention block in the SST encoder.
 % We compute an attention matrix~$A\in \real^{(O + 1)\times (O + 1)}$ as
 
 % \begin{equation}
-% A = \softmax{\big(UW_q {(UW_k)}^\intercal\big)}.
+% A = \softmax{\big(UW_q {(UW_k)}^\top\big)}.
 % \end{equation}
 
 % Then we update each object~$o$'s appearance model~$\objmean{}$ to become a
@@ -1105,7 +1105,7 @@ connectivity pattern~$I_\pixel$.
 Adding relative positional embeddings, Equation~\ref{eqn:stridedattndefn} becomes
 
 \begin{equation}
-        \mathtt{StridedAttn}{\big(\querytensor, \keytensor, \valuetensor)}_\pixel{} = \softmax\big(\querytensor_\pixel{} \big(\keytensor^\intercal_{I_\pixel} + \embtensor^\intercal_{\tilde{I}_\pixel}\big)\big)\keytensor_{I_\pixel}
+        \mathtt{StridedAttn}{\big(\querytensor, \keytensor, \valuetensor)}_\pixel{} = \softmax\big(\querytensor_\pixel{} \big(\keytensor^\top_{I_\pixel} + \embtensor^\top_{\tilde{I}_\pixel}\big)\big)\keytensor_{I_\pixel}
 \end{equation}
 
 \noindent where~$\tilde{I}_\pixel{} = (f(q, \pixel) : q \in I_\pixel)$

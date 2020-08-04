@@ -138,7 +138,7 @@ of~$\q$ and~$\v$ with learned weight matrices~$W_\q$ and~$W_\v$, in order to
 make a low-rank approximation to the general outer product~$\q \otimes \v$. The
 projected vectors are multiplied by a third weight matrix~$W_{\z}$, such that
 the fusion operator in the case of~MLB
-is~$\fusop{(\q \,, \v)} = {W_{\z}}^\intercal{} ({W_\q}^\intercal{} \q \odot {W_\v}^\intercal{} \v)$,
+is~$\fusop{(\q \,, \v)} = {W_{\z}}^\top{} ({W_\q}^\top{} \q \odot {W_\v}^\top{} \v)$,
 where~$\odot$ denotes the Hadamard product. Combined, the weight
 matrices~$W_\q$, $W_\v$ and~$W_{\z}$ approximate the general weight tensor~$\T$
 corresponding to the bilinear interaction between~$\q$ and~$\v$ in the special
@@ -157,7 +157,7 @@ derivation as well. The MUTAN fusion operator generalizes the MLB fusion
 operator to an interaction tensor of rank~$R$, and therefore is,
 
 \begin{equation}
-        \fusop{(\q \,, \v)} = \sum_{r = 1}^R {W^r_\z}^\intercal{} ({W^r_\q}^\intercal{} \q \odot {W^r_\v}^\intercal{} \v) \,.
+        \fusop{(\q \,, \v)} = \sum_{r = 1}^R {W^r_\z}^\top{} ({W^r_\q}^\top{} \q \odot {W^r_\v}^\top{} \v) \,.
 \label{eqn:mutan-fusop}
 \end{equation}
 
@@ -165,8 +165,8 @@ operator to an interaction tensor of rank~$R$, and therefore is,
 \subsection{Tucker Decomposition}
 \label{sec:tucker}
 
-\newcommand{\qtWq}{\q^\intercal{} W_\q{}}
-\newcommand{\vtWv}{\v^\intercal{} W_\v{}}
+\newcommand{\qtWq}{\q^\top{} W_\q{}}
+\newcommand{\vtWv}{\v^\top{} W_\v{}}
 \begin{figure}[!t]
 \centering
 \input{Figures/n-mode-prod.tikz}
@@ -391,7 +391,7 @@ of~$\mutanfeat{q}$ and~$\mutanfeat{v}$, and slices of~$\T_c$.
 \begin{split}
         \T_c^{\q\v}[k] &= \sum_{j = 1}^{t_v} \T_c^{\q}[j, k] \cdot \mutanfeat{v}[j]  \\
                        &= \sum_{j = 1}^{t_v} \biggl(\sum_{i = 1}^{t_q} \T_c[i, j, k] \cdot \mutanfeat{q}[i]\biggr) \cdot \mutanfeat{v}[j]  \\
-                       &= {\mutanfeat{q}}^\intercal \T_c[:, :, k] \mutanfeat{v}
+                       &= {\mutanfeat{q}}^\top \T_c[:, :, k] \mutanfeat{v}
 \end{split}
 \label{eqn:tucker-core-tensor-expanded}
 \end{align}
@@ -402,7 +402,7 @@ of matrices each given by an outer product of vectors. Therefore,
 
 \begin{equation}
         \T_c[:, :, k] = \sum_{r = 1}^R \m_r^k \otimes \n_r^k
-                      = \sum_{r = 1}^R \m_r^k {\n_r^k}^\intercal \,,
+                      = \sum_{r = 1}^R \m_r^k {\n_r^k}^\top \,,
 \label{eqn:tucker-core-tensor-rank-r}
 \end{equation}
 
@@ -412,10 +412,10 @@ Equation~\ref{eqn:tucker-core-tensor-expanded} gives:
 
 \begin{align}
 \begin{split}
-        \T_c^{\q\v}[k] &= {\mutanfeat{q}}^\intercal
-                \biggl(\sum_{r = 1}^R \m_r^k {\n_r^k}^\intercal\biggr) \mutanfeat{v}  \\
-                     &= \sum_{r = 1}^R \left({\mutanfeat{q}}^\intercal \m_r^k\right)
-                                \left({\n_r^k}^\intercal \mutanfeat{v}\right) \,,
+        \T_c^{\q\v}[k] &= {\mutanfeat{q}}^\top
+                \biggl(\sum_{r = 1}^R \m_r^k {\n_r^k}^\top\biggr) \mutanfeat{v}  \\
+                     &= \sum_{r = 1}^R \left({\mutanfeat{q}}^\top \m_r^k\right)
+                                \left({\n_r^k}^\top \mutanfeat{v}\right) \,,
 \end{split}
 \label{eqn:tucker-core-element-wise}
 \end{align}
