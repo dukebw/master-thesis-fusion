@@ -15,3 +15,69 @@ of~\num{1.1}\% in top-1 accuracy over the baseline MUTAN model.
 Furthermore, our proposed fusion operator search space holds promise for use
 with neural architecture search to discover new, even superior fusion
 operators.
+
+Although not a focus of our main article, our multimodal fusion operator for
+VQA is used not only to compute classification logits, but also to compute
+spatial attention over features extracted from the input image.
+Therefore our performance improvements for VQA may be attributed to both
+superior predictive capacity and improved attention computation.
+In our second article we investigated attention in greater detail, by exploring
+design choices for constructing a video object segmentation (VOS) architecture
+entirely from attention building blocks.
+We introduced the attention-based Transformer
+architecture~\citep{vaswani2017attention} to VOS, while exploring sparse
+video-attention variants, which is at time of writing an underexplored area.
+In particular, we wrote custom CUDA implementations for 3D ``grid attention''
+and ``strided attention'' operators and provide these implementations to the
+community for use on VOS and other dense video prediction tasks.
+
+Both of our articles, then, could be viewed as exploring attention variants
+applied to different subfields of computer vision.
+We expect that attention's importance in computer vision, alongside the broader
+machine learning community, will continue to grow in the coming years.
+Early deep learning applied to computer vision has been built on convolutional
+neural networks (CNNs), which were designed with an effective
+translation-equivariant prior for processing images.
+As computer vision research moves beyond the 2D image domain to more complex
+domains such as 3D and video, we believe that CNNs will face computational
+challenges, coupled with decreased effectiveness of the convolutional layer as
+a prior in these domains.
+
+We believe that in domains where CNNs are limited, either due to computation or
+modeling capacity, models based on attention have potential.
+Attention-based models have recently been shown by \citet{Cordonnier2020On} to
+be general enough even to contain convolutional layers as a subset, under
+certain conditions.
+Furthermore, attention models hold the promise of being a fitting component for
+computing on a variety of different inputs, including variable length
+sequences, as proven by the success of Transformers for language processing and
+now video object segmentation.
+
+One area of computer vision where attention methods could be further developed
+is in 3D vision scenarios where data can be represented as a graph.
+Such a scenario exists in 3D mesh representations, such as the low-level
+representation of 3D faces.
+In recent work, \citet{ranjan2018generating} have shown that graph neural
+networks (GNNs) operating as an autoencoder on 3D face meshes outperform
+traditional linear methods.
+Furthermore, \citet{knyazev2019generalization} showed that attention, if
+initialized correctly, can improve the performance of GNNs while making GNNs
+generalize well to noisy test inputs.
+Based on Knyazev et al's findings, pursuing research into attention operators
+for computation on 3D meshes holds potential for improving the
+interpretability, performance and generalization of computer vision tasks that
+use 3D representations.
+
+Additionally, attention-based architectures have the ability to conditionally
+compute via top-k pooling, as proposed by \citet{gao2019graphunets}.
+The conditional pooling of attention layers contrasts with the fixed, general
+pooling of convolutional layers, and provides a method for attention-based
+models to find efficiencies and thereby achieve faster model runtimes in
+comparison to CNNs.
+Simultaneously, in order to realize these efficiencies on real devices, the
+community must spend research and engineering effort designing accelerated
+software and hardware implementations for attention networks, as has already
+been done for CNNs.
+We look forward to the community's future progress in developing ever superior
+attention-based models, and applying attention to underexplored areas of
+computer vision and machine learning.
