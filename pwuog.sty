@@ -66,50 +66,55 @@
 %%%% pagestyles
 %% the main text
 \makepagestyle{uog}
-\makeevenhead{uog}{\thepage}{}{}
-\makeoddhead{uog}{}{}{\thepage}
+\makeevenfoot{uog}{}{\thepage}{}
+\makeoddfoot{uog}{}{\thepage}{}
 
 %% for continuation pages of the ToC, LoF, LoT
 \makepagestyle{toc}
-\makeevenfoot{toc}{}{\thepage}{}
-\makeoddfoot{toc}{}{\thepage}{}
-\makeevenhead{toc}{Chapter}{}{Page}
-\makeoddhead{toc}{Chapter}{}{Page}
+\makeevenfoot{toc}{}{}{}
+\makeoddfoot{toc}{}{}{}
+\makeevenhead{toc}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Chapter\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
+\makeoddhead{toc}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Chapter\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
+\makeoddfoot{toc}{}{}{}
+\setheadfoot{36pt}{32.4pt}
 \makepagestyle{lof}
-\makeevenfoot{lof}{}{\thepage}{}
-\makeoddfoot{lof}{}{\thepage}{}
-\makeevenhead{lof}{Figure}{}{Page}
-\makeoddhead{lof}{Figure}{}{Page}
+\makeevenfoot{lof}{}{}{}
+\makeoddfoot{lof}{}{}{}
+\makeevenhead{lof}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Figure\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
+\makeoddhead{lof}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Figure\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
 \makepagestyle{lot}
-\makeevenfoot{lot}{}{\thepage}{}
-\makeoddfoot{lot}{}{\thepage}{}
-\makeevenhead{lot}{Table}{}{Page}
-\makeoddhead{lot}{Table}{}{Page}
+\makeevenhead{lot}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Table\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
+\makeoddhead{lot}{{\parbox{0.04\textwidth}{\centering \leavevmode \\[2\baselineskip]Table\hfill\null}}}{}{\parbox{0.04\textwidth}{\centering\thepage\\[\baselineskip]Page\hfill\null}}
+\makeevenfoot{lot}{}{}{}
+\makeoddfoot{lot}{}{}{}
+\makepagestyle{ack}
+\makeevenhead{ack}{}{}{\thepage}
+\makeoddhead{ack}{}{}{\thepage}
 
 %%%% The LoF
 \renewcommand{\listfigurename}{LIST OF FIGURES}
 \addtodef{\listoffigures}{\clearpage\pagestyle{lof}}{}
 
 \renewcommand*{\lofheadstart}{\vspace*{-\topfiddle}}
-\renewcommand*{\afterloftitle}{\thispagestyle{plain}%
-  \par\nobreak {\normalfont Figure \hfill Page}\par\nobreak}
+\renewcommand*{\afterloftitle}{\thispagestyle{lof}%
+  \par\nobreak \hfill\par\nobreak}
 
 %%% The LoT
 \renewcommand{\listtablename}{LIST OF TABLES}
 \addtodef{\listoftables}{\clearpage\pagestyle{lot}}{}
 \renewcommand*{\lotheadstart}{\vspace*{-\topfiddle}}
-\renewcommand*{\afterlottitle}{\thispagestyle{plain}%
-  \par\nobreak {\normalfont Table \hfill Page}\par\nobreak}
+\renewcommand*{\afterlottitle}{\thispagestyle{lot}%
+  \par\nobreak \hfill\par\nobreak}
 
 %%% The LoS
-\renewcommand{\nomname}{LIST OF SYMBOLS}
+\renewcommand{\nomname}{\vspace{1\onelineskip}LIST OF SYMBOLS\thispagestyle{ack}}
 
 %%%% Do the ToC
 \renewcommand{\contentsname}{TABLE OF CONTENTS}
 \addtodef{\tableofcontents}{\clearpage\pagestyle{toc}}{}
 \renewcommand*{\tocheadstart}{\vspace*{-\topfiddle}}
-\renewcommand*{\aftertoctitle}{\thispagestyle{plain}%
-  \par\nobreak \mbox{}\hfill{\normalfont Page}\par\nobreak}
+\renewcommand*{\aftertoctitle}{\thispagestyle{toc}%
+  \par\nobreak \mbox{}\hfill\par\nobreak}
 
 \renewcommand*{\cftchapterfont}{\normalfont}
 \renewcommand*{\cftchapterpagefont}{\normalfont}
@@ -131,7 +136,7 @@
   \renewcommand*{\printchapternum}{\centering\chapnumfont \thechapter}
   \renewcommand*{\chaptitlefont}{\normalfont\centering}
   \renewcommand*{\printchapternonum}{}}
-\aliaspagestyle{chapter}{empty}
+\aliaspagestyle{chapter}{uog}
 
 %%% different chapter style for appendices, (and double spaced)
 \addtodef{\appendix}{}{\chapterstyle{uogappendix}\UogSpacing}
@@ -183,12 +188,17 @@
 \newcommand*{\pretoctitle}[1]{{\clearpage\centering
   \vspace*{-\topfiddle}#1\par}}
 %%% Start the ACKNOWLEDGEMENTS
-\newcommand{\uogacknowledgements}{\pretoctitle{ACKNOWLEDGEMENTS}}
+\newcommand{\uogacknowledgements}{%
+  \clearpage\thispagestyle{ack}%
+  \prelimtitle{\vspace{1\onelineskip}ACKNOWLEDGEMENTS}
+  \vspace{3\onelineskip}
+  \input{Acknowledgement/acknowledgement}}
+% \addcontentsline{toc}{chapter}{Acknowledgements}
 
 %%% Start the ABSTRACT
 \newcommand{\uogabstract}{%
-  \addtotextheight{-\botfiddle}%
-  \pretoctitle{ABSTRACT}
+  \clearpage\thispagestyle{empty}%
+  \prelimtitle{ABSTRACT}
   \vspace{3\onelineskip}
   {\centering
   \uogtitleupper \\[3\onelineskip]
@@ -254,14 +264,15 @@ DAY AND NIGHT FOR FAR TOO LONG AND NOW IT IS OVER}
   \thispagestyle{empty}
   \centering
   \vspace*{-\toptafiddle}
-  \uogtitle \\ by \\ \uogauthor
-  \vfill
+  \vspace{6\onelineskip}
+  \uogtitle \\\vspace{1\onelineskip} by \\\vspace{1\onelineskip} \uogauthor \\
+  \vspace{6\onelineskip}
   {A \uogdoctype\ \\
   Presented to \\
   The University of Guelph\par}
   \vspace{3\onelineskip}
-  \includegraphics[width=0.2\textwidth]{UofGshield}
-  \vspace{3\onelineskip}
+  % \includegraphics[width=0.2\textwidth]{UofGshield}
+  \vspace{1\onelineskip}
   {\SingleSpace
   In Partial Fulfillment \\
   of the Requirements for the Degree \\
@@ -300,7 +311,7 @@ DAY AND NIGHT FOR FAR TOO LONG AND NOW IT IS OVER}
 
 %% use the uog chapterstyle and plain pagestyle
 \chapterstyle{uog}
-\pagestyle{plain}
+\pagestyle{uog}
 %%%%%%%%%%%%%%% end of *.sty file
 \endinput
 %%%%%%%%%%%%%%%

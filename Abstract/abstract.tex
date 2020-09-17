@@ -4,44 +4,19 @@ In this thesis by articles we make contributions related to attention and
 fusion at the intersection of the deep learning and computer vision fields.
 
 In our first article, we investigate the design of neural network operators
-that fuse features extracted from different modalities, such as audio and
-video, and use the fused representation to make predictions on a single task,
-such as visual question answering (VQA) or activity recognition.
-We propose a generalized class of multimodal fusion operators for the task of
-VQA.
-We identify generalizations of existing multimodal fusion operators based on
-the Hadamard product, and show that specific non-trivial instantiations of this
-generalized fusion operator exhibit superior performance in terms of open-ended
-accuracy on the VQA task.
-In particular, we introduce Nonlinearity Ensembling, Feature Gating, and
-post-fusion neural network layers as fusion operator components, culminating in
-an absolute percentage point improvement of~$1.1\%$ on the VQA~2.0 test-dev set
-over baseline fusion operators, which use the same features as input.
-We use our findings as evidence that our generalized class of fusion operators
-could lead to the discovery of even superior task-specific operators when used
-as a search space in an architecture search over fusion operators.
+that fuse features extracted from different modalities to make predictions on a
+single task.
+We propose a generalized class of multimodal fusion operators for visual
+question answering (VQA).
+We identify generalizations of existing multimodal fusion operators, and show
+that specific non-trivial instantiations of our operator exhibit superior
+performance in terms of open-ended accuracy on the VQA task.
 
-In our second article, we introduce Transformers, which are an attention-based
-architecture, to the video object segmentation (VOS) task.
-VOS requires tracking an object through a video
-with pixel-level accuracy, and has previously been solved either through
-combinations of online fine-tuning or recurrent feature propagation, which have
-inherent disadvantages.
-Online fine-tuning methods have slow runtimes, while recurrent methods lack
-scalability and have the drawback of compounding error, due to their sequential
-nature.
+In our second article, we introduce Transformers to video object segmentation
+(VOS).
 We propose a scalable, end-to-end method for VOS called
-``Sparse Spatiotemporal Transformers'' (SST) to address said runtime,
-scalability and temporal dependency issues.
-SST extracts per-pixel representations for each object by simultaneously
-attending to high semantic information feature vectors at each pixel in a
-video.
-SST performs inference in a single feedforward pass of a Transformer
-architecture designed with sparse attention components.
-We contribute the first method for using attention-based networks for VOS, and
-demonstrate the scalability advantage of attention-based over recurrent
-networks in the spatiotemporal domain.
-We show that our attention-based feedforward method achieves competitive
-results on YouTube-VOS 2019 with improved scalability compared to state of the
-art approaches.
+``Sparse Spatiotemporal Transformers'' (SST) to address runtime, scalability
+and temporal dependency issues of prior work.
+We show that our method achieves competitive results on YouTube-VOS 2019 with
+increased scalability compared with the state of the art.
 % TODO(brendan): runtime + scalability numbers from on-device profiling.
